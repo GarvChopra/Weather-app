@@ -1,0 +1,43 @@
+{
+  "features": [
+    "area_enc",
+    "drain",
+    "elev",
+    "road_age",
+    "infra_age",
+    "wp",
+    "pop",
+    "month",
+    "hour",
+    "rain_1h",
+    "rain_3h",
+    "rain_6h",
+    "rain_24h",
+    "temp",
+    "wind",
+    "gust",
+    "humid",
+    "pressure",
+    "press_trend",
+    "visibility",
+    "weathercode",
+    "storm_now",
+    "thunder_now",
+    "open_water",
+    "open_sewage",
+    "open_pothole",
+    "open_garbage",
+    "open_elec",
+    "complaint_vel"
+  ],
+  "labels": [
+    "label_flood",
+    "label_pothole_worsen",
+    "label_sewage_overflow",
+    "label_garbage_flood",
+    "label_elec_hazard"
+  ],
+  "version": "3.0",
+  "type": "MultiOutputXGBoost",
+  "trained_on": "Open-Meteo historical Delhi 2019-2024 + AreaPulse issues"
+}

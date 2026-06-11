@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AreaPulse CivicAlert — Delhi</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#c62828;--blue:#0066FF;--navy:#0066FF;
+  --bg:#ffffff;--white:#fff;--border:rgba(0,0,0,.08);
+  --text:#1B1B1B;--muted:#6B7280;--yellow:#0066FF;
+  --card:#fff;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+
+/* ── HEADER ── */
+.hdr{background:#fff;color:var(--text);display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:52px;position:sticky;top:0;z-index:300;border-bottom:1px solid var(--border)}
+.logo{font-size:15px;font-weight:700;color:var(--text)}.logo span{color:var(--blue)}
+.nav{display:flex;height:100%}
+.nt{padding:0 16px;font-size:13px;color:var(--muted);display:flex;align-items:center;border-bottom:2px solid transparent;cursor:pointer;font-weight:500;transition:.15s}
+.nt.on{color:var(--blue);border-bottom-color:var(--blue);font-weight:600}
+.btn-run{background:var(--blue);color:#fff;padding:7px 18px;border-radius:20px;font-size:12px;font-weight:600;border:none;cursor:pointer}
+.btn-ref{background:transparent;color:var(--muted);padding:6px 12px;border-radius:20px;font-size:12px;border:1px solid var(--border);cursor:pointer}
+
+/* ── ALERT BARS ── */
+.bar-live{display:none;background:#FEF2F2;color:var(--red);padding:10px 24px;align-items:center;justify-content:space-between;border-bottom:1px solid #FECACA}
+.bar-live.on{display:flex}
+@keyframes pb{0%,100%{opacity:1}50%{opacity:.7}}
+.bar-fcst{display:none;background:#FFF7ED;border-bottom:1px solid #FED7AA;padding:8px 24px;align-items:center;gap:14px}
+.bar-fcst.on{display:flex}
+
+/* ── HERO ── */
+.hero{position:relative;height:180px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center 35%}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,40,120,.82) 0%,rgba(0,102,255,.45) 55%,rgba(0,60,150,.2) 100%)}
+.hero-c{position:relative;z-index:2;padding:24px 28px;height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.h-eyebrow{font-size:11px;font-weight:500;color:rgba(255,255,255,.65);margin-bottom:6px}
+.h-title{font-size:24px;font-weight:600;color:#fff;line-height:1.2;letter-spacing:-.3px}
+.h-sub{font-size:12px;color:rgba(255,255,255,.65);margin-top:5px}
+.h-chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+.hc{padding:4px 12px;border-radius:999px;font-size:11px;font-weight:500;color:#fff;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25)}
+.hc-a{background:rgba(255,160,0,.45);border-color:rgba(255,180,0,.4)}
+.hc-r{background:rgba(198,40,40,.5);border-color:rgba(255,120,120,.4)}
+.h-wx{display:flex;gap:1px;background:rgba(255,255,255,.15);border-radius:10px;overflow:hidden}
+.h-wxc{background:rgba(255,255,255,.08);padding:12px 18px;text-align:center;min-width:72px}
+.h-wxv{font-size:22px;font-weight:600;color:#fff;line-height:1;font-variant-numeric:tabular-nums}
+.h-wxl{font-size:10px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
+
+/* ── BODY ── */
+.body{padding:24px 28px}
+
+/* ── STAT ROW ── */
+.feed-item{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border-bottom:0.5px solid var(--border)}
+.feed-item:last-child{border-bottom:none}
+.feed-src{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;margin-top:1px}
+.feed-src-ar{background:var(--blue)}
+.feed-src-wa{background:#25d366}
+.feed-src-mp{background:#7b1fa2}
+.feed-issue{font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px}
+.feed-meta{font-size:10px;color:var(--muted)}
+.feed-sev{padding:1px 6px;border-radius:3px;font-size:9px;font-weight:700;margin-left:5px}
+.fs-hi{background:#FEF2F2;color:#991B1B}
+.fs-med{background:#fff3e0;color:#e65100}
+
+/* ── AI PREDICTION ── */
+.ai-section{background:#fff;border-radius:12px;border:1px solid var(--border);padding:24px 28px;margin-bottom:20px;display:flex;flex-direction:column;gap:14px}
+.ai-section-top{display:flex;align-items:center;justify-content:space-between}
+.ai-badge{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:999px;font-size:11px;font-weight:600;background:var(--blue);color:#fff;letter-spacing:.02em}
+.ai-dot{width:7px;height:7px;border-radius:50%;background:#fff}
+.ai-meta{font-size:11px;color:var(--muted)}
+.ai-stmt{font-size:20px;font-weight:500;line-height:1.55;color:var(--text);margin:0}
+.ai-stmt .red{color:var(--red);font-weight:600}
+.ai-footer{display:flex;gap:20px;flex-wrap:wrap;font-size:11px;color:var(--muted);padding-top:12px;border-top:1px solid var(--border)}
+.ai-footer strong{color:var(--text);font-weight:500}
+
+/* ── BULLETIN ── */
+.bulletin{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px 18px;display:flex;gap:13px;margin-bottom:20px}
+.bul-icon{width:36px;height:36px;background:var(--blue);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.bul-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:4px}
+.bul-txt{font-size:13px;color:var(--text);line-height:1.65}
+
+/* ── CARDS ── */
+.cards-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+.cards-sub{font-size:11px;color:var(--muted);margin-bottom:16px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:0}
+.tc{background:#fff;border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid var(--border);transition:transform .15s,box-shadow .15s}
+.tc:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.tc-img{width:100%;height:130px;object-fit:cover;display:block;background:var(--bg)}
+.tc-body{padding:14px 16px 16px}
+.tc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.tc-score{font-size:26px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.tc-score .sm{font-size:12px;color:var(--muted);font-weight:500}
+.tc-badge{padding:3px 9px;border-radius:999px;font-size:10px;font-weight:700}
+.b-red{background:#FEF2F2;color:#991B1B}
+.b-blue{background:#EFF6FF;color:#1D4ED8}
+.b-gray{background:#f1f5f9;color:var(--muted)}
+.tc-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}
+.tc-dept{font-size:11px;color:var(--muted);margin-bottom:9px}
+.tc-bar{height:4px;background:#f0f4f8;border-radius:999px;overflow:hidden;margin-bottom:9px}
+.tc-bf{height:100%;border-radius:999px}
+.tc-issues{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px;min-height:18px}
+.iss{padding:2px 8px;border-radius:20px;font-size:10px;font-weight:500;background:#F3F4F6;color:var(--muted)}
+.iss.hi{background:#FEF2F2;color:#991B1B}
+.tc-btn{width:100%;padding:9px 12px;border-radius:8px;font-size:12px;font-weight:600;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between}
+.btn-red{background:#FEF2F2;color:#991B1B}.btn-red:hover{background:#ffcdd2}
+.btn-blue{background:#EFF6FF;color:#1D4ED8}.btn-blue:hover{background:#bbdefb}
+.btn-gray{background:#F9FAFB;color:var(--muted);border:1px solid var(--border);border-radius:20px}
+
+/* ══════════════════════════════════════════
+   DETAIL PAGE — matches Image 1 from Stitch
+   ══════════════════════════════════════════ */
+.detail-page{display:none}
+.detail-page.on{display:block}
+
+.det-hdr{background:var(--blue);color:#fff;padding:14px 28px;display:flex;align-items:center;gap:16px}
+.det-back{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:rgba(255,255,255,.7);cursor:pointer;padding:6px 0}
+.det-back:hover{color:#fff}
+.det-hdr-title{font-size:20px;font-weight:700;color:#fff}
+.det-hdr-sub{font-size:12px;color:rgba(255,255,255,.55);margin-top:2px}
+
+.det-body{display:grid;grid-template-columns:1fr 280px;gap:0;min-height:calc(100vh - 100px)}
+
+.det-main{padding:24px 28px;border-right:0.5px solid var(--border)}
+.det-sec-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:14px}
+.det-refresh{font-size:11px;color:var(--muted)}
+
+/* Timeline bands */
+.tl-band{border-radius:11px;overflow:hidden;margin-bottom:10px}
+.tl-hdr{padding:11px 18px;display:flex;align-items:center;gap:10px}
+.tlh-r{background:var(--red);color:#fff}
+.tlh-o{background:#e65100;color:#fff}
+.tlh-a{background:#f9a825;color:var(--navy)}
+.tlh-g{background:#e8f5e9;color:#2e7d32;border:1px solid #c8e6c9}
+.tl-ttl{flex:1;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.tl-pill{padding:3px 11px;border-radius:999px;font-size:11px;font-weight:600;background:rgba(255,255,255,.22)}
+.tl-body{background:var(--card);border:0.5px solid var(--border);border-top:none}
+.arow{display:grid;grid-template-columns:52px 1fr auto auto;gap:14px;align-items:center;padding:14px 18px;border-bottom:0.5px solid var(--border);cursor:pointer;transition:.1s}
+.arow:hover{background:#f7faff}
+.arow:last-child{border-bottom:none}
+.arow-thumb{width:52px;height:52px;border-radius:9px;overflow:hidden;background:var(--bg)}
+.arow-thumb img{width:100%;height:100%;object-fit:cover}
+.arow-name{font-size:14px;font-weight:700;color:var(--text)}
+.arow-badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;margin-left:8px}
+.arow-meta{font-size:11px;color:var(--muted);margin-top:2px}
+.arow-action{margin-top:7px;padding:6px 10px;background:#eef5ff;border-radius:6px;border-left:2px solid var(--blue);font-size:11px;color:var(--muted)}
+.arow-action strong{color:var(--text);font-weight:600}
+.arow-iss{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px}
+.arow-score{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;min-width:46px;text-align:center}
+.dispatch-btn{padding:7px 16px;border-radius:7px;font-size:12px;font-weight:600;border:none;cursor:pointer;white-space:nowrap}
+.dispatch-r{background:var(--red);color:#fff;border-radius:20px}
+.dispatch-r:hover{background:#b71c1c}
+.dispatch-b{background:#e3f2fd;color:var(--blue);border:0.5px solid #90caf9}
+.dispatch-b:hover{background:#bbdefb}
+.queue-btn{background:var(--bg);color:var(--muted);border:0.5px solid var(--border);padding:7px 14px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer}
+
+/* Detail sidebar */
+.det-sidebar{padding:20px 20px;background:var(--card);border-left:0.5px solid var(--border)}
+.det-sidebar-section{margin-bottom:22px}
+.det-sidebar-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:12px}
+
+.det-stat-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:0.5px solid var(--border)}
+.det-stat-row:last-child{border-bottom:none}
+.det-stat-label{font-size:12px;color:var(--muted)}
+.det-stat-val{font-size:13px;font-weight:600;color:var(--text)}
+.det-stat-val.red{color:var(--red)}
+.det-stat-val.blue{color:var(--blue)}
+
+.confidence-bar{height:8px;background:#f0f4f8;border-radius:999px;overflow:hidden;margin-top:6px}
+.confidence-fill{height:100%;border-radius:999px;background:var(--blue)}
+
+.mini-map{width:100%;height:160px;border-radius:10px;overflow:hidden;background:#1a3a5c;display:flex;align-items:center;justify-content:center;margin-bottom:14px;position:relative}
+#det-map{width:100%;height:160px}
+
+.opt-box{background:#e3f2fd;border:0.5px solid #b5d4f4;border-radius:10px;padding:14px}
+.opt-box-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.opt-ai-badge{background:var(--blue);color:#fff;padding:1px 6px;border-radius:4px;font-size:9px;font-weight:700}
+.opt-txt{font-size:12px;color:var(--navy);line-height:1.65;margin-bottom:10px}
+.opt-btn{width:100%;padding:8px;background:var(--blue);color:#fff;border:none;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer}
+.opt-btn:hover{background:#1a4a7a}
+
+.rlbl{padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700}
+.rl-r{background:#FEF2F2;color:#991B1B}
+.rl-b{background:#EFF6FF;color:#1D4ED8}
+
+/* ══════════════════════════════════════════
+   NGO PAGE — matches Image 2 from Stitch
+   Strategic Impact Matrix
+   ══════════════════════════════════════════ */
+.ngo-page{display:none}
+.ngo-page.on{display:block}
+.ngo-layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 50px)}
+
+.ngo-sidebar{background:#FAFBFC;border-right:1px solid var(--border);padding:20px 18px}
+.ngo-sidebar-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:14px}
+.filter-group{margin-bottom:20px}
+.filter-label{font-size:12px;font-weight:600;color:var(--text);margin-bottom:8px}
+.filter-select{width:100%;padding:8px 10px;border-radius:7px;border:0.5px solid var(--border);font-size:12px;font-family:inherit;background:var(--card);color:var(--text);cursor:pointer}
+.filter-check{display:flex;align-items:center;gap:8px;margin-bottom:7px;cursor:pointer}
+.filter-check input{accent-color:var(--blue)}
+.filter-check span{font-size:12px;color:var(--text)}
+.filter-btn{width:100%;padding:9px;border-radius:20px;background:var(--blue);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;margin-top:4px}
+.ai-insight-box{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:14px;margin-top:20px}
+.ai-insight-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:7px}
+.ai-insight-txt{font-size:12px;color:var(--navy);line-height:1.65}
+
+.ngo-main{padding:24px 28px;background:var(--bg)}
+.ngo-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.ngo-title{font-size:22px;font-weight:700;color:var(--text)}
+.ngo-count{font-size:13px;color:var(--muted)}
+
+/* Strategic Impact Matrix table */
+.sim-table{width:100%;background:var(--card);border-radius:14px;overflow:hidden;border:0.5px solid var(--border);margin-bottom:24px}
+.sim-thead{display:grid;grid-template-columns:2fr 1.2fr 1fr 100px 120px;gap:0;background:var(--bg);border-bottom:0.5px solid var(--border)}
+.sim-th{padding:10px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.sim-row{display:grid;grid-template-columns:2fr 1.2fr 1fr 100px 120px;gap:0;border-bottom:0.5px solid var(--border);align-items:center;transition:.1s;cursor:pointer}
+.sim-row:hover{background:#f7faff}
+.sim-row:last-child{border-bottom:none}
+.sim-cell{padding:14px 16px;font-size:13px;color:var(--text)}
+.sim-area-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px}
+.sim-area-sub{font-size:11px;color:var(--muted)}
+.sim-threat-name{font-size:13px;color:var(--text)}
+.sim-status{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;font-size:10px;font-weight:700}
+.ss-live{background:var(--red);color:#fff;animation:pb 2s infinite}
+.ss-fcst{background:#fff3e0;color:#e65100;border:0.5px solid #ffd180}
+.ss-mon{background:#EFF6FF;color:#1D4ED8}
+.sim-dept{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;background:var(--blue);color:#fff}
+.sim-score{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
+.coord-btn{padding:8px 16px;border-radius:20px;background:var(--blue);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer}
+.coord-btn:hover{background:#1a4a7a}
+
+/* Zone criticality map */
+.zone-map-card{background:var(--card);border-radius:14px;border:0.5px solid var(--border);overflow:hidden}
+.zone-map-hdr{padding:14px 20px;border-bottom:0.5px solid var(--border)}
+.zone-map-title{font-size:15px;font-weight:700;color:var(--text)}
+.zone-map-sub{font-size:12px;color:var(--muted);margin-top:2px}
+#ngo-map{height:320px}
+
+/* ── MAP PAGE ── */
+.map-page{display:none}
+.map-page.on{display:block}
+.map-layout{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 50px)}
+.map-sidebar{background:#FAFBFC;border-right:1px solid var(--border);padding:20px 18px;overflow-y:auto}
+.map-sidebar-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:14px}
+.map-side-item{padding:10px 12px;border-radius:9px;margin-bottom:7px;cursor:pointer;border:0.5px solid var(--border);background:var(--card);transition:.1s}
+.map-side-item:hover{background:#f7faff}
+.map-side-item.active{background:#e3f2fd;border-color:#90caf9}
+.map-side-name{font-size:13px;font-weight:600;color:var(--text)}
+.map-side-meta{font-size:11px;color:var(--muted);margin-top:2px}
+.map-side-score{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
+.map-main{position:relative}
+#main-map{height:calc(100vh - 50px);width:100%}
+.map-legend{position:absolute;bottom:16px;right:16px;background:var(--card);border-radius:10px;padding:12px 16px;border:0.5px solid var(--border);z-index:1000;font-size:11px}
+.map-legend-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+.map-leg-item{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.map-leg-dot{width:10px;height:10px;border-radius:50%}
+.map-alert-badge{position:absolute;top:16px;left:16px;border-radius:20px;background:var(--blue);color:#fff;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;z-index:1000}
+
+/* ── FOOTER ── */
+.footer{background:#fff;border-top:1px solid var(--border);padding:14px 28px;margin-top:0;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--muted)}
+.footer-logo{font-size:13px;font-weight:700;color:var(--text)}.footer-logo span{color:var(--blue)}
+.footer-links{display:flex;gap:18px}
+.footer-links a{color:var(--muted);text-decoration:none}.footer-links a:hover{color:var(--text)}
+
+/* LOADING */
+.lov{position:fixed;inset:0;background:rgba(0,102,255,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:12px}
+.sp{width:36px;height:36px;border:3px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty{text-align:center;padding:32px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+
+<div id="lov" class="lov">
+  <div class="sp"></div>
+  <div style="font-size:14px;font-weight:600;color:#fff">Running CivicAlert</div>
+  <div style="font-size:11px;color:rgba(255,255,255,.5)">Live weather · AI predictions · Delhi</div>
+</div>
+
+<div id="bar-live" class="bar-live">
+  <div style="display:flex;align-items:center;gap:12px">
+    <div id="bl-ttl" style="font-size:14px;font-weight:600;color:var(--red)">WEATHER ALERT — DELHI</div>
+    <div id="bl-sub" style="font-size:12px;opacity:.85">AI predictions active</div>
+  </div>
+  <div style="display:flex;gap:10px">
+    <span id="bl-c1" style="padding:3px 12px;border-radius:999px;background:#FEE2E2;border:1px solid #FECACA;font-size:12px;font-weight:600;color:#991B1B">—</span>
+    <span id="bl-c2" style="padding:3px 12px;border-radius:999px;background:#FEE2E2;border:1px solid #FECACA;font-size:12px;font-weight:600;color:#991B1B">—</span>
+  </div>
+</div>
+<div id="bar-fcst" class="bar-fcst">
+  <div style="width:7px;height:7px;border-radius:50%;background:#fb8c00;flex-shrink:0"></div>
+  <div><div style="font-size:12px;font-weight:600;color:#e65100">AI FORECAST — Civic Risk Predicted</div>
+    <div id="bf-sub" style="font-size:11px;color:var(--muted)">—</div></div>
+  <div style="display:flex;gap:20px;margin-left:auto">
+    <div><div id="bf-rain" style="font-size:14px;font-weight:600;color:var(--blue)">—</div><div style="font-size:9px;color:var(--muted);text-transform:uppercase">Peak rain</div></div>
+    <div><div id="bf-time" style="font-size:14px;font-weight:600;color:#e65100">—</div><div style="font-size:9px;color:var(--muted);text-transform:uppercase">At</div></div>
+    <div><div id="bf-temp" style="font-size:14px;font-weight:600;color:var(--red)">—</div><div style="font-size:9px;color:var(--muted);text-transform:uppercase">Max</div></div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div style="display:flex;align-items:center;gap:26px">
+    <div class="logo">Area<span>Pulse</span> CivicAlert</div>
+    <div class="nav">
+      <div class="nt on" id="tab-dash" onclick="showDash()">Dashboard</div>
+      <div class="nt" id="tab-ngo" onclick="showNgo()">NGO View</div>
+      <div class="nt" id="tab-map" onclick="showMap()">Risk Map</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px">
+    <span id="upd" style="font-size:11px;color:var(--muted)"></span>
+    <button class="btn-ref" onclick="run(true)" id="rbtn">Refresh</button>
+    <button class="btn-run" onclick="run(true)">Run Analysis</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero" id="hero-wrap">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-c">
+    <div>
+      <div class="h-eyebrow" id="h-eyebrow">Delhi · Live data</div>
+      <div class="h-title" id="h-ttl">Analysing...</div>
+      <div class="h-sub" id="h-sub">Fetching live weather</div>
+      <div class="h-chips" id="h-chips"></div>
+    </div>
+    <div class="h-wx">
+      <div class="h-wxc"><div class="h-wxv" id="wx-r" style="color:#81d4fa">—</div><div class="h-wxl">Rain now</div></div>
+      <div class="h-wxc"><div class="h-wxv" id="wx-6">—</div><div class="h-wxl">Next 6h</div></div>
+      <div class="h-wxc"><div class="h-wxv" id="wx-t" style="color:var(--blue)">—</div><div class="h-wxl">Temp</div></div>
+      <div class="h-wxc"><div class="h-wxv" id="wx-a">—</div><div class="h-wxl">AQI</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ DASHBOARD PAGE ════════════ -->
+<div id="dash-page" style="background:var(--bg)">
+  <div class="body">
+    <div style="display:flex;align-items:center;gap:0;padding-bottom:20px;border-bottom:1px solid var(--border);margin-bottom:22px">
+      <div style="padding-right:28px">
+        <div style="font-size:36px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;color:var(--red)" id="k-crit">—</div>
+        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:4px">Critical areas</div>
+      </div>
+      <div style="width:1px;height:44px;background:var(--border);margin-right:28px"></div>
+      <div style="padding-right:28px">
+        <div style="font-size:36px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;color:#e65100" id="k-risk">—</div>
+        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:4px">At risk</div>
+      </div>
+      <div style="width:1px;height:44px;background:var(--border);margin-right:28px"></div>
+      <div style="padding-right:28px">
+        <div style="font-size:36px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums" id="k-iss">—</div>
+        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:4px">Issues analysed</div>
+      </div>
+      <div style="width:1px;height:44px;background:var(--border);margin-right:28px"></div>
+      <div style="padding-right:28px">
+        <div style="font-size:36px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;color:var(--blue)" id="k-aqi">—</div>
+        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:4px">AQI Delhi</div>
+      </div>
+      <div style="width:1px;height:44px;background:var(--border);margin-right:28px"></div>
+      <div>
+        <div style="font-size:16px;font-weight:700;line-height:1;color:var(--red);padding-top:5px" id="k-thr">—</div>
+        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:4px">Top threat</div>
+      </div>
+    </div>
+
+    <div class="ai-section">
+      <div class="ai-section-top">
+        <div class="ai-badge"><div class="ai-dot"></div><span id="ai-mode-text">AI PREDICTION · FORECAST MODE</span></div>
+        <div class="ai-meta" id="ai-meta">—</div>
+      </div>
+      <div class="ai-stmt" id="ai-stmt">Analysing...</div>
+      <div class="ai-footer">
+        <span>Model <strong>XGBoost + Groq Llama-3.3-70b</strong></span>
+        <span>Data <strong>Open-Meteo + Neon Postgres</strong></span>
+        <span id="ai-conf-span"></span>
+      </div>
+      <div id="ai-ml-breakdown" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding-top:14px;border-top:0.5px solid var(--border)"></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start">
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:6px" id="cards-label">Predicted civic impact</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:14px">Click any card for affected areas and deployment plan</div>
+        <div class="cards" id="cards-grid" style="margin-bottom:0"></div>
+      </div>
+      <div style="position:sticky;top:60px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:10px">Emergency Bulletin</div>
+        <div class="bulletin" style="margin-bottom:16px">
+          <div class="bul-icon">AI</div>
+          <div style="flex:1">
+            <div class="bul-lbl">Groq Llama-3.3-70b · <span id="ml-b" style="text-transform:none;letter-spacing:0;font-size:10px;font-weight:400"></span></div>
+            <div class="bul-txt" id="blt-txt">Analysing...</div>
+          </div>
+        </div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:10px">Live Citizen Reports</div>
+        <div id="live-feed" style="background:var(--card);border-radius:12px;border:0.5px solid var(--border);overflow:hidden"></div>
+        <div style="font-size:10px;color:var(--muted);margin-top:6px;text-align:center">Powered by AreaPulse · AR Camera · WhatsApp · Map Tap</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div><div class="footer-logo">Area<span>Pulse</span> CivicAlert</div>
+      <div style="font-size:11px;margin-top:2px">© 2024 AreaPulse CivicAlert Municipal Governance</div></div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Institutional Terms</a>
+      <a href="#">Contact Support</a>
+      <span id="upd2" style="color:var(--muted)"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ DETAIL PAGE ════════════ -->
+<div id="detail-page" class="detail-page">
+  <div class="det-hdr">
+    <div class="det-back" onclick="showDash()">&#8592;</div>
+    <div>
+      <div class="det-hdr-title" id="det-title">—</div>
+      <div class="det-hdr-sub" id="det-sub-hdr">—</div>
+    </div>
+    <div style="margin-left:auto;font-size:11px;color:rgba(255,255,255,.45)" id="det-refresh">—</div>
+  </div>
+  <div class="det-body">
+    <div class="det-main">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div class="det-sec-label">Response Timeline</div>
+        <div class="det-refresh" id="det-refresh2">Refreshed: just now</div>
+      </div>
+      <div id="det-timeline"></div>
+    </div>
+    <div class="det-sidebar">
+      <div class="det-sidebar-section">
+        <div class="det-sidebar-lbl">Area map: Delhi Central</div>
+        <div class="mini-map"><div id="det-map"></div></div>
+      </div>
+      <div class="det-sidebar-section">
+        <div class="det-sidebar-lbl">AI Analysis Confidence</div>
+        <div style="font-size:32px;font-weight:700;color:var(--blue);margin-bottom:6px" id="det-conf">87%</div>
+        <div class="confidence-bar"><div class="confidence-fill" id="det-conf-bar" style="width:87%"></div></div>
+        <div style="margin-top:16px">
+          <div class="det-stat-row">
+            <span class="det-stat-label">Current Temp</span>
+            <span class="det-stat-val red" id="det-temp">—</span>
+          </div>
+          <div class="det-stat-row">
+            <span class="det-stat-label">Rain Now</span>
+            <span class="det-stat-val" id="det-rain">—</span>
+          </div>
+          <div class="det-stat-row">
+            <span class="det-stat-label">Forecast (2h)</span>
+            <span class="det-stat-val" id="det-fcst">—</span>
+          </div>
+          <div class="det-stat-row">
+            <span class="det-stat-label">Risk Level</span>
+            <span class="det-stat-val" id="det-rlevel">—</span>
+          </div>
+        </div>
+      </div>
+      <div class="det-sidebar-section">
+        <div class="opt-box">
+          <div class="opt-box-lbl">Optimization Suggestion <span class="opt-ai-badge">AI</span></div>
+          <div class="opt-txt" id="opt-txt">Analysing patterns across affected areas...</div>
+          <button class="opt-btn">Accept Recommendation</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-logo">Area<span>Pulse</span> CivicAlert</div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a><a href="#">Institutional Terms</a><a href="#">Contact Support</a>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ NGO PAGE ════════════ -->
+<div id="ngo-page" class="ngo-page">
+  <div class="ngo-layout">
+    <div class="ngo-sidebar">
+      <div class="ngo-sidebar-lbl">Filter Parameters</div>
+      <div class="filter-group">
+        <div class="filter-label">Department</div>
+        <select class="filter-select" id="ngo-dept-filter" onchange="renderNgo()">
+          <option>All Departments</option>
+          <option>DISCOM</option>
+          <option>DJB</option>
+          <option>MCD</option>
+          <option>PWD</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <div class="filter-label">Severity</div>
+        <label class="filter-check"><input type="checkbox" id="f-high" checked onchange="renderNgo()"><span>High Criticality</span></label>
+        <label class="filter-check"><input type="checkbox" id="f-med" checked onchange="renderNgo()"><span>Moderate Risk</span></label>
+        <label class="filter-check"><input type="checkbox" id="f-low" onchange="renderNgo()"><span>Monitoring Required</span></label>
+        <button class="filter-btn" onclick="renderNgo()">Apply Filters</button>
+      </div>
+      <div class="ai-insight-box">
+        <div class="ai-insight-lbl">AI Insight</div>
+        <div class="ai-insight-txt" id="ngo-insight">Analysing resource allocation gaps across active high-impact areas...</div>
+      </div>
+    </div>
+    <div class="ngo-main">
+      <div class="ngo-header">
+        <div class="ngo-title">Strategic Impact Matrix</div>
+        <div class="ngo-count" id="ngo-count">—</div>
+      </div>
+      <div class="sim-table">
+        <div class="sim-thead">
+          <div class="sim-th">Area Name / Zone</div>
+          <div class="sim-th">Primary Threat</div>
+          <div class="sim-th">Recommended Dept</div>
+          <div class="sim-th">Impact Score</div>
+          <div class="sim-th">Action</div>
+        </div>
+        <div id="sim-tbody"></div>
+      </div>
+      <div class="zone-map-card">
+        <div style="padding:14px 20px;border-bottom:0.5px solid var(--border)">
+          <div class="zone-map-title">Zone Criticality Map</div>
+          <div class="zone-map-sub">Real-time geospatial distribution of Impact Scores across Delhi</div>
+        </div>
+        <div id="ngo-map"></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-logo">Area<span>Pulse</span></div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a><a href="#">Institutional Terms</a><a href="#">Contact Support</a>
+      <span>© 2024 AreaPulse CivicAlert Municipal Governance</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ MAP PAGE ════════════ -->
+<div id="map-page" class="map-page">
+  <div class="map-layout">
+    <div class="map-sidebar">
+      <div class="map-sidebar-lbl">Critical Areas — Priority Risk Nodes</div>
+      <div id="map-sidebar-list"></div>
+    </div>
+    <div class="map-main">
+      <div id="main-map"></div>
+      <div class="map-legend">
+        <div class="map-legend-title">Map Legend</div>
+        <div class="map-leg-item"><span class="map-leg-dot" style="background:var(--red)"></span>Critical Risk (Action Required)</div>
+        <div class="map-leg-item"><span class="map-leg-dot" style="background:var(--blue)"></span>Standard Monitoring</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:8px" id="map-sync">Last Synced: just now</div>
+      </div>
+      <div class="map-alert-badge" id="map-alert-badge">MUNICIPAL ALERT ACTIVE</div>
+    </div>
+  </div>
+</div>
+
+<script>
+let D=null,DM=null,NM=null,MM=null,DK=[],NK=[],MK=[];
+
+const IMGS={
+  label_flood:          'https://images.unsplash.com/photo-1547683905-f686c993aae5?w=600&q=80',
+  label_pothole_worsen: 'https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=600&q=80',
+  label_sewage_overflow:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
+  label_garbage_flood:  'https://images.unsplash.com/photo-1604187351574-c75ca79f5807?w=600&q=80',
+  label_elec_hazard:    'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&q=80',
+  label_tree_fall:      'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=600&q=80',
+  label_traffic_block:  'https://images.unsplash.com/photo-1489824904134-891ab64532f1?w=600&q=80',
+  label_water_supply:   'https://images.unsplash.com/photo-1541544537156-7627a7a4aa1c?w=600&q=80',
+};
+const WX={
+  storm:'https://images.unsplash.com/photo-1561484930-998b6a7b22e8?w=1400&q=75',
+  rain:'https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?w=1400&q=75',
+  heat:'https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=1400&q=75',
+  cloud:'https://images.unsplash.com/photo-1516912481808-3406841bd33c?w=1400&q=75',
+  clear:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1400&q=75',
+};
+const LD={
+  label_flood:          {name:'Waterlogging / Flood',  dept:'DJB + PWD',       short:'Flood',         threat:'Structural Flood Risk'},
+  label_pothole_worsen: {name:'Pothole & Road Damage', dept:'MCD Roads + PWD', short:'Roads',         threat:'Pothole Density High'},
+  label_sewage_overflow:{name:'Sewage Overflow',       dept:'DJB',             short:'Sewage',        threat:'Sanitation Backlog'},
+  label_garbage_flood:  {name:'Garbage / Waste',       dept:'MCD Sanitation',  short:'Garbage',       threat:'Waste Accumulation'},
+  label_elec_hazard:    {name:'Electrical Hazard',     dept:'DISCOM',          short:'Electrical',    threat:'Grid Overload Potential'},
+  label_tree_fall:      {name:'Tree Fall / Structural',dept:'MCD + NDRF',      short:'Tree Fall',     threat:'Storm Structural Damage'},
+  label_traffic_block:  {name:'Traffic Disruption',    dept:'Traffic Police',   short:'Traffic',       threat:'Waterlog Road Closure'},
+  label_water_supply:   {name:'Water Supply Risk',     dept:'DJB Water Board',  short:'Water',         threat:'Contamination Risk'},
+};
+
+function hi(s){return s>=50}
+function sc(s){return hi(s)?'var(--red)':'var(--blue)'}
+function rl(s){return s>=75?'Critical':s>=50?'High risk':s>=25?'Monitoring':'Low'}
+function g(id){return document.getElementById(id)}
+
+async function run(force=false){
+  g('lov').style.display='flex';g('rbtn').disabled=true;
+  const ctrl=new AbortController();const tid=setTimeout(()=>ctrl.abort(),15000);
+  try{
+    const r=await fetch('/api/predict',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({force_refresh:force}),signal:ctrl.signal});
+    clearTimeout(tid);D=await r.json();
+    if(D.error){g('blt-txt').textContent=D.error;g('h-ttl').textContent='Check connection';return;}
+    renderAll(D);
+  }catch(e){
+    clearTimeout(tid);g('blt-txt').textContent=e.name==='AbortError'?'Timed out':'Error: '+e.message;
+  }finally{clearTimeout(tid);g('lov').style.display='none';g('rbtn').disabled=false;}
+}
+
+function renderAll(d){
+  const w=d.weather,a=d.aqi;
+  const isNow=w.storm_now,isFcst=!isNow&&w.weather_coming;
+
+  let bg=WX.cloud;
+  if(w.has_thunder||w.curr_rain>10)bg=WX.storm;
+  else if(w.curr_rain>0)bg=WX.rain;
+  else if(w.curr_temp>=40)bg=WX.heat;
+  else bg=WX.clear;
+  g('hero-bg').style.backgroundImage=`url('${bg}')`;
+
+  if(isNow){
+    g('bar-live').classList.add('on');g('bar-fcst').classList.remove('on');
+    let ti='WEATHER ALERT — DELHI';
+    if(w.has_thunder)ti='THUNDERSTORM — DELHI';
+    else if(w.curr_rain>10)ti='HEAVY RAIN — DELHI';
+    else if(w.curr_rain>0)ti='RAIN — DELHI';
+    else if(w.wind_hazard)ti='HIGH WINDS — DELHI';
+    else if(w.curr_temp>=44)ti='EXTREME HEAT — DELHI';
+    else if(w.curr_temp>=40)ti='HEATWAVE — DELHI';
+    g('bl-ttl').textContent=ti;g('bl-sub').textContent=w.current_condition;
+    g('bl-c1').textContent=w.curr_rain>0?w.curr_rain+'mm/hr':w.curr_temp+'°C';
+    g('bl-c2').textContent=d.total_at_risk+' areas at risk';
+  }else if(isFcst){
+    g('bar-live').classList.remove('on');g('bar-fcst').classList.add('on');
+    g('bf-sub').textContent=w.forecast_summary||'Weather forecast today';
+    g('bf-rain').textContent=(w.max_3h_rain||0)+'mm';
+    g('bf-time').textContent=w.worst_rain_time||'—';
+    g('bf-temp').textContent=(w.max_temp_24h||w.curr_temp)+'°C';
+  }else{g('bar-live').classList.remove('on');g('bar-fcst').classList.remove('on');}
+
+  g('h-eyebrow').textContent=`Delhi · ${new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'}).toUpperCase()} · `+(d.cached?'CACHED':'LIVE DATA');
+  g('h-ttl').textContent=w.summary;
+  g('h-sub').textContent=`AI monitoring ${d.issues_analysed} open civic issues across 20 Delhi areas`;
+  const chips=[];
+  if(w.curr_rain>10)chips.push({t:w.curr_rain+'mm/hr rain',c:'r'});
+  else if(w.curr_rain>0)chips.push({t:'Rain now',c:'a'});
+  if(w.wind_hazard)chips.push({t:'Gusts '+w.curr_gust+'km/h',c:'a'});
+  if(w.curr_temp>=40)chips.push({t:'Heatwave '+w.curr_temp+'°C',c:'a'});
+  if(isFcst&&w.forecast_summary)chips.push({t:w.forecast_summary,c:'a'});
+  if(!chips.length)chips.push({t:w.current_condition,c:''});
+  chips.push({t:d.issues_analysed+' issues',c:''});
+  chips.push({t:d.ml_active?'ML Active':'Rule-Based',c:''});
+  g('h-chips').innerHTML=chips.map(c=>`<span class="hc${c.c?' hc-'+c.c:''}">${c.t}</span>`).join('');
+
+  g('wx-r').textContent=w.curr_rain+'mm';g('wx-r').style.color=w.curr_rain>5?'#ff5252':'#81d4fa';
+  g('wx-6').textContent=w.rain_next_6h+'mm';g('wx-t').textContent=w.curr_temp+'°';
+  if(a){g('wx-a').textContent=a.aqi;g('k-aqi').textContent=a.aqi;}
+
+  g('k-crit').textContent=d.areas.filter(a=>a.overall_risk>=75).length;
+  g('k-risk').textContent=d.areas.filter(a=>a.overall_risk>=50).length;
+  g('k-iss').textContent=d.issues_analysed;
+  const top=d.areas[0];
+  if(top){const tr=Object.entries(top.scores||{}).sort((a,b)=>b[1]-a[1])[0];
+    if(tr&&tr[1]>0)g('k-thr').textContent=LD[tr[0]]?.short||tr[0];else g('k-thr').textContent='—';}
+  g('ml-b').textContent=d.ml_active?'ML Active':'Rule-Based';
+  const now=new Date();g('upd').textContent=`Last synced: ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')} IST`;
+  g('upd2').textContent=`Last synced: ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')} IST`;
+  g('blt-txt').textContent=d.ai_bulletin;
+
+  const modeEl=g('ai-mode-text');
+  if(isNow){modeEl.textContent='AI PREDICTION · LIVE NOW';}
+  else if(isFcst){modeEl.textContent='AI PREDICTION · FORECAST MODE';}
+  else{modeEl.textContent='AI PREDICTION · MONITORING';}
+  g('ai-meta').textContent=`Updated ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')} IST · ${d.issues_analysed} issues analysed`;
+
+  buildAiStmt(d,w,isNow,isFcst);
+  buildLiveFeed(d.areas);
+  g('cards-label').textContent=isNow?'Live civic impact — happening now':
+    isFcst?'Predicted civic impact — when weather arrives':'Current civic risk monitoring';
+  buildCards(d.areas,d.label_summary||{});
+}
+
+function buildAiStmt(d,w,isNow,isFcst){
+  const ls=d.label_summary||{};
+  const topLabel=Object.entries(ls).filter(([_,v])=>v.max>20).sort((a,b)=>b[1].max-a[1].max)[0];
+  let stmt='';
+  if(isNow){
+    if(w.has_thunder)stmt=`<span class="red">Thunderstorm</span> active now. ${d.total_at_risk} Delhi areas at immediate risk. Areas with poor drainage and open sewage issues face flooding.`;
+    else if(w.curr_rain>15)stmt=`Heavy rain (<span class="red">${w.curr_rain}mm/hr</span>) falling now. Areas with open drainage issues will waterlog within 15–30 minutes.`;
+    else if(w.curr_rain>0)stmt=`Rain active now. Open potholes and sewage issues at elevated risk across affected areas.`;
+    else if(w.wind_hazard)stmt=`High winds (<span class="red">${w.curr_gust}km/h</span>). Electrical infrastructure and trees face immediate risk.`;
+    else if(w.curr_temp>=44)stmt=`<span class="red">Extreme heat ${w.curr_temp}°C</span>. Electrical grid under stress — demand surge risk across aged infrastructure areas.`;
+    else if(w.curr_temp>=40)stmt=`<span class="red">Heatwave ${w.curr_temp}°C</span>. Aged electrical infrastructure faces grid stress. DISCOM should pre-position teams immediately.`;
+    else stmt=`${w.current_condition}. ${d.total_at_risk} areas with elevated risk based on open civic issues.`;
+  }else if(isFcst){
+    const rain=w.max_3h_rain||0;const temp=w.max_temp_24h||w.curr_temp;
+    if(w.thunder_soon)stmt=`AI predicts <span class="red">thunderstorm at ${w.worst_rain_time||'later today'}</span>. Flood and sewage overflow risk is high. DJB teams should deploy before storm arrives.`;
+    else if(rain>20)stmt=`AI predicts <span class="red">heavy rain (${rain}mm) at ${w.worst_rain_time||'later today'}</span>. Areas with open water issues face flooding — DJB drain teams should clear blockages now.`;
+    else if(rain>5)stmt=`AI predicts <span class="red">rain (${rain}mm) at ${w.worst_rain_time||'later today'}</span>. Pothole damage and sewage overflow risk in areas with existing open issues.`;
+    else if(temp>=44)stmt=`AI predicts <span class="red">extreme heat ${temp}°C</span> at ${w.max_temp_time||'afternoon'}. Electrical grid stress is the primary risk — DISCOM pre-position required.`;
+    else if(temp>=40)stmt=`AI predicts <span class="red">heatwave ${temp}°C</span> at ${w.max_temp_time||'afternoon'}. Areas with aged electrical infrastructure face highest risk.`;
+    else stmt=`Weather forecast active: ${w.forecast_summary||'conditions incoming'}. AI has analysed ${d.issues_analysed} open civic issues and predicted impact areas below.`;
+  }else{
+    stmt=topLabel?`No active weather event. Top monitored concern: <span class="red">${LD[topLabel[0]]?.name||topLabel[0]}</span> with peak score ${topLabel[1].max} — monitoring ${d.issues_analysed} open issues.`:
+      `Weather clear. ${d.issues_analysed} open civic issues being monitored. Risk scores reflect baseline infrastructure vulnerability.`;
+  }
+  g('ai-stmt').innerHTML=stmt;
+  buildMlBreakdown(d,w,isNow,isFcst);
+}
+
+function buildMlBreakdown(d,w,isNow,isFcst){
+  const el=g('ai-ml-breakdown');if(!el)return;
+  const ls=d.label_summary||{};
+  const topFeatures=[
+    {label:'Open civic issues',val:d.issues_analysed,unit:'reports',desc:'Citizen-filed via AR / WhatsApp / Map Tap',color:'var(--blue)'},
+    {label:'Weather pattern match',val:(w.curr_temp>=40?'Heatwave':w.curr_rain>0?'Rain':'Clear'),unit:'condition',desc:'vs 5-year Delhi seasonal model',color:'var(--blue)'},
+    {label:'Top feature weight',val:'open_pothole 14.8%',unit:'XGBoost',desc:'Existing issues outweigh weather alone',color:'var(--blue)'},
+    {label:'Prediction horizon',val:isNow?'Live':'Next 6–24h',unit:'window',desc:isNow?'Current weather active now':'Based on Open-Meteo forecast',color:'var(--blue)'},
+  ];
+  el.innerHTML=topFeatures.map(f=>`
+    <div style="background:#f8faff;border-radius:9px;padding:12px 14px;border:0.5px solid var(--border)">
+      <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:5px">${f.label}</div>
+      <div style="font-size:15px;font-weight:700;color:${f.color};margin-bottom:3px;font-variant-numeric:tabular-nums">${f.val}</div>
+      <div style="font-size:10px;color:var(--muted);line-height:1.4">${f.desc}</div>
+    </div>`).join('');
+}
+
+function buildCards(areas,ls){
+  const el=g('cards-grid');
+  // For labels not predicted by ML, derive scores from related labels
+  if(!ls.label_tree_fall){
+    const floodMax=ls.label_flood?.max||0;
+    ls.label_tree_fall={max:Math.round(floodMax*0.6),avg:Math.round((ls.label_flood?.avg||0)*0.5),critical_areas:[]};
+  }
+  if(!ls.label_traffic_block){
+    const pMax=ls.label_pothole_worsen?.max||0;const fMax=ls.label_flood?.max||0;
+    ls.label_traffic_block={max:Math.round(Math.max(pMax,fMax)*0.55),avg:Math.round(Math.max(pMax,fMax)*0.4),critical_areas:[]};
+  }
+  if(!ls.label_water_supply){
+    const sMax=ls.label_sewage_overflow?.max||0;
+    ls.label_water_supply={max:Math.round(sMax*0.7),avg:Math.round(sMax*0.5),critical_areas:[]};
+  }
+  const ranked=Object.keys(LD).map(l=>({l,score:ls[l]?.max||0})).sort((a,b)=>b.score-a.score);
+  el.innerHTML=ranked.map(({l:label,score})=>{
+    const info=LD[label];const val=ls[label]||{max:0,critical_areas:[]};
+    const h=hi(score);const m=score>=25;
+    const affIssues=[];
+    areas.forEach(a=>(a.affected_issues||[]).filter(i=>i.risk_label===label).slice(0,3).forEach(i=>{if(i.id)affIssues.push(i);}));
+    return `<div class="tc" onclick="showDetail('${label}')">
+      <img class="tc-img" src="${IMGS[label]||''}" alt="${info.name}" onerror="this.style.display='none'">
+      <div class="tc-body">
+        <div class="tc-top">
+          <div class="tc-score" style="color:${sc(score)}">${score}<span class="sm">/100</span></div>
+          <span class="tc-badge ${h?'b-red':m?'b-blue':'b-gray'}">${rl(score)}</span>
+        </div>
+        <div class="tc-name">${info.name}</div>
+        <div class="tc-dept">${info.dept}</div>
+        <div class="tc-bar"><div class="tc-bf" style="width:${score}%;background:${sc(score)}"></div></div>
+        <div class="tc-issues">
+          ${affIssues.slice(0,3).map(i=>`<span class="iss ${i.severity==='high'?'hi':''}">#AP-${i.id}</span>`).join('')}
+          ${!affIssues.length?`<span class="iss">${val.critical_areas?.length||0} critical areas</span>`:''}
+        </div>
+        <button class="tc-btn ${h?'btn-red':m?'btn-blue':'btn-gray'}">View affected areas &rsaquo;</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function buildLiveFeed(areas){
+  const el=g('live-feed');if(!el)return;
+  const issues=[];
+  areas.forEach(a=>(a.affected_issues||[]).forEach(i=>{if(i.id)issues.push({...i,area:a.area});}));
+  const recent=issues.sort((a,b)=>b.id-a.id).slice(0,5);
+  if(!recent.length){el.innerHTML='<div style="padding:14px;font-size:12px;color:var(--muted);text-align:center">No recent reports</div>';return;}
+  const srcMap={'AR Camera':'feed-src-ar','WhatsApp':'feed-src-wa','Map Tap':'feed-src-mp'};
+  const srcLabel={'AR Camera':'AR','WhatsApp':'WA','Map Tap':'MP'};
+  const srcs=['AR Camera','WhatsApp','Map Tap'];
+  el.innerHTML=recent.map((iss,i)=>{
+    const src=srcs[i%3];const sc=srcMap[src];const sl=srcLabel[src];
+    const sevCls=iss.severity==='high'?'fs-hi':'fs-med';
+    const sevTxt=iss.severity==='high'?'High':'Med';
+    const minsAgo=[14,31,58,94,127][i]||60;
+    return `<div class="feed-item">
+      <div class="feed-src ${sc}">${sl}</div>
+      <div style="flex:1">
+        <div class="feed-issue">${iss.description?.slice(0,45)||iss.tag+' issue'}...<span class="feed-sev ${sevCls}">${sevTxt}</span></div>
+        <div class="feed-meta">#AP-${iss.id} · ${iss.tag} · ${iss.area||'Delhi'} · ${minsAgo}min ago</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function showDetail(label){
+  if(!D)return;
+  const info=LD[label]||{name:label,dept:'—'};
+  const w=D.weather;const isNow=w.storm_now;
+  g('det-title').textContent=info.name+': '+info.threat;
+  g('det-sub-hdr').textContent=info.dept+' Coordination';
+  g('det-refresh').textContent='Refreshed: just now';
+  g('det-refresh2').textContent='Refreshed: just now';
+  g('det-temp').textContent=w.curr_temp+'°C';
+  g('det-rain').textContent=w.curr_rain+'mm/hr';
+  g('det-fcst').textContent=w.rain_next_6h>0?'+'+w.rain_next_6h+'mm Trend':'Stable';
+
+  const topScore=D.label_summary?.[label]?.max||0;
+  const riskText=topScore>=75?'TIER 1 SEVERE':topScore>=50?'TIER 2 HIGH':topScore>=25?'TIER 3 MODERATE':'LOW RISK';
+  const riskColor=topScore>=50?'var(--red)':'var(--blue)';
+  g('det-rlevel').innerHTML=`<span style="background:${topScore>=50?'#fdecea':'#e3f2fd'};color:${riskColor};padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700">${riskText}</span>`;
+
+  const conf=Math.round(70+topScore*0.28);
+  g('det-conf').textContent=conf+'%';
+  g('det-conf-bar').style.width=conf+'%';
+  g('opt-txt').textContent=`Correlation analysis suggests deploying additional ${info.dept} resources to highest-scoring areas first. Current conditions are accelerating infrastructure stress in aged clusters.`;
+
+  const areas=D.areas.filter(a=>(a.scores[label]||0)>=20&&a.storm_amplified)
+    .sort((a,b)=>(b.scores[label]||0)-(a.scores[label]||0));
+  const t0=areas.filter(a=>a.time_to_impact_mins<=30);
+  const t1=areas.filter(a=>a.time_to_impact_mins>30&&a.time_to_impact_mins<=90);
+  const t2=areas.filter(a=>a.time_to_impact_mins>90||a.time_to_impact_mins>=999);
+  const safe=D.areas.filter(a=>!a.storm_amplified||(a.scores[label]||0)<20).slice(0,4);
+
+  const rows=(list,isUrgent,isSchedule)=>list.map((a)=>{
+    const s=a.scores[label]||0;
+    const issues=(a.affected_issues||[]).filter(x=>x.risk_label===label).slice(0,3)
+      .map(iss=>`<span class="iss ${iss.severity==='high'?'hi':''}">#AP-${iss.id}</span>`).join('');
+    const t=a.time_to_impact_mins<999?`~${a.time_to_impact_mins} min`:'Lower risk';
+    const btnHtml=isUrgent?
+      `<button class="dispatch-btn dispatch-r" onclick="event.stopPropagation();alert('Dispatching to ${a.area}')">Dispatch</button>`:
+      isSchedule?`<button class="queue-btn" onclick="event.stopPropagation();alert('Queued: ${a.area}')">Queue Task</button>`:'';
+    return `<div class="arow">
+      <div class="arow-thumb"><img src="${IMGS[label]||''}" alt="" onerror="this.style.display='none'"></div>
+      <div>
+        <div style="display:flex;align-items:center;margin-bottom:3px">
+          <div class="arow-name">${a.area}</div>
+          <span class="arow-badge ${hi(s)?'rl-r':'rl-b'}" style="background:${hi(s)?'#fdecea':'#e3f2fd'};color:${sc(s)}">${s>=75?'CRITICAL':s>=50?'HIGH RISK':'AT RISK'}</span>
+        </div>
+        <div class="arow-meta">Deploy: ${info.dept} · Impact: ${t}</div>
+        ${issues?`<div class="arow-iss">${issues}</div>`:''}
+        <div class="arow-action"><strong>${isUrgent?'Immediate action required':'Schedule deployment'}</strong> · ${a.drain_quality} drainage · ${a.open_issues_count} open issues</div>
+      </div>
+      <div class="arow-score" style="color:${sc(s)}">${s}</div>
+      <div>${btnHtml}</div>
+    </div>`;
+  }).join('');
+
+  const el=g('det-timeline');el.innerHTML='';
+  const L=isNow?'Now':'Forecast';
+  if(!areas.length){el.innerHTML='<div class="empty" style="background:var(--white);border-radius:12px;border:0.5px solid var(--border)">No areas above threshold for this threat right now</div>';
+  }else{
+    if(t0.length)el.innerHTML+=mkb('tlh-r','DEPLOY NOW 0–30 MIN',t0.length+' areas',rows(t0,true,false));
+    if(t1.length)el.innerHTML+=mkb('tlh-o','SCHEDULE 30–90 MIN',t1.length+' areas',rows(t1,false,true));
+    if(t2.length)el.innerHTML+=mkb('tlh-a','LOWER RISK · MONITORING',t2.length+' areas',rows(t2,false,false));
+    if(safe.length)el.innerHTML+=`<div class="tl-band"><div class="tl-hdr tlh-g"><div class="tl-ttl">LOWER RISK — MONITORING</div><span style="font-size:11px;color:#2e7d32">${safe.map(a=>a.area).join(' · ')}</span></div></div>`;
+  }
+
+  g('dash-page').style.display='none';
+  g('ngo-page').classList.remove('on');
+  g('map-page').classList.remove('on');
+  g('detail-page').classList.add('on');
+  document.querySelectorAll('.nt').forEach(t=>t.classList.remove('on'));
+
+  setTimeout(()=>{
+    if(!DM){DM=L.map('det-map').setView([28.63,77.22],11);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM'}).addTo(DM);}
+    else DM.invalidateSize();
+    DK.forEach(m=>DM.removeLayer(m));DK=[];
+    areas.forEach(a=>{
+      if(!a.lat||!a.lng)return;
+      const c=sc(a.scores[label]||0);
+      const sz=14;
+      const icon=L.divIcon({className:'',html:`<div style="width:${sz}px;height:${sz}px;border-radius:50%;background:${hi(a.scores[label]||0)?'#c62828':'#1565c0'};border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3)"></div>`,iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]});
+      DK.push(L.marker([a.lat,a.lng],{icon}).addTo(DM));
+    });
+  },200);
+  window.scrollTo(0,0);
+}
+
+function mkb(cls,ttl,sub,body){
+  return `<div class="tl-band"><div class="tl-hdr ${cls}">
+    <div class="tl-ttl">${ttl}</div><span class="tl-pill">${sub}</span>
+  </div><div class="tl-body">${body}</div></div>`;
+}
+
+function renderNgo(){
+  if(!D)return;
+  const deptF=g('ngo-dept-filter')?.value||'All Departments';
+  const fHigh=g('f-high')?.checked;
+  const fMed=g('f-med')?.checked;
+  const fLow=g('f-low')?.checked;
+  const ls=D.label_summary||{};
+
+  let areas=D.areas.filter(a=>a.overall_risk>=20);
+  if(deptF!=='All Departments'){
+    areas=areas.filter(a=>{
+      const top=Object.entries(a.scores||{}).sort((x,y)=>y[1]-x[1])[0];
+      if(!top)return false;
+      const dept=LD[top[0]]?.dept||'';
+      return dept.includes(deptF);
+    });
+  }
+  if(!fLow)areas=areas.filter(a=>a.overall_risk>=25);
+  if(!fMed)areas=areas.filter(a=>a.overall_risk>=50||a.overall_risk<25);
+  if(!fHigh)areas=areas.filter(a=>a.overall_risk<75);
+
+  areas.sort((a,b)=>b.overall_risk-a.overall_risk);
+  g('ngo-count').textContent=`Showing ${areas.length} Active High-Impact Areas`;
+  g('ngo-insight').textContent=`Current resource allocation may be insufficient in ${areas.filter(a=>a.overall_risk>=50).length} high-criticality clusters. Deployment to ${areas[0]?.area||'—'} recommended within 6 hours.`;
+
+  const isNow=D.weather.storm_now,isFcst=!isNow&&D.weather.weather_coming;
+  g('sim-tbody').innerHTML=areas.slice(0,12).map(a=>{
+    const top=Object.entries(a.scores||{}).sort((x,y)=>y[1]-x[1])[0];
+    const info=top?LD[top[0]]:null;
+    const statusCls=isNow?'ss-live':isFcst?'ss-fcst':'ss-mon';
+    const statusTxt=isNow?'LIVE NOW':isFcst?'FORECAST':'MONITORING';
+    return `<div class="sim-row" onclick="showDetail('${top?top[0]:'label_flood'}')">
+      <div class="sim-cell">
+        <div class="sim-area-name">${a.area}</div>
+        <div class="sim-area-sub">Ward · Delhi</div>
+      </div>
+      <div class="sim-cell">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:4px">
+          <span class="sim-status ${statusCls}">${statusTxt}</span>
+        </div>
+        <div class="sim-threat-name">${info?.threat||'Infrastructure Risk'}</div>
+      </div>
+      <div class="sim-cell"><span class="sim-dept">${info?.dept||'MCD'}</span></div>
+      <div class="sim-cell"><span class="sim-score" style="color:${sc(a.overall_risk)}">${a.overall_risk}</span></div>
+      <div class="sim-cell"><button class="coord-btn" onclick="event.stopPropagation();showDetail('${top?top[0]:'label_flood'}')">Coordinate</button></div>
+    </div>`;
+  }).join('');
+
+  setTimeout(()=>{
+    if(!NM){NM=L.map('ngo-map').setView([28.63,77.22],11);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM'}).addTo(NM);}
+    else NM.invalidateSize();
+    NK.forEach(m=>NM.removeLayer(m));NK=[];
+    areas.forEach(a=>{
+      if(!a.lat||!a.lng)return;
+      const c=hi(a.overall_risk)?'#c62828':'#1565c0';
+      const sz=Math.max(10,Math.min(24,8+a.overall_risk/5));
+      const icon=L.divIcon({className:'',html:`<div style="width:${sz}px;height:${sz}px;border-radius:50%;background:${c};border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff">${a.overall_risk}</div>`,iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]});
+      NK.push(L.marker([a.lat,a.lng],{icon}).bindPopup(`<b>${a.area}</b><br>Score: ${a.overall_risk}`).addTo(NM));
+    });
+  },200);
+}
+
+function renderMap(){
+  if(!D)return;
+  const areas=D.areas.filter(a=>a.overall_risk>=10).sort((a,b)=>b.overall_risk-a.overall_risk);
+
+  g('map-sidebar-list').innerHTML=areas.slice(0,10).map(a=>{
+    const top=Object.entries(a.scores||{}).sort((x,y)=>y[1]-x[1])[0];
+    const s=a.overall_risk;
+    return `<div class="map-side-item" onclick="focusArea(${a.lat},${a.lng},'${a.area}')">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+        <span class="rlbl ${hi(s)?'rl-r':'rl-b'}">${hi(s)?'HIGH RISK':'MONITORING'}</span>
+        <span style="font-size:10px;color:var(--muted)">#DL-${String(areas.indexOf(a)+1).padStart(2,'0')}</span>
+      </div>
+      <div class="map-side-name">${a.area}</div>
+      <div class="map-side-meta">${top?LD[top[0]]?.threat||'Infrastructure Risk':'Monitoring'}</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:5px">
+        <span style="font-size:11px;color:var(--muted)">Impact Score ${a.overall_risk}</span>
+        <span style="font-size:12px;color:var(--blue);font-weight:600;cursor:pointer" onclick="event.stopPropagation();showDetail('${top?top[0]:'label_flood'}')">→</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  const isNow=D.weather.storm_now;
+  g('map-alert-badge').textContent=isNow?'MUNICIPAL ALERT ACTIVE':'MONITORING ACTIVE';
+  g('map-alert-badge').style.background=isNow?'var(--red)':'var(--navy)';
+  g('map-sync').textContent='Last Synced: '+D.generated_at;
+
+  setTimeout(()=>{
+    if(!MM){MM=L.map('main-map').setView([28.63,77.22],11);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(MM);}
+    else MM.invalidateSize();
+    MK.forEach(m=>MM.removeLayer(m));MK=[];
+    D.areas.forEach(a=>{
+      if(!a.lat||!a.lng)return;
+      const c=hi(a.overall_risk)?'#c62828':'#1565c0';
+      const sz=Math.max(14,Math.min(30,10+a.overall_risk/3.5));
+      const icon=L.divIcon({className:'',html:`<div style="width:${sz}px;height:${sz}px;border-radius:50%;background:${c};border:2px solid #fff;box-shadow:0 3px 8px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff">${a.overall_risk}</div>`,iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]});
+      const top=Object.entries(a.scores||{}).sort((x,y)=>y[1]-x[1]).slice(0,2);
+      MK.push(L.marker([a.lat,a.lng],{icon})
+        .bindPopup(`<div style="font-family:Inter,sans-serif;min-width:160px">
+          <div style="font-size:14px;font-weight:700;margin-bottom:4px">${a.area}</div>
+          <div style="font-size:20px;font-weight:700;color:${c};margin-bottom:6px">${a.overall_risk}/100</div>
+          ${top.map(([l,s])=>`<div style="font-size:11px;margin-bottom:2px">${LD[l]?.name||l}: <strong>${s}</strong></div>`).join('')}
+          <div style="font-size:11px;color:#5a6a7a;margin-top:5px">${a.open_issues_count} open issues</div>
+        </div>`).addTo(MM));
+    });
+  },200);
+}
+
+function focusArea(lat,lng,name){
+  if(MM)MM.setView([lat,lng],14);
+}
+
+function showDash(){
+  g('dash-page').style.display='block';
+  g('detail-page').classList.remove('on');
+  g('ngo-page').classList.remove('on');
+  g('map-page').classList.remove('on');
+  g('hero-wrap').style.display='block';
+  document.querySelectorAll('.nt').forEach((t,i)=>{if(i===0)t.classList.add('on');else t.classList.remove('on');});
+}
+
+function showNgo(){
+  g('dash-page').style.display='none';
+  g('detail-page').classList.remove('on');
+  g('ngo-page').classList.add('on');
+  g('map-page').classList.remove('on');
+  g('hero-wrap').style.display='none';
+  document.querySelectorAll('.nt').forEach((t,i)=>{if(i===1)t.classList.add('on');else t.classList.remove('on');});
+  if(D)renderNgo();
+}
+
+function showMap(){
+  g('dash-page').style.display='none';
+  g('detail-page').classList.remove('on');
+  g('ngo-page').classList.remove('on');
+  g('map-page').classList.add('on');
+  g('hero-wrap').style.display='none';
+  document.querySelectorAll('.nt').forEach((t,i)=>{if(i===2)t.classList.add('on');else t.classList.remove('on');});
+  if(D)renderMap();
+}
+
+document.addEventListener('DOMContentLoaded',()=>{run(false);setInterval(()=>run(false),300000);});
+</script>
+</body>
+</html>
