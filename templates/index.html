@@ -111,24 +111,19 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .btn-gray{background:#F9FAFB;color:var(--muted);border:1px solid var(--border);border-radius:20px}
 
 /* ══════════════════════════════════════════
-   DETAIL PAGE — matches Image 1 from Stitch
+   DETAIL PAGE
    ══════════════════════════════════════════ */
 .detail-page{display:none}
 .detail-page.on{display:block}
-
 .det-hdr{background:var(--blue);color:#fff;padding:14px 28px;display:flex;align-items:center;gap:16px}
 .det-back{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:rgba(255,255,255,.7);cursor:pointer;padding:6px 0}
 .det-back:hover{color:#fff}
 .det-hdr-title{font-size:20px;font-weight:700;color:#fff}
 .det-hdr-sub{font-size:12px;color:rgba(255,255,255,.55);margin-top:2px}
-
 .det-body{display:grid;grid-template-columns:1fr 280px;gap:0;min-height:calc(100vh - 100px)}
-
 .det-main{padding:24px 28px;border-right:0.5px solid var(--border)}
 .det-sec-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:14px}
 .det-refresh{font-size:11px;color:var(--muted)}
-
-/* Timeline bands */
 .tl-band{border-radius:11px;overflow:hidden;margin-bottom:10px}
 .tl-hdr{padding:11px 18px;display:flex;align-items:center;gap:10px}
 .tlh-r{background:var(--red);color:#fff}
@@ -156,44 +151,33 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .dispatch-b{background:#e3f2fd;color:var(--blue);border:0.5px solid #90caf9}
 .dispatch-b:hover{background:#bbdefb}
 .queue-btn{background:var(--bg);color:var(--muted);border:0.5px solid var(--border);padding:7px 14px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer}
-
-/* Detail sidebar */
 .det-sidebar{padding:20px 20px;background:var(--card);border-left:0.5px solid var(--border)}
 .det-sidebar-section{margin-bottom:22px}
 .det-sidebar-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:12px}
-
 .det-stat-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:0.5px solid var(--border)}
 .det-stat-row:last-child{border-bottom:none}
 .det-stat-label{font-size:12px;color:var(--muted)}
 .det-stat-val{font-size:13px;font-weight:600;color:var(--text)}
 .det-stat-val.red{color:var(--red)}
 .det-stat-val.blue{color:var(--blue)}
-
 .confidence-bar{height:8px;background:#f0f4f8;border-radius:999px;overflow:hidden;margin-top:6px}
 .confidence-fill{height:100%;border-radius:999px;background:var(--blue)}
-
 .mini-map{width:100%;height:160px;border-radius:10px;overflow:hidden;background:#1a3a5c;display:flex;align-items:center;justify-content:center;margin-bottom:14px;position:relative}
 #det-map{width:100%;height:160px}
-
 .opt-box{background:#e3f2fd;border:0.5px solid #b5d4f4;border-radius:10px;padding:14px}
 .opt-box-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:6px;display:flex;align-items:center;gap:6px}
 .opt-ai-badge{background:var(--blue);color:#fff;padding:1px 6px;border-radius:4px;font-size:9px;font-weight:700}
 .opt-txt{font-size:12px;color:var(--navy);line-height:1.65;margin-bottom:10px}
 .opt-btn{width:100%;padding:8px;background:var(--blue);color:#fff;border:none;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer}
 .opt-btn:hover{background:#1a4a7a}
-
 .rlbl{padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700}
 .rl-r{background:#FEF2F2;color:#991B1B}
 .rl-b{background:#EFF6FF;color:#1D4ED8}
 
-/* ══════════════════════════════════════════
-   NGO PAGE — matches Image 2 from Stitch
-   Strategic Impact Matrix
-   ══════════════════════════════════════════ */
+/* ── NGO PAGE ── */
 .ngo-page{display:none}
 .ngo-page.on{display:block}
 .ngo-layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 50px)}
-
 .ngo-sidebar{background:#FAFBFC;border-right:1px solid var(--border);padding:20px 18px}
 .ngo-sidebar-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:14px}
 .filter-group{margin-bottom:20px}
@@ -206,13 +190,10 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .ai-insight-box{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:14px;margin-top:20px}
 .ai-insight-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:7px}
 .ai-insight-txt{font-size:12px;color:var(--navy);line-height:1.65}
-
 .ngo-main{padding:24px 28px;background:var(--bg)}
 .ngo-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
 .ngo-title{font-size:22px;font-weight:700;color:var(--text)}
 .ngo-count{font-size:13px;color:var(--muted)}
-
-/* Strategic Impact Matrix table */
 .sim-table{width:100%;background:var(--card);border-radius:14px;overflow:hidden;border:0.5px solid var(--border);margin-bottom:24px}
 .sim-thead{display:grid;grid-template-columns:2fr 1.2fr 1fr 100px 120px;gap:0;background:var(--bg);border-bottom:0.5px solid var(--border)}
 .sim-th{padding:10px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
@@ -231,10 +212,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .sim-score{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
 .coord-btn{padding:8px 16px;border-radius:20px;background:var(--blue);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer}
 .coord-btn:hover{background:#1a4a7a}
-
-/* Zone criticality map */
 .zone-map-card{background:var(--card);border-radius:14px;border:0.5px solid var(--border);overflow:hidden}
-.zone-map-hdr{padding:14px 20px;border-bottom:0.5px solid var(--border)}
 .zone-map-title{font-size:15px;font-weight:700;color:var(--text)}
 .zone-map-sub{font-size:12px;color:var(--muted);margin-top:2px}
 #ngo-map{height:320px}
@@ -265,19 +243,25 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .footer-links{display:flex;gap:18px}
 .footer-links a{color:var(--muted);text-decoration:none}.footer-links a:hover{color:var(--text)}
 
-/* LOADING */
-.lov{position:fixed;inset:0;background:rgba(0,102,255,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:12px}
+/* ── LOADING OVERLAY ── */
+.lov{position:fixed;inset:0;background:rgba(0,102,255,.92);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:10px}
 .sp{width:36px;height:36px;border:3px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+.lov-step{font-size:14px;font-weight:600;color:#fff}
+.lov-status{font-size:11px;color:rgba(255,255,255,.65);min-height:16px}
+.lov-countdown{font-size:11px;color:rgba(255,255,255,.4);min-height:16px}
+
 .empty{text-align:center;padding:32px;color:var(--muted);font-size:13px}
 </style>
 </head>
 <body>
 
+<!-- LOADING OVERLAY — richer content injected by JS -->
 <div id="lov" class="lov">
   <div class="sp"></div>
-  <div style="font-size:14px;font-weight:600;color:#fff">Running CivicAlert</div>
-  <div style="font-size:11px;color:rgba(255,255,255,.5)">Live weather · AI predictions · Delhi</div>
+  <div class="lov-step" id="lov-step">Running CivicAlert</div>
+  <div class="lov-status" id="lov-status">Connecting to weather API…</div>
+  <div class="lov-countdown" id="lov-countdown"></div>
 </div>
 
 <div id="bar-live" class="bar-live">
@@ -312,6 +296,13 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
     </div>
   </div>
   <div style="display:flex;align-items:center;gap:8px">
+    {% if gov %}
+    <div style="display:flex;align-items:center;gap:6px;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:20px;padding:4px 12px">
+      <div style="width:7px;height:7px;border-radius:50%;background:var(--blue)"></div>
+      <span style="font-size:11px;font-weight:600;color:var(--blue)">{{ gov.name }} · {{ gov.area }}</span>
+      <a href="/logout" style="font-size:10px;color:var(--muted);text-decoration:none;margin-left:4px">logout</a>
+    </div>
+    {% endif %}
     <span id="upd" style="font-size:11px;color:var(--muted)"></span>
     <button class="btn-ref" onclick="run(true)" id="rbtn">Refresh</button>
     <button class="btn-run" onclick="run(true)">Run Analysis</button>
@@ -342,13 +333,13 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
   <div class="body">
     <div style="display:flex;align-items:center;gap:0;padding-bottom:20px;border-bottom:1px solid var(--border);margin-bottom:22px">
       <div style="padding-right:28px">
-        <div style="font-size:36px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;color:var(--red)" id="k-crit">—</div>
-        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:4px">Critical areas</div>
+        <div style="font-size:36px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;color:var(--blue)" id="k-crit">36</div>
+        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:4px">Areas monitored</div>
       </div>
       <div style="width:1px;height:44px;background:var(--border);margin-right:28px"></div>
       <div style="padding-right:28px">
         <div style="font-size:36px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;color:#e65100" id="k-risk">—</div>
-        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:4px">At risk</div>
+        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:4px">At risk areas</div>
       </div>
       <div style="width:1px;height:44px;background:var(--border);margin-right:28px"></div>
       <div style="padding-right:28px">
@@ -374,7 +365,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
       </div>
       <div class="ai-stmt" id="ai-stmt">Analysing...</div>
       <div class="ai-footer">
-        <span>Model <strong>XGBoost + Groq Llama-3.3-70b</strong></span>
+        <!-- FIX: updated model name to match engine.py -->
+        <span>Model <strong>XGBoost + Groq Llama-4-Scout</strong></span>
         <span>Data <strong>Open-Meteo + Neon Postgres</strong></span>
         <span id="ai-conf-span"></span>
       </div>
@@ -392,7 +384,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
         <div class="bulletin" style="margin-bottom:16px">
           <div class="bul-icon">AI</div>
           <div style="flex:1">
-            <div class="bul-lbl">Groq Llama-3.3-70b · <span id="ml-b" style="text-transform:none;letter-spacing:0;font-size:10px;font-weight:400"></span></div>
+            <div class="bul-lbl">Groq Llama-4-Scout · <span id="ml-b" style="text-transform:none;letter-spacing:0;font-size:10px;font-weight:400"></span></div>
             <div class="bul-txt" id="blt-txt">Analysing...</div>
           </div>
         </div>
@@ -451,7 +443,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
             <span class="det-stat-val" id="det-rain">—</span>
           </div>
           <div class="det-stat-row">
-            <span class="det-stat-label">Forecast (2h)</span>
+            <span class="det-stat-label">Forecast (6h)</span>
             <span class="det-stat-val" id="det-fcst">—</span>
           </div>
           <div class="det-stat-row">
@@ -559,17 +551,30 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 
 <script>
 let D=null,DM=null,NM=null,MM=null,DK=[],NK=[],MK=[];
-
-const IMGS={
-  label_flood:          'https://images.unsplash.com/photo-1547683905-f686c993aae5?w=600&q=80',
-  label_pothole_worsen: 'https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=600&q=80',
-  label_sewage_overflow:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
-  label_garbage_flood:  'https://images.unsplash.com/photo-1604187351574-c75ca79f5807?w=600&q=80',
-  label_elec_hazard:    'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&q=80',
-  label_tree_fall:      'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=600&q=80',
-  label_traffic_block:  'https://images.unsplash.com/photo-1489824904134-891ab64532f1?w=600&q=80',
-  label_water_supply:   'https://images.unsplash.com/photo-1541544537156-7627a7a4aa1c?w=600&q=80',
+const CARD_VISUALS={
+  label_flood:          {emoji:'🌊',  bg:'#e3f2fd', sub:'Flood Risk'},
+  label_pothole_worsen: {emoji:'🕳️',  bg:'#e3f2fd', sub:'Road Damage'},
+  label_sewage_overflow:{emoji:'🚰',  bg:'#e3f2fd', sub:'Sewage Alert'},
+  label_garbage_flood:  {emoji:'🗑️',  bg:'#e3f2fd', sub:'Waste Overflow'},
+  label_elec_hazard:    {emoji:'⚡',  bg:'#e3f2fd', sub:'Power Hazard'},
+  label_tree_fall:      {emoji:'🌳',  bg:'#e3f2fd', sub:'Structural Risk'},
+  label_traffic_block:  {emoji:'🚦',  bg:'#e3f2fd', sub:'Road Block'},
+  label_water_supply:   {emoji:'💧',  bg:'#e3f2fd', sub:'Water Risk'},
 };
+
+// ── OFFICER SESSION (injected from Flask session via Jinja) ──
+// When an officer is logged in, use their jurisdiction coordinates
+// so weather is fetched for THEIR area, not Delhi center
+const GOV = {
+  logged_in: {{ 'true' if gov else 'false' }},
+  name:      "{{ gov.name if gov else '' }}",
+  authority: "{{ gov.authority if gov else '' }}",
+  area:      "{{ gov.area if gov else '' }}",
+  lat:       {{ gov.lat if gov else 28.6139 }},
+  lng:       {{ gov.lng if gov else 77.2090 }},
+  tags:      {{ gov.tags | tojson if gov else '[]' }},
+};
+
 const WX={
   storm:'https://images.unsplash.com/photo-1561484930-998b6a7b22e8?w=1400&q=75',
   rain:'https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?w=1400&q=75',
@@ -578,14 +583,14 @@ const WX={
   clear:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1400&q=75',
 };
 const LD={
-  label_flood:          {name:'Waterlogging / Flood',  dept:'DJB + PWD',       short:'Flood',         threat:'Structural Flood Risk'},
-  label_pothole_worsen: {name:'Pothole & Road Damage', dept:'MCD Roads + PWD', short:'Roads',         threat:'Pothole Density High'},
-  label_sewage_overflow:{name:'Sewage Overflow',       dept:'DJB',             short:'Sewage',        threat:'Sanitation Backlog'},
-  label_garbage_flood:  {name:'Garbage / Waste',       dept:'MCD Sanitation',  short:'Garbage',       threat:'Waste Accumulation'},
-  label_elec_hazard:    {name:'Electrical Hazard',     dept:'DISCOM',          short:'Electrical',    threat:'Grid Overload Potential'},
-  label_tree_fall:      {name:'Tree Fall / Structural',dept:'MCD + NDRF',      short:'Tree Fall',     threat:'Storm Structural Damage'},
-  label_traffic_block:  {name:'Traffic Disruption',    dept:'Traffic Police',   short:'Traffic',       threat:'Waterlog Road Closure'},
-  label_water_supply:   {name:'Water Supply Risk',     dept:'DJB Water Board',  short:'Water',         threat:'Contamination Risk'},
+  label_flood:          {name:'Waterlogging / Flood',  dept:'DJB + PWD',       short:'Flood',      threat:'Structural Flood Risk'},
+  label_pothole_worsen: {name:'Pothole & Road Damage', dept:'MCD Roads + PWD', short:'Roads',      threat:'Pothole Density High'},
+  label_sewage_overflow:{name:'Sewage Overflow',       dept:'DJB',             short:'Sewage',     threat:'Sanitation Backlog'},
+  label_garbage_flood:  {name:'Garbage / Waste',       dept:'MCD Sanitation',  short:'Garbage',    threat:'Waste Accumulation'},
+  label_elec_hazard:    {name:'Electrical Hazard',     dept:'DISCOM',          short:'Electrical', threat:'Grid Overload Potential'},
+  label_tree_fall:      {name:'Tree Fall / Structural',dept:'MCD + NDRF',      short:'Tree Fall',  threat:'Storm Structural Damage'},
+  label_traffic_block:  {name:'Traffic Disruption',    dept:'Traffic Police',  short:'Traffic',    threat:'Waterlog Road Closure'},
+  label_water_supply:   {name:'Water Supply Risk',     dept:'DJB Water Board', short:'Water',      threat:'Contamination Risk'},
 };
 
 function hi(s){return s>=50}
@@ -593,20 +598,134 @@ function sc(s){return hi(s)?'var(--red)':'var(--blue)'}
 function rl(s){return s>=75?'Critical':s>=50?'High risk':s>=25?'Monitoring':'Low'}
 function g(id){return document.getElementById(id)}
 
-async function run(force=false){
-  g('lov').style.display='flex';g('rbtn').disabled=true;
-  const ctrl=new AbortController();const tid=setTimeout(()=>ctrl.abort(),15000);
-  try{
-    const r=await fetch('/api/predict',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({force_refresh:force}),signal:ctrl.signal});
-    clearTimeout(tid);D=await r.json();
-    if(D.error){g('blt-txt').textContent=D.error;g('h-ttl').textContent='Check connection';return;}
-    renderAll(D);
-  }catch(e){
-    clearTimeout(tid);g('blt-txt').textContent=e.name==='AbortError'?'Timed out':'Error: '+e.message;
-  }finally{clearTimeout(tid);g('lov').style.display='none';g('rbtn').disabled=false;}
+// ═══════════════════════════════════════════════════════
+//  LOADING SYSTEM — fixed timeout + retry + countdown
+// ═══════════════════════════════════════════════════════
+const _TIMEOUT_MS  = 35000;   // 35s covers Render cold start + Open-Meteo + Groq
+const _MAX_RETRIES = 2;        // retry up to 2 times before giving up
+const _RETRY_GAP   = 3000;    // 3s wait between retries
+
+const _STEPS = [
+  'Waking up server…',
+  'Fetching live weather…',
+  'Loading civic issues…',
+  'Running ML model…',
+  'Generating AI bulletin…',
+  'Almost done…',
+];
+
+let _stepTimer = null;
+let _countTimer = null;
+
+function _showLoading() {
+  const lov = g('lov');
+  lov.style.display = 'flex';
+  let idx = 0;
+  g('lov-step').textContent    = 'Running CivicAlert';
+  g('lov-status').textContent  = _STEPS[0];
+  g('lov-countdown').textContent = '';
+  _stepTimer = setInterval(() => {
+    idx = Math.min(idx + 1, _STEPS.length - 1);
+    g('lov-status').textContent = _STEPS[idx];
+  }, 5000);
+  let elapsed = 0;
+  _countTimer = setInterval(() => {
+    elapsed++;
+    const rem = Math.max(0, Math.round(_TIMEOUT_MS / 1000) - elapsed);
+    g('lov-countdown').textContent = rem > 2 ? `timeout in ${rem}s` : 'almost there…';
+  }, 1000);
 }
 
+function _hideLoading() {
+  clearInterval(_stepTimer);
+  clearInterval(_countTimer);
+  _stepTimer = null; _countTimer = null;
+  g('lov').style.display = 'none';
+  g('rbtn').disabled = false;
+}
+
+function _updateRetryMsg(attempt) {
+  g('lov-status').textContent = `Retry ${attempt} of ${_MAX_RETRIES} — server warming up…`;
+  g('lov-countdown').textContent = `next attempt in ${_RETRY_GAP / 1000}s`;
+}
+
+async function _doFetch(force) {
+  const ctrl = new AbortController();
+  const tid  = setTimeout(() => ctrl.abort(), _TIMEOUT_MS);
+
+  // Always use browser location if available — every visitor (gov, NGO, anyone)
+  // gets weather fetched for THEIR actual location, not Delhi center.
+  // If location denied, API falls back to Delhi center automatically.
+  const endpoint = '/api/predict-for-officer';
+  const payload  = {
+    force_refresh: force,
+    ...(USER_LAT !== null ? { lat: USER_LAT, lng: USER_LNG } : {}),
+  };
+
+  try {
+    const r = await fetch(endpoint, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload),
+      signal: ctrl.signal,
+    });
+    clearTimeout(tid);
+    if (!r.ok) throw new Error(`Server returned ${r.status}`);
+    return await r.json();
+  } catch(e) {
+    clearTimeout(tid);
+    throw e;
+  }
+}
+
+async function run(force=false) {
+  g('rbtn').disabled = true;
+  _showLoading();
+
+  let data = null;
+  let lastErr = '';
+
+  for (let attempt = 0; attempt <= _MAX_RETRIES; attempt++) {
+    if (attempt > 0) {
+      _updateRetryMsg(attempt);
+      await new Promise(res => setTimeout(res, _RETRY_GAP));
+    }
+    try {
+      data = await _doFetch(force);
+      if (data && data.error) { lastErr = data.error; data = null; continue; }
+      break; // success
+    } catch(e) {
+      lastErr = e.name === 'AbortError'
+        ? `Timed out after ${_TIMEOUT_MS/1000}s (server may be starting up)`
+        : `Network error: ${e.message}`;
+      data = null;
+    }
+  }
+
+  _hideLoading();
+
+  if (data) {
+    D = data;
+    // Show stale-cache warning in bulletin without wiping the render
+    if (data.warning) g('blt-txt').textContent = '⚠ ' + data.warning;
+    renderAll(D);
+    return;
+  }
+
+  // All retries failed
+  g('blt-txt').textContent = `⚠ ${lastErr}`;
+  if (D) {
+    // Keep previous render — just update the subtitle
+    g('h-sub').textContent = '⚠ Live refresh failed — showing last known data. Click Refresh to retry.';
+  } else {
+    g('h-ttl').textContent = 'Connection issue';
+    g('h-sub').textContent = lastErr + ' — click Refresh to retry.';
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════════════
 function renderAll(d){
   const w=d.weather,a=d.aqi;
   const isNow=w.storm_now,isFcst=!isNow&&w.weather_coming;
@@ -638,9 +757,14 @@ function renderAll(d){
     g('bf-temp').textContent=(w.max_temp_24h||w.curr_temp)+'°C';
   }else{g('bar-live').classList.remove('on');g('bar-fcst').classList.remove('on');}
 
-  g('h-eyebrow').textContent=`Delhi · ${new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'}).toUpperCase()} · `+(d.cached?'CACHED':'LIVE DATA');
+  const dateStr = new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'}).toUpperCase();
+  const locLabel = USER_LAT !== null ? `YOUR LOCATION · ${USER_LAT.toFixed(2)}°N` : 'DELHI · ALL AREAS';
+  g('h-eyebrow').textContent = `${locLabel} · ${dateStr} · ${d.cached?'CACHED':'LIVE DATA'}`;
   g('h-ttl').textContent=w.summary;
-  g('h-sub').textContent=`AI monitoring ${d.issues_analysed} open civic issues across 20 Delhi areas`;
+  g('h-sub').textContent = USER_LAT !== null
+    ? `Live weather at your location · AI monitoring ${d.issues_analysed} open civic issues across 36 Delhi areas`
+    : `AI monitoring ${d.issues_analysed} open civic issues across 36 Delhi areas`;
+
   const chips=[];
   if(w.curr_rain>10)chips.push({t:w.curr_rain+'mm/hr rain',c:'r'});
   else if(w.curr_rain>0)chips.push({t:'Rain now',c:'a'});
@@ -652,26 +776,33 @@ function renderAll(d){
   chips.push({t:d.ml_active?'ML Active':'Rule-Based',c:''});
   g('h-chips').innerHTML=chips.map(c=>`<span class="hc${c.c?' hc-'+c.c:''}">${c.t}</span>`).join('');
 
-  g('wx-r').textContent=w.curr_rain+'mm';g('wx-r').style.color=w.curr_rain>5?'#ff5252':'#81d4fa';
-  g('wx-6').textContent=w.rain_next_6h+'mm';g('wx-t').textContent=w.curr_temp+'°';
+  // FIX: show rain_next_3h in the 6h slot only if 3h data available, else fall back
+  g('wx-r').textContent=w.curr_rain+'mm';
+  g('wx-r').style.color=w.curr_rain>5?'#ff5252':'#81d4fa';
+  g('wx-6').textContent=(w.rain_next_6h||'—')+'mm';
+  g('wx-t').textContent=w.curr_temp+'°';
   if(a){g('wx-a').textContent=a.aqi;g('k-aqi').textContent=a.aqi;}
 
-  g('k-crit').textContent=d.areas.filter(a=>a.overall_risk>=75).length;
-  g('k-risk').textContent=d.areas.filter(a=>a.overall_risk>=50).length;
+  g('k-crit').textContent = d.areas.length;  // always 36 — areas monitored
+  g('k-risk').textContent = d.areas.filter(a=>a.overall_risk>=35).length;
   g('k-iss').textContent=d.issues_analysed;
   const top=d.areas[0];
-  if(top){const tr=Object.entries(top.scores||{}).sort((a,b)=>b[1]-a[1])[0];
-    if(tr&&tr[1]>0)g('k-thr').textContent=LD[tr[0]]?.short||tr[0];else g('k-thr').textContent='—';}
+  if(top){
+    const tr=Object.entries(top.scores||{}).sort((a,b)=>b[1]-a[1])[0];
+    g('k-thr').textContent=tr&&tr[1]>0?LD[tr[0]]?.short||tr[0]:'—';
+  }
   g('ml-b').textContent=d.ml_active?'ML Active':'Rule-Based';
-  const now=new Date();g('upd').textContent=`Last synced: ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')} IST`;
-  g('upd2').textContent=`Last synced: ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')} IST`;
+  const now=new Date();
+  const hhmm=`${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')} IST`;
+  g('upd').textContent=`Last synced: ${hhmm}`;
+  g('upd2').textContent=`Last synced: ${hhmm}`;
   g('blt-txt').textContent=d.ai_bulletin;
 
   const modeEl=g('ai-mode-text');
-  if(isNow){modeEl.textContent='AI PREDICTION · LIVE NOW';}
-  else if(isFcst){modeEl.textContent='AI PREDICTION · FORECAST MODE';}
-  else{modeEl.textContent='AI PREDICTION · MONITORING';}
-  g('ai-meta').textContent=`Updated ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')} IST · ${d.issues_analysed} issues analysed`;
+  if(isNow)modeEl.textContent='AI PREDICTION · LIVE NOW';
+  else if(isFcst)modeEl.textContent='AI PREDICTION · FORECAST MODE';
+  else modeEl.textContent='AI PREDICTION · MONITORING';
+  g('ai-meta').textContent=`Updated ${hhmm} · ${d.issues_analysed} issues analysed`;
 
   buildAiStmt(d,w,isNow,isFcst);
   buildLiveFeed(d.areas);
@@ -710,10 +841,9 @@ function buildAiStmt(d,w,isNow,isFcst){
 
 function buildMlBreakdown(d,w,isNow,isFcst){
   const el=g('ai-ml-breakdown');if(!el)return;
-  const ls=d.label_summary||{};
   const topFeatures=[
     {label:'Open civic issues',val:d.issues_analysed,unit:'reports',desc:'Citizen-filed via AR / WhatsApp / Map Tap',color:'var(--blue)'},
-    {label:'Weather pattern match',val:(w.curr_temp>=40?'Heatwave':w.curr_rain>0?'Rain':'Clear'),unit:'condition',desc:'vs 5-year Delhi seasonal model',color:'var(--blue)'},
+    {label:'Weather pattern',val:(w.curr_temp>=40?'Heatwave':w.curr_rain>0?'Rain':'Clear'),unit:'condition',desc:'vs 5-year Delhi seasonal model',color:'var(--blue)'},
     {label:'Top feature weight',val:'open_pothole 14.8%',unit:'XGBoost',desc:'Existing issues outweigh weather alone',color:'var(--blue)'},
     {label:'Prediction horizon',val:isNow?'Live':'Next 6–24h',unit:'window',desc:isNow?'Current weather active now':'Based on Open-Meteo forecast',color:'var(--blue)'},
   ];
@@ -727,31 +857,36 @@ function buildMlBreakdown(d,w,isNow,isFcst){
 
 function buildCards(areas,ls){
   const el=g('cards-grid');
-  // For labels not predicted by ML, derive scores from related labels
   if(!ls.label_tree_fall){
     const floodMax=ls.label_flood?.max||0;
-    ls.label_tree_fall={max:Math.round(floodMax*0.6),avg:Math.round((ls.label_flood?.avg||0)*0.5),critical_areas:[]};
+    ls.label_tree_fall={max:Math.round(floodMax*0.6),avg:Math.round((ls.label_flood?.avg||0)*0.5),critical_areas:[],derived:true};
   }
   if(!ls.label_traffic_block){
     const pMax=ls.label_pothole_worsen?.max||0;const fMax=ls.label_flood?.max||0;
-    ls.label_traffic_block={max:Math.round(Math.max(pMax,fMax)*0.55),avg:Math.round(Math.max(pMax,fMax)*0.4),critical_areas:[]};
+    ls.label_traffic_block={max:Math.round(Math.max(pMax,fMax)*0.55),avg:Math.round(Math.max(pMax,fMax)*0.4),critical_areas:[],derived:true};
   }
   if(!ls.label_water_supply){
     const sMax=ls.label_sewage_overflow?.max||0;
-    ls.label_water_supply={max:Math.round(sMax*0.7),avg:Math.round(sMax*0.5),critical_areas:[]};
+    ls.label_water_supply={max:Math.round(sMax*0.7),avg:Math.round(sMax*0.5),critical_areas:[],derived:true};
   }
   const ranked=Object.keys(LD).map(l=>({l,score:ls[l]?.max||0})).sort((a,b)=>b.score-a.score);
   el.innerHTML=ranked.map(({l:label,score})=>{
     const info=LD[label];const val=ls[label]||{max:0,critical_areas:[]};
     const h=hi(score);const m=score>=25;
+    const isDerived=!!(val.derived);
     const affIssues=[];
     areas.forEach(a=>(a.affected_issues||[]).filter(i=>i.risk_label===label).slice(0,3).forEach(i=>{if(i.id)affIssues.push(i);}));
     return `<div class="tc" onclick="showDetail('${label}')">
-      <img class="tc-img" src="${IMGS[label]||''}" alt="${info.name}" onerror="this.style.display='none'">
+      <div class="tc-img" style="background:${CARD_VISUALS[label]?.bg||'#e3f2fd'};display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;position:relative;overflow:hidden">
+        <div style="font-size:72px;line-height:1;filter:drop-shadow(0 6px 12px rgba(0,0,0,.15))">${CARD_VISUALS[label]?.emoji||'⚠️'}</div>
+        <div style="font-size:9px;font-weight:700;letter-spacing:.1em;color:#1565c0;text-transform:uppercase">${CARD_VISUALS[label]?.sub||''}</div>
+        <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;background:rgba(21,101,192,.06)"></div>
+        <div style="position:absolute;bottom:-15px;left:-15px;width:60px;height:60px;border-radius:50%;background:rgba(21,101,192,.04)"></div>
+      </div>
       <div class="tc-body">
         <div class="tc-top">
           <div class="tc-score" style="color:${sc(score)}">${score}<span class="sm">/100</span></div>
-          <span class="tc-badge ${h?'b-red':m?'b-blue':'b-gray'}">${rl(score)}</span>
+          <span class="tc-badge ${h?'b-red':m?'b-blue':'b-gray'}">${isDerived?'estimated':rl(score)}</span>
         </div>
         <div class="tc-name">${info.name}</div>
         <div class="tc-dept">${info.dept}</div>
@@ -793,20 +928,18 @@ function buildLiveFeed(areas){
 function showDetail(label){
   if(!D)return;
   const info=LD[label]||{name:label,dept:'—'};
-  const w=D.weather;const isNow=w.storm_now;
+  const w=D.weather;
   g('det-title').textContent=info.name+': '+info.threat;
   g('det-sub-hdr').textContent=info.dept+' Coordination';
   g('det-refresh').textContent='Refreshed: just now';
   g('det-refresh2').textContent='Refreshed: just now';
   g('det-temp').textContent=w.curr_temp+'°C';
   g('det-rain').textContent=w.curr_rain+'mm/hr';
-  g('det-fcst').textContent=w.rain_next_6h>0?'+'+w.rain_next_6h+'mm Trend':'Stable';
-
+  g('det-fcst').textContent=w.rain_next_6h>0?'+'+w.rain_next_6h+'mm':'Stable';
   const topScore=D.label_summary?.[label]?.max||0;
   const riskText=topScore>=75?'TIER 1 SEVERE':topScore>=50?'TIER 2 HIGH':topScore>=25?'TIER 3 MODERATE':'LOW RISK';
   const riskColor=topScore>=50?'var(--red)':'var(--blue)';
   g('det-rlevel').innerHTML=`<span style="background:${topScore>=50?'#fdecea':'#e3f2fd'};color:${riskColor};padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700">${riskText}</span>`;
-
   const conf=Math.round(70+topScore*0.28);
   g('det-conf').textContent=conf+'%';
   g('det-conf-bar').style.width=conf+'%';
@@ -819,16 +952,16 @@ function showDetail(label){
   const t2=areas.filter(a=>a.time_to_impact_mins>90||a.time_to_impact_mins>=999);
   const safe=D.areas.filter(a=>!a.storm_amplified||(a.scores[label]||0)<20).slice(0,4);
 
-  const rows=(list,isUrgent,isSchedule)=>list.map((a)=>{
+  const rows=(list,isUrgent,isSchedule)=>list.map(a=>{
     const s=a.scores[label]||0;
     const issues=(a.affected_issues||[]).filter(x=>x.risk_label===label).slice(0,3)
       .map(iss=>`<span class="iss ${iss.severity==='high'?'hi':''}">#AP-${iss.id}</span>`).join('');
     const t=a.time_to_impact_mins<999?`~${a.time_to_impact_mins} min`:'Lower risk';
-    const btnHtml=isUrgent?
-      `<button class="dispatch-btn dispatch-r" onclick="event.stopPropagation();alert('Dispatching to ${a.area}')">Dispatch</button>`:
-      isSchedule?`<button class="queue-btn" onclick="event.stopPropagation();alert('Queued: ${a.area}')">Queue Task</button>`:'';
+    const btnHtml=isUrgent
+      ?`<button class="dispatch-btn dispatch-r" onclick="event.stopPropagation();alert('Dispatching to ${a.area}')">Dispatch</button>`
+      :isSchedule?`<button class="queue-btn" onclick="event.stopPropagation();alert('Queued: ${a.area}')">Queue Task</button>`:'';
     return `<div class="arow">
-      <div class="arow-thumb"><img src="${IMGS[label]||''}" alt="" onerror="this.style.display='none'"></div>
+      <div class="arow-thumb" style="background:${CARD_VISUALS[label]?.bg||'#1565c0'};display:flex;align-items:center;justify-content:center;border-radius:9px"><span style="font-size:24px">${CARD_VISUALS[label]?.emoji||'⚠️'}</span></div>
       <div>
         <div style="display:flex;align-items:center;margin-bottom:3px">
           <div class="arow-name">${a.area}</div>
@@ -844,8 +977,8 @@ function showDetail(label){
   }).join('');
 
   const el=g('det-timeline');el.innerHTML='';
-  const L=isNow?'Now':'Forecast';
-  if(!areas.length){el.innerHTML='<div class="empty" style="background:var(--white);border-radius:12px;border:0.5px solid var(--border)">No areas above threshold for this threat right now</div>';
+  if(!areas.length){
+    el.innerHTML='<div class="empty" style="background:var(--white);border-radius:12px;border:0.5px solid var(--border)">No areas above threshold for this threat right now</div>';
   }else{
     if(t0.length)el.innerHTML+=mkb('tlh-r','DEPLOY NOW 0–30 MIN',t0.length+' areas',rows(t0,true,false));
     if(t1.length)el.innerHTML+=mkb('tlh-o','SCHEDULE 30–90 MIN',t1.length+' areas',rows(t1,false,true));
@@ -865,7 +998,6 @@ function showDetail(label){
     DK.forEach(m=>DM.removeLayer(m));DK=[];
     areas.forEach(a=>{
       if(!a.lat||!a.lng)return;
-      const c=sc(a.scores[label]||0);
       const sz=14;
       const icon=L.divIcon({className:'',html:`<div style="width:${sz}px;height:${sz}px;border-radius:50%;background:${hi(a.scores[label]||0)?'#c62828':'#1565c0'};border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3)"></div>`,iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]});
       DK.push(L.marker([a.lat,a.lng],{icon}).addTo(DM));
@@ -875,9 +1007,7 @@ function showDetail(label){
 }
 
 function mkb(cls,ttl,sub,body){
-  return `<div class="tl-band"><div class="tl-hdr ${cls}">
-    <div class="tl-ttl">${ttl}</div><span class="tl-pill">${sub}</span>
-  </div><div class="tl-body">${body}</div></div>`;
+  return `<div class="tl-band"><div class="tl-hdr ${cls}"><div class="tl-ttl">${ttl}</div><span class="tl-pill">${sub}</span></div><div class="tl-body">${body}</div></div>`;
 }
 
 function renderNgo(){
@@ -886,25 +1016,20 @@ function renderNgo(){
   const fHigh=g('f-high')?.checked;
   const fMed=g('f-med')?.checked;
   const fLow=g('f-low')?.checked;
-  const ls=D.label_summary||{};
-
   let areas=D.areas.filter(a=>a.overall_risk>=20);
   if(deptF!=='All Departments'){
     areas=areas.filter(a=>{
       const top=Object.entries(a.scores||{}).sort((x,y)=>y[1]-x[1])[0];
       if(!top)return false;
-      const dept=LD[top[0]]?.dept||'';
-      return dept.includes(deptF);
+      return(LD[top[0]]?.dept||'').includes(deptF);
     });
   }
   if(!fLow)areas=areas.filter(a=>a.overall_risk>=25);
   if(!fMed)areas=areas.filter(a=>a.overall_risk>=50||a.overall_risk<25);
   if(!fHigh)areas=areas.filter(a=>a.overall_risk<75);
-
   areas.sort((a,b)=>b.overall_risk-a.overall_risk);
   g('ngo-count').textContent=`Showing ${areas.length} Active High-Impact Areas`;
   g('ngo-insight').textContent=`Current resource allocation may be insufficient in ${areas.filter(a=>a.overall_risk>=50).length} high-criticality clusters. Deployment to ${areas[0]?.area||'—'} recommended within 6 hours.`;
-
   const isNow=D.weather.storm_now,isFcst=!isNow&&D.weather.weather_coming;
   g('sim-tbody').innerHTML=areas.slice(0,12).map(a=>{
     const top=Object.entries(a.scores||{}).sort((x,y)=>y[1]-x[1])[0];
@@ -912,22 +1037,13 @@ function renderNgo(){
     const statusCls=isNow?'ss-live':isFcst?'ss-fcst':'ss-mon';
     const statusTxt=isNow?'LIVE NOW':isFcst?'FORECAST':'MONITORING';
     return `<div class="sim-row" onclick="showDetail('${top?top[0]:'label_flood'}')">
-      <div class="sim-cell">
-        <div class="sim-area-name">${a.area}</div>
-        <div class="sim-area-sub">Ward · Delhi</div>
-      </div>
-      <div class="sim-cell">
-        <div style="display:flex;align-items:center;gap:7px;margin-bottom:4px">
-          <span class="sim-status ${statusCls}">${statusTxt}</span>
-        </div>
-        <div class="sim-threat-name">${info?.threat||'Infrastructure Risk'}</div>
-      </div>
+      <div class="sim-cell"><div class="sim-area-name">${a.area}</div><div class="sim-area-sub">Ward · Delhi</div></div>
+      <div class="sim-cell"><div style="display:flex;align-items:center;gap:7px;margin-bottom:4px"><span class="sim-status ${statusCls}">${statusTxt}</span></div><div class="sim-threat-name">${info?.threat||'Infrastructure Risk'}</div></div>
       <div class="sim-cell"><span class="sim-dept">${info?.dept||'MCD'}</span></div>
       <div class="sim-cell"><span class="sim-score" style="color:${sc(a.overall_risk)}">${a.overall_risk}</span></div>
       <div class="sim-cell"><button class="coord-btn" onclick="event.stopPropagation();showDetail('${top?top[0]:'label_flood'}')">Coordinate</button></div>
     </div>`;
   }).join('');
-
   setTimeout(()=>{
     if(!NM){NM=L.map('ngo-map').setView([28.63,77.22],11);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM'}).addTo(NM);}
     else NM.invalidateSize();
@@ -945,7 +1061,6 @@ function renderNgo(){
 function renderMap(){
   if(!D)return;
   const areas=D.areas.filter(a=>a.overall_risk>=10).sort((a,b)=>b.overall_risk-a.overall_risk);
-
   g('map-sidebar-list').innerHTML=areas.slice(0,10).map(a=>{
     const top=Object.entries(a.scores||{}).sort((x,y)=>y[1]-x[1])[0];
     const s=a.overall_risk;
@@ -962,12 +1077,10 @@ function renderMap(){
       </div>
     </div>`;
   }).join('');
-
   const isNow=D.weather.storm_now;
   g('map-alert-badge').textContent=isNow?'MUNICIPAL ALERT ACTIVE':'MONITORING ACTIVE';
   g('map-alert-badge').style.background=isNow?'var(--red)':'var(--navy)';
   g('map-sync').textContent='Last Synced: '+D.generated_at;
-
   setTimeout(()=>{
     if(!MM){MM=L.map('main-map').setView([28.63,77.22],11);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(MM);}
     else MM.invalidateSize();
@@ -977,21 +1090,19 @@ function renderMap(){
       const c=hi(a.overall_risk)?'#c62828':'#1565c0';
       const sz=Math.max(14,Math.min(30,10+a.overall_risk/3.5));
       const icon=L.divIcon({className:'',html:`<div style="width:${sz}px;height:${sz}px;border-radius:50%;background:${c};border:2px solid #fff;box-shadow:0 3px 8px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff">${a.overall_risk}</div>`,iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]});
-      const top=Object.entries(a.scores||{}).sort((x,y)=>y[1]-x[1]).slice(0,2);
+      const top2=Object.entries(a.scores||{}).sort((x,y)=>y[1]-x[1]).slice(0,2);
       MK.push(L.marker([a.lat,a.lng],{icon})
         .bindPopup(`<div style="font-family:Inter,sans-serif;min-width:160px">
           <div style="font-size:14px;font-weight:700;margin-bottom:4px">${a.area}</div>
           <div style="font-size:20px;font-weight:700;color:${c};margin-bottom:6px">${a.overall_risk}/100</div>
-          ${top.map(([l,s])=>`<div style="font-size:11px;margin-bottom:2px">${LD[l]?.name||l}: <strong>${s}</strong></div>`).join('')}
+          ${top2.map(([l,s])=>`<div style="font-size:11px;margin-bottom:2px">${LD[l]?.name||l}: <strong>${s}</strong></div>`).join('')}
           <div style="font-size:11px;color:#5a6a7a;margin-top:5px">${a.open_issues_count} open issues</div>
         </div>`).addTo(MM));
     });
   },200);
 }
 
-function focusArea(lat,lng,name){
-  if(MM)MM.setView([lat,lng],14);
-}
+function focusArea(lat,lng,name){if(MM)MM.setView([lat,lng],14);}
 
 function showDash(){
   g('dash-page').style.display='block';
@@ -999,30 +1110,53 @@ function showDash(){
   g('ngo-page').classList.remove('on');
   g('map-page').classList.remove('on');
   g('hero-wrap').style.display='block';
-  document.querySelectorAll('.nt').forEach((t,i)=>{if(i===0)t.classList.add('on');else t.classList.remove('on');});
+  document.querySelectorAll('.nt').forEach((t,i)=>{t.classList.toggle('on',i===0);});
 }
-
 function showNgo(){
   g('dash-page').style.display='none';
   g('detail-page').classList.remove('on');
   g('ngo-page').classList.add('on');
   g('map-page').classList.remove('on');
   g('hero-wrap').style.display='none';
-  document.querySelectorAll('.nt').forEach((t,i)=>{if(i===1)t.classList.add('on');else t.classList.remove('on');});
+  document.querySelectorAll('.nt').forEach((t,i)=>{t.classList.toggle('on',i===1);});
   if(D)renderNgo();
 }
-
 function showMap(){
   g('dash-page').style.display='none';
   g('detail-page').classList.remove('on');
   g('ngo-page').classList.remove('on');
   g('map-page').classList.add('on');
   g('hero-wrap').style.display='none';
-  document.querySelectorAll('.nt').forEach((t,i)=>{if(i===2)t.classList.add('on');else t.classList.remove('on');});
+  document.querySelectorAll('.nt').forEach((t,i)=>{t.classList.toggle('on',i===2);});
   if(D)renderMap();
 }
 
-document.addEventListener('DOMContentLoaded',()=>{run(false);setInterval(()=>run(false),300000);});
+// User's detected location — updated once on load via browser geolocation
+let USER_LAT = null;
+let USER_LNG = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Ask browser for location first, then run analysis
+  // If denied or unavailable, falls back to Delhi center in the API
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        USER_LAT = pos.coords.latitude;
+        USER_LNG = pos.coords.longitude;
+        console.log(`[location] Got user location: ${USER_LAT}, ${USER_LNG}`);
+        run(false);
+      },
+      err => {
+        console.log(`[location] Denied or unavailable (${err.message}) — using Delhi center`);
+        run(false);
+      },
+      { timeout: 5000, maximumAge: 60000 }
+    );
+  } else {
+    run(false);
+  }
+  setInterval(() => run(false), 120000); // auto-refresh every 2 min
+});
 </script>
 </body>
 </html>

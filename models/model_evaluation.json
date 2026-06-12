@@ -1,0 +1,75 @@
+{
+  "trained_at": "2026-06-12T22:55:14.582059",
+  "n_train": 493056,
+  "n_test": 123264,
+  "n_features": 29,
+  "labels": {
+    "label_flood": {
+      "auc": 0.995,
+      "pos_rate": 0.1,
+      "pred_rate": 0.0
+    },
+    "label_pothole_worsen": {
+      "auc": 0.999,
+      "pos_rate": 0.1,
+      "pred_rate": 0.1
+    },
+    "label_sewage_overflow": {
+      "auc": 0.999,
+      "pos_rate": 0.1,
+      "pred_rate": 0.0
+    },
+    "label_garbage_flood": {
+      "auc": 0.999,
+      "pos_rate": 0.1,
+      "pred_rate": 0.0
+    },
+    "label_elec_hazard": {
+      "auc": 0.999,
+      "pos_rate": 0.0,
+      "pred_rate": 0.0
+    }
+  },
+  "top_features": [
+    {
+      "feature": "open_pothole",
+      "importance": 0.1479
+    },
+    {
+      "feature": "open_garbage",
+      "importance": 0.1085
+    },
+    {
+      "feature": "open_water",
+      "importance": 0.1018
+    },
+    {
+      "feature": "open_sewage",
+      "importance": 0.0957
+    },
+    {
+      "feature": "open_elec",
+      "importance": 0.0884
+    },
+    {
+      "feature": "rain_3h",
+      "importance": 0.0614
+    },
+    {
+      "feature": "rain_6h",
+      "importance": 0.0443
+    },
+    {
+      "feature": "infra_age",
+      "importance": 0.0314
+    },
+    {
+      "feature": "drain",
+      "importance": 0.0303
+    },
+    {
+      "feature": "rain_24h",
+      "importance": 0.0294
+    }
+  ]
+}

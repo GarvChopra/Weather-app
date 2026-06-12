@@ -37,7 +37,8 @@
     "label_garbage_flood",
     "label_elec_hazard"
   ],
-  "version": "3.0",
+  "version": "3.1",
   "type": "MultiOutputXGBoost",
-  "trained_on": "Open-Meteo historical Delhi 2019-2024 + AreaPulse issues"
+  "trained_on": "Open-Meteo historical Delhi 2019-2024 + AreaPulse issues",
+  "trained_at": "2026-06-12T22:55:14.917524"
 }
