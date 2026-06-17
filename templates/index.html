@@ -11,11 +11,11 @@
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --red:#c62828;--blue:#0066FF;--navy:#0066FF;
-  --bg:#ffffff;--white:#fff;--border:rgba(0,0,0,.08);
+  --bg:#EBF4FF;--white:#fff;--border:rgba(0,102,255,.12);
   --text:#1B1B1B;--muted:#6B7280;--yellow:#0066FF;
-  --card:#fff;
+  --card:#ffffff;
 }
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+body{font-family:'Inter',sans-serif;background:#EBF4FF;color:var(--text);font-size:14px}
 
 .hdr{background:#fff;color:var(--text);display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:52px;position:sticky;top:0;z-index:300;border-bottom:1px solid var(--border)}
 .logo{font-size:15px;font-weight:700;color:var(--text)}.logo span{color:var(--blue)}
@@ -146,41 +146,41 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 
 .detail-page{display:none}
 .detail-page.on{display:block}
-.det-hdr{background:var(--blue);color:#fff;padding:14px 28px;display:flex;align-items:center;gap:16px}
-.det-back{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:rgba(255,255,255,.7);cursor:pointer;padding:6px 0}
-.det-back:hover{color:#fff}
-.det-hdr-title{font-size:20px;font-weight:700;color:#fff}
-.det-hdr-sub{font-size:12px;color:rgba(255,255,255,.55);margin-top:2px}
-.det-body{display:grid;grid-template-columns:1fr 280px;gap:0;min-height:calc(100vh - 100px)}
-.det-main{padding:24px 28px;border-right:0.5px solid var(--border)}
+.det-hdr{background:#fff;border-bottom:1px solid #e5e7eb;padding:14px 28px;display:flex;align-items:center;gap:16px}
+.det-back{font-size:13px;font-weight:600;color:var(--blue);cursor:pointer;padding:6px 12px;border:1px solid #e5e7eb;border-radius:20px}
+.det-back:hover{background:#f0f7ff}
+.det-hdr-title{font-size:17px;font-weight:700;color:#111}
+.det-hdr-sub{font-size:12px;color:#6b7280;margin-top:1px}
+.det-body{display:grid;grid-template-columns:1fr 320px;min-height:calc(100vh - 52px);align-items:start}
+.det-main{padding:20px 24px;background:#f8f9fa}
 .det-sec-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:14px}
 .det-refresh{font-size:11px;color:var(--muted)}
-.tl-band{border-radius:11px;overflow:hidden;margin-bottom:10px}
+.tl-band{border-radius:8px;overflow:hidden;margin-bottom:8px;border:1px solid #e5e7eb;background:#fff}
 .tl-hdr{padding:11px 18px;display:flex;align-items:center;gap:10px}
-.tlh-r{background:var(--red);color:#fff}
-.tlh-o{background:#e65100;color:#fff}
-.tlh-a{background:#f9a825;color:var(--navy)}
-.tlh-g{background:#e8f5e9;color:#2e7d32;border:1px solid #c8e6c9}
+.tlh-r{background:#fff;border-bottom:1px solid #fecaca}.tlh-r .tl-ttl{color:#c62828}
+.tlh-o{background:#fff;border-bottom:1px solid #fed7aa}.tlh-o .tl-ttl{color:#e65100}
+.tlh-a{background:#fff;border-bottom:1px solid #e5e7eb}.tlh-a .tl-ttl{color:#374151}
+.tlh-g{background:#fff;border-bottom:1px solid #e5e7eb}.tlh-g .tl-ttl{color:#374151}
 .tl-ttl{flex:1;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
-.tl-pill{padding:3px 11px;border-radius:999px;font-size:11px;font-weight:600;background:rgba(255,255,255,.22)}
-.tl-body{background:var(--card);border:0.5px solid var(--border);border-top:none}
-.arow{display:grid;grid-template-columns:52px 1fr auto auto;gap:14px;align-items:center;padding:14px 18px;border-bottom:0.5px solid var(--border);cursor:pointer;transition:.1s}
-.arow:hover{background:#f7faff}
+.tl-pill{padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600;background:#f3f4f6;color:#374151}
+.tl-body{background:#fff}
+.arow{display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;padding:14px 16px;border-bottom:1px solid #f3f4f6;cursor:pointer;transition:.1s}
+.arow:hover{background:#f8faff}
 .arow:last-child{border-bottom:none}
-.arow-thumb{width:52px;height:52px;border-radius:9px;overflow:hidden;background:var(--bg)}
-.arow-name{font-size:14px;font-weight:700;color:var(--text)}
+.arow-thumb{display:none}
+.arow-name{font-size:14px;font-weight:700;color:#111;margin-bottom:2px}
 .arow-badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;margin-left:8px}
 .arow-meta{font-size:11px;color:var(--muted);margin-top:2px}
 .arow-action{margin-top:7px;padding:6px 10px;background:#eef5ff;border-radius:6px;border-left:2px solid var(--blue);font-size:11px;color:var(--muted)}
 .arow-action strong{color:var(--text);font-weight:600}
 .arow-iss{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px}
-.arow-score{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;min-width:46px;text-align:center}
-.dispatch-btn{padding:7px 16px;border-radius:7px;font-size:12px;font-weight:600;border:none;cursor:pointer;white-space:nowrap}
-.dispatch-r{background:var(--red);color:#fff;border-radius:20px}
+.arow-score{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--blue);min-width:38px;text-align:right}
+.dispatch-btn{padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;border:none;cursor:pointer;white-space:nowrap;background:var(--blue);color:#fff}
+.dispatch-r{background:var(--blue);color:#fff}
 .dispatch-r:hover{background:#b71c1c}
-.queue-btn{background:var(--bg);color:var(--muted);border:0.5px solid var(--border);padding:7px 14px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer}
-.det-sidebar{padding:20px 20px;background:var(--card);border-left:0.5px solid var(--border)}
-.det-sidebar-section{margin-bottom:22px}
+.queue-btn{background:#fff;color:var(--blue);border:1px solid var(--blue);padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer}
+.det-sidebar{padding:20px;background:#fff;border-left:1px solid #e5e7eb;position:sticky;top:52px}
+.det-sidebar-section{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #f3f4f6}.det-sidebar-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
 .det-sidebar-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:12px}
 .det-stat-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:0.5px solid var(--border)}
 .det-stat-row:last-child{border-bottom:none}
@@ -188,17 +188,17 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .det-stat-val{font-size:13px;font-weight:600;color:var(--text)}
 .det-stat-val.red{color:var(--red)}
 .det-stat-val.blue{color:var(--blue)}
-.confidence-bar{height:8px;background:#f0f4f8;border-radius:999px;overflow:hidden;margin-top:6px}
+.confidence-bar{height:5px;background:#f0f4f8;border-radius:999px;overflow:hidden;margin-top:5px}
 .confidence-fill{height:100%;border-radius:999px;background:var(--blue)}
-.mini-map{width:100%;height:160px;border-radius:10px;overflow:hidden;background:#1a3a5c;display:flex;align-items:center;justify-content:center;margin-bottom:14px;position:relative}
-#det-map{width:100%;height:160px}
-.opt-box{background:#e3f2fd;border:0.5px solid #b5d4f4;border-radius:10px;padding:14px}
+.mini-map{width:100%;height:150px;border-radius:8px;overflow:hidden;margin-bottom:14px;border:1px solid #e5e7eb}
+#det-map{width:100%;height:150px}
+.opt-box{background:#f8faff;border:1px solid #dbeafe;border-radius:8px;padding:12px}
 .opt-box-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:6px;display:flex;align-items:center;gap:6px}
 .opt-ai-badge{background:var(--blue);color:#fff;padding:1px 6px;border-radius:4px;font-size:9px;font-weight:700}
 .opt-txt{font-size:12px;color:var(--navy);line-height:1.65;margin-bottom:10px}
-.opt-btn{width:100%;padding:8px;background:var(--blue);color:#fff;border:none;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer}
+.opt-btn{width:100%;padding:8px;background:var(--blue);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer}
 .opt-btn:hover{background:#1a4a7a}
-.rlbl{padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700}
+.rlbl{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700}
 .rl-r{background:#FEF2F2;color:#991B1B}
 .rl-b{background:#EFF6FF;color:#1D4ED8}
 
@@ -273,11 +273,51 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .lov-status{font-size:11px;color:rgba(255,255,255,.65);min-height:16px}
 .lov-countdown{font-size:11px;color:rgba(255,255,255,.4);min-height:16px}
 .empty{text-align:center;padding:32px;color:var(--muted);font-size:13px}
+
+/* ── AI Chatbot ─────────────────────────────────────────── */
+.ai-chat{background:#fff;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden}
+.ai-chat-msgs{height:180px;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.ai-msg-ai{background:#f0f7ff;border-radius:6px;padding:8px 10px;font-size:12px;color:#111;line-height:1.5;align-self:flex-start;max-width:95%}
+.ai-msg-user{background:#e8f5e9;border-radius:6px;padding:6px 10px;font-size:12px;color:#111;align-self:flex-end;max-width:90%}
+.ai-chat-inp{display:flex;border-top:1px solid #e5e7eb}
+.ai-chat-inp input{flex:1;padding:8px 10px;font-size:12px;border:none;outline:none;font-family:inherit;color:#111}
+.ai-chat-inp button{padding:8px 14px;background:var(--blue);color:#fff;border:none;font-size:12px;font-weight:600;cursor:pointer}
+
+/* ── What-happens panel ──────────────────────────────────── */
+.what-panel{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:14px;margin-bottom:12px}
+.what-panel-ttl{font-size:11px;font-weight:700;color:#111;margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em}
+.what-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #f3f4f6}
+.what-item:last-child{border-bottom:none}
+.what-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.what-txt{font-size:12px;color:#374151;line-height:1.5}
+.what-time{font-size:10px;color:#9ca3af;margin-top:2px}
 </style>
 </head>
 <body>
 
 <div id="lov" class="lov">
+  <div style="text-align:center;margin-bottom:24px">
+    <div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:.08em;margin-bottom:2px">AREAPULSE CIVICALERT</div>
+    <div style="font-size:11px;color:rgba(255,255,255,.5)">Delhi Municipal Intelligence</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.15);border-radius:10px;overflow:hidden;margin-bottom:28px;min-width:380px">
+    <div style="background:rgba(255,255,255,.08);padding:14px 16px;text-align:center">
+      <div style="font-size:28px;font-weight:700;color:#fff;line-height:1" id="lov-k-areas">70</div>
+      <div style="font-size:9px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;margin-top:4px">Areas</div>
+    </div>
+    <div style="background:rgba(255,255,255,.08);padding:14px 16px;text-align:center">
+      <div style="font-size:28px;font-weight:700;color:#fff;line-height:1" id="lov-k-issues">—</div>
+      <div style="font-size:9px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;margin-top:4px">Issues</div>
+    </div>
+    <div style="background:rgba(255,255,255,.08);padding:14px 16px;text-align:center">
+      <div style="font-size:28px;font-weight:700;color:#fff;line-height:1" id="lov-k-risk">—</div>
+      <div style="font-size:9px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;margin-top:4px">At Risk</div>
+    </div>
+    <div style="background:rgba(255,255,255,.08);padding:14px 16px;text-align:center">
+      <div style="font-size:28px;font-weight:700;color:#fff;line-height:1" id="lov-k-aqi">—</div>
+      <div style="font-size:9px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.08em;margin-top:4px">AQI</div>
+    </div>
+  </div>
   <div class="sp"></div>
   <div class="lov-step" id="lov-step">Running CivicAlert</div>
   <div class="lov-status" id="lov-status">Connecting to weather API…</div>
@@ -323,6 +363,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
     </div>
     {% endif %}
     <span id="upd" style="font-size:11px;color:var(--muted)"></span>
+    <button class="btn-ref" onclick="exportPDF()" id="pdf-btn" style="display:flex;align-items:center;gap:5px">
+      <span>📄</span> Export PDF
+    </button>
     <button class="btn-ref" onclick="run(true)" id="rbtn">Refresh</button>
     <button class="btn-run" onclick="run(true)">Run Analysis</button>
   </div>
@@ -350,37 +393,34 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
   </div>
 </div>
 
-<!-- FIX: fchart-body contains ONLY bars and summary — no stray ai-strip inside -->
-<div class="fchart-wrap" id="fchart-wrap" style="display:none">
-  <div class="fchart-head">
-    <div class="fchart-title">12-Hour Precipitation Forecast</div>
-    <span class="fchart-tag">Open-Meteo · Hourly</span>
-    <button class="fchart-toggle" id="fchart-toggle-btn" onclick="toggleFchart()">Hide ▲</button>
-  </div>
-  <div class="fchart-body" id="fchart-body">
-    <div class="fchart-bars" id="fchart-bars"></div>
-    <div class="fchart-summary" id="fchart-summary"></div>
-  </div>
-</div>
-
-<!-- AI strip — ONE instance only, with all required IDs -->
-<div class="ai-strip" id="ai-strip" style="display:none">
-  <div class="ai-strip-head">
-    <div class="ai-strip-lbl">AI Civic Risk Prediction</div>
-    <span class="ai-stag">XGBoost ML</span>
-    <span class="ai-stag">Groq Llama-4-Scout</span>
-    <span class="ai-mode-pill ai-mode-idle" id="ai-strip-mode">Monitoring</span>
-    <button class="ai-strip-toggle" id="ai-strip-toggle-btn" onclick="toggleAiStrip()">Hide ▲</button>
-  </div>
-  <div id="ai-strip-body">
-    <div class="ai-scores" id="ai-strip-scores"></div>
-    <div class="ai-bul-lbl">AI Bulletin · <span id="ai-strip-meta" style="text-transform:none;letter-spacing:0;font-size:9px;color:#6B7280"></span></div>
-    <div class="ai-bul-txt" id="ai-strip-bul">Analysing…</div>
-  </div>
-</div>
-
 <!-- DASHBOARD PAGE -->
 <div id="dash-page" style="background:var(--bg)">
+  <!-- FIX: fchart + ai-strip inside dash-page only — not visible on detail/ngo/map pages -->
+  <div class="fchart-wrap" id="fchart-wrap" style="display:none">
+    <div class="fchart-head">
+      <div class="fchart-title">12-Hour Precipitation Forecast</div>
+      <span class="fchart-tag">Open-Meteo · Hourly</span>
+      <button class="fchart-toggle" id="fchart-toggle-btn" onclick="toggleFchart()">Hide ▲</button>
+    </div>
+    <div class="fchart-body" id="fchart-body">
+      <div class="fchart-bars" id="fchart-bars"></div>
+      <div class="fchart-summary" id="fchart-summary"></div>
+    </div>
+  </div>
+  <div class="ai-strip" id="ai-strip" style="display:none">
+    <div class="ai-strip-head">
+      <div class="ai-strip-lbl">AI Civic Risk Prediction</div>
+      <span class="ai-stag">XGBoost ML</span>
+      <span class="ai-stag">Groq Llama-4-Scout</span>
+      <span class="ai-mode-pill ai-mode-idle" id="ai-strip-mode">Monitoring</span>
+      <button class="ai-strip-toggle" id="ai-strip-toggle-btn" onclick="toggleAiStrip()">Hide ▲</button>
+    </div>
+    <div id="ai-strip-body">
+      <div class="ai-scores" id="ai-strip-scores"></div>
+      <div class="ai-bul-lbl">AI Bulletin · <span id="ai-strip-meta" style="text-transform:none;letter-spacing:0;font-size:9px;color:#6B7280"></span></div>
+      <div class="ai-bul-txt" id="ai-strip-bul">Analysing…</div>
+    </div>
+  </div>
   <div class="body">
     <div style="display:flex;align-items:center;gap:0;padding-bottom:20px;border-bottom:1px solid var(--border);margin-bottom:22px">
       <div style="padding-right:28px">
@@ -416,7 +456,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
       <div class="ai-stmt" id="ai-stmt">Analysing...</div>
       <div class="ai-footer">
         <span>Model <strong>XGBoost + Groq Llama-4-Scout</strong></span>
-        <span>Data <strong>Open-Meteo + Neon Postgres</strong></span>
+        <span>Data <strong id='data-src-lbl'>WeatherAPI + Neon Postgres</strong></span>
         <span id="ai-conf-span"></span>
       </div>
       <div id="ai-ml-breakdown" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding-top:14px;border-top:0.5px solid var(--border)"></div>
@@ -455,49 +495,48 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 <!-- DETAIL PAGE -->
 <div id="detail-page" class="detail-page">
   <div class="det-hdr">
-    <div class="det-back" onclick="showDash()">&#8592;</div>
+    <div class="det-back" onclick="showDash()">&#8592; Back</div>
     <div>
       <div class="det-hdr-title" id="det-title">—</div>
       <div class="det-hdr-sub" id="det-sub-hdr">—</div>
     </div>
-    <div style="margin-left:auto;font-size:11px;color:rgba(255,255,255,.45)" id="det-refresh">—</div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+      <span id="det-refresh" style="font-size:11px;color:#9ca3af">—</span>
+    </div>
   </div>
   <div class="det-body">
     <div class="det-main">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-        <div class="det-sec-label">Response Timeline</div>
-        <div class="det-refresh" id="det-refresh2">Refreshed: just now</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div class="det-sec-label">Areas — sorted by risk</div>
+        <div class="det-refresh" id="det-refresh2">just now</div>
       </div>
       <div id="det-timeline"></div>
     </div>
     <div class="det-sidebar">
       <div class="det-sidebar-section">
-        <div class="det-sidebar-lbl">Area map: Delhi Central</div>
+        <div class="det-sidebar-lbl">Map</div>
         <div class="mini-map"><div id="det-map"></div></div>
       </div>
       <div class="det-sidebar-section">
-        <div class="det-sidebar-lbl">AI Analysis Confidence</div>
-        <div style="font-size:32px;font-weight:700;color:var(--blue);margin-bottom:6px" id="det-conf">87%</div>
-        <div class="confidence-bar"><div class="confidence-fill" id="det-conf-bar" style="width:87%"></div></div>
-        <div style="margin-top:16px">
-          <div class="det-stat-row"><span class="det-stat-label">Current Temp</span><span class="det-stat-val red" id="det-temp">—</span></div>
-          <div class="det-stat-row"><span class="det-stat-label">Rain Now</span><span class="det-stat-val" id="det-rain">—</span></div>
-          <div class="det-stat-row"><span class="det-stat-label">Forecast (6h)</span><span class="det-stat-val" id="det-fcst">—</span></div>
-          <div class="det-stat-row"><span class="det-stat-label">Risk Level</span><span class="det-stat-val" id="det-rlevel">—</span></div>
+        <div class="det-stat-row"><span class="det-stat-label">Temp</span><span class="det-stat-val red" id="det-temp">—</span></div>
+        <div class="det-stat-row"><span class="det-stat-label">Rain</span><span class="det-stat-val" id="det-rain">—</span></div>
+        <div class="det-stat-row"><span class="det-stat-label">Forecast 6h</span><span class="det-stat-val" id="det-fcst">—</span></div>
+        <div class="det-stat-row"><span class="det-stat-label">Risk</span><span class="det-stat-val" id="det-rlevel">—</span></div>
+        <div class="det-stat-row">
+          <span class="det-stat-label">Confidence</span>
+          <span class="det-stat-val blue" id="det-conf">—</span>
         </div>
+        <div class="confidence-bar" style="margin-top:8px"><div class="confidence-fill" id="det-conf-bar" style="width:0%"></div></div>
       </div>
       <div class="det-sidebar-section">
         <div class="opt-box">
-          <div class="opt-box-lbl">Optimization Suggestion <span class="opt-ai-badge">AI</span></div>
-          <div class="opt-txt" id="opt-txt">Analysing patterns across affected areas...</div>
-          <button class="opt-btn">Accept Recommendation</button>
+          <div class="opt-box-lbl">AI Recommendation <span class="opt-ai-badge">AI</span></div>
+          <div class="opt-txt" id="opt-txt">Analysing...</div>
+          <button class="opt-btn">Accept & Dispatch</button>
         </div>
       </div>
+
     </div>
-  </div>
-  <div class="footer">
-    <div class="footer-logo">Area<span>Pulse</span> CivicAlert</div>
-    <div class="footer-links"><a href="#">Privacy Policy</a><a href="#">Institutional Terms</a><a href="#">Contact Support</a></div>
   </div>
 </div>
 
@@ -688,7 +727,8 @@ const AQI_TIERS=[
 
 function renderAll(d){
   const w=d.weather,a=d.aqi;
-  const isNow=w.storm_now,isFcst=!isNow&&w.weather_coming;
+  // isNow: true only for real active events (rain/thunder/heat/wind), not fog/mist alone
+  const isNow=(w.storm_now&&!w.fog_now)||(w.has_thunder||w.curr_rain>0||w.wind_hazard||w.heat_hazard),isFcst=!isNow&&w.weather_coming;
 
   let bg=WX.cloud;
   if(w.has_thunder||w.curr_rain>10)bg=WX.storm;
@@ -743,7 +783,7 @@ function renderAll(d){
 
   g('wx-r').textContent=w.curr_rain+'mm';
   g('wx-r').style.color=w.curr_rain>5?'#ff5252':'#81d4fa';
-  g('wx-6').textContent=(w.rain_next_6h||'—')+'mm';
+  g('wx-6').textContent=(w.rain_next_6h!=null?w.rain_next_6h:'—')+'mm';
   g('wx-t').textContent=w.curr_temp+'°';
 
   if(a&&a.aqi){
@@ -762,7 +802,14 @@ function renderAll(d){
   g('ml-b').textContent=d.ml_active?'ML Active':'Rule-Based';
   const now=new Date();
   const hhmm=`${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')} IST`;
-  g('upd').textContent=`Last synced: ${hhmm}`;g('upd2').textContent=`Last synced: ${hhmm}`;
+  g('upd').textContent=`Last synced: ${hhmm}`;
+  // update loading screen stats for next load
+  const lovAreas=g('lov-k-areas');const lovIss=g('lov-k-issues');
+  const lovRisk=g('lov-k-risk');const lovAqi=g('lov-k-aqi');
+  if(lovAreas)lovAreas.textContent=d.areas.length;
+  if(lovIss)lovIss.textContent=d.issues_analysed;
+  if(lovRisk)lovRisk.textContent=d.areas.filter(x=>x.overall_risk>=1).length;
+  if(lovAqi&&d.aqi&&d.aqi.aqi)lovAqi.textContent=d.aqi.aqi;g('upd2').textContent=`Last synced: ${hhmm}`;
   g('blt-txt').textContent=d.ai_bulletin;
   const modeEl=g('ai-mode-text');
   if(isNow)modeEl.textContent='AI PREDICTION · LIVE NOW';
@@ -883,7 +930,7 @@ function buildAiStmt(d,w,isNow,isFcst){
     else if(w.wind_hazard)stmt=`High winds (<span class="red">${w.curr_gust}km/h</span>). Electrical infrastructure and trees face immediate risk.`;
     else if(w.curr_temp>=44)stmt=`<span class="red">Extreme heat ${w.curr_temp}°C</span>. Electrical grid under stress — demand surge risk across aged infrastructure areas.`;
     else if(w.curr_temp>=40)stmt=`<span class="red">Heatwave ${w.curr_temp}°C</span>. Aged electrical infrastructure faces grid stress. DISCOM should pre-position teams immediately.`;
-    else{const atRisk=d.areas.filter(a=>a.overall_risk>=1).length;stmt=`${w.current_condition}. ${atRisk} areas with elevated risk based on open civic issues.`;}
+    else{const monitored=d.areas.length;const atRisk=d.areas.filter(a=>a.overall_risk>=1).length;stmt=`${w.current_condition} — monitoring ${monitored} Delhi areas · ${d.issues_analysed} open civic issues${atRisk>0?' · '+atRisk+' areas flagged':' · baseline risk'}.`;}
   }else if(isFcst){
     const rain=w.max_3h_rain||0;const temp=w.max_temp_24h||w.curr_temp;
     if(w.thunder_soon)stmt=`AI predicts <span class="red">thunderstorm at ${w.worst_rain_time||'later today'}</span>. Flood and sewage overflow risk is high. DJB teams should deploy before storm arrives.`;
@@ -1005,24 +1052,22 @@ function showDetail(label){
 
   const rows=(list,isUrgent,isSchedule)=>list.map(a=>{
     const s=a.scores[label]||0;
-    const issues=(a.affected_issues||[]).filter(x=>x.risk_label===label).slice(0,3)
+    const issues=(a.affected_issues||[]).slice(0,3)
       .map(iss=>`<span class="iss ${iss.severity==='high'?'hi':''}">#AP-${iss.id}</span>`).join('');
     const t=a.time_to_impact_mins<999?`~${a.time_to_impact_mins} min`:'Lower risk';
     const btnHtml=isUrgent
-      ?`<button class="dispatch-btn dispatch-r" onclick="event.stopPropagation();alert('Dispatching to ${a.area}')">Dispatch</button>`
-      :isSchedule?`<button class="queue-btn" onclick="event.stopPropagation();alert('Queued: ${a.area}')">Queue Task</button>`:'';
-    return `<div class="arow">
-      <div class="arow-thumb" style="background:${CARD_VISUALS[label]?.bg||'#1565c0'};display:flex;align-items:center;justify-content:center;border-radius:9px"><span style="font-size:24px">${CARD_VISUALS[label]?.emoji||'⚠️'}</span></div>
+      ?`<button class="dispatch-btn" onclick="event.stopPropagation();onAreaClick('${a.area}','${label}',${s})">Dispatch</button>`
+      :isSchedule?`<button class="queue-btn" onclick="event.stopPropagation();onAreaClick('${a.area}','${label}',${s})">Queue</button>`:'';
+    return `<div class="arow" onclick="onAreaClick('${a.area}','${label}',${s})">
       <div>
         <div style="display:flex;align-items:center;margin-bottom:3px">
           <div class="arow-name">${a.area}</div>
-          <span class="arow-badge ${hi(s)?'rl-r':'rl-b'}" style="background:${hi(s)?'#fdecea':'#e3f2fd'};color:${sc(s)}">${s>=75?'CRITICAL':s>=50?'HIGH RISK':'AT RISK'}</span>
+          <span class="arow-badge">${s>=75?'Critical':s>=50?'High':s>=25?'Medium':'Low'}</span>
         </div>
-        <div class="arow-meta">Deploy: ${info.dept} · Impact: ${t}</div>
-        ${issues?`<div class="arow-iss">${issues}</div>`:''}
-        <div class="arow-action"><strong>${isUrgent?'Immediate action required':'Schedule deployment'}</strong> · ${a.drain_quality} drainage · ${a.open_issues_count} open issues</div>
+        <div class="arow-meta">${info.dept} · ${t} · ${a.drain_quality||'—'} drainage · ${a.open_issues||0} issues</div>
+        ${issues?`<div class="arow-iss" style="margin-top:4px">${issues}</div>`:''}
       </div>
-      <div class="arow-score" style="color:${sc(s)}">${s}</div>
+      <div class="arow-score">${s}</div>
       <div>${btnHtml}</div>
     </div>`;
   }).join('');
@@ -1139,7 +1184,7 @@ function renderMap(){
           <div style="font-size:14px;font-weight:700;margin-bottom:4px">${a.area}</div>
           <div style="font-size:20px;font-weight:700;color:${c};margin-bottom:6px">${a.overall_risk}/100</div>
           ${top2.map(([l,s])=>`<div style="font-size:11px;margin-bottom:2px">${LD[l]?.name||l}: <strong>${s}</strong></div>`).join('')}
-          <div style="font-size:11px;color:#5a6a7a;margin-top:5px">${a.open_issues_count} open issues</div>
+          <div style="font-size:11px;color:#5a6a7a;margin-top:5px">${a.open_issues||0} open issues</div>
         </div>`).addTo(MM));
     });
   },200);
@@ -1170,6 +1215,148 @@ function showMap(){
 
 let USER_LAT=null,USER_LNG=null;
 
+
+// ═══════════════════════════════════════════════════════
+//  DETAIL PAGE — area click + AI chatbot
+// ═══════════════════════════════════════════════════════
+let _chatLabel='', _chatArea='', _chatScore=0, _chatHistory=[];
+
+const WHAT_HAPPENS={
+  label_flood:[
+    {icon:'💧',txt:'Roads will waterlog within 20–40 minutes of heavy rain',time:'0–40 min',color:'#e65100'},
+    {icon:'🚗',txt:'Traffic will be severely disrupted on low-lying roads',time:'30–60 min',color:'#e65100'},
+    {icon:'🏠',txt:'Ground floor properties face flood water entry risk',time:'1–3 hours',color:'#c62828'},
+    {icon:'🚰',txt:'Drainage overflow will contaminate water supply lines',time:'2–6 hours',color:'#c62828'},
+  ],
+  label_pothole_worsen:[
+    {icon:'🕳',txt:'Existing potholes will expand significantly under rain',time:'0–2 hours',color:'#e65100'},
+    {icon:'🚗',txt:'Vehicle damage risk increases — tyre and axle impacts',time:'Immediate',color:'#e65100'},
+    {icon:'🛵',txt:'Two-wheeler accidents likely on affected stretches',time:'Immediate',color:'#c62828'},
+    {icon:'🏗',txt:'Road surface delamination will require major repair',time:'24–72 hours',color:'#374151'},
+  ],
+  label_sewage_overflow:[
+    {icon:'🚨',txt:'Sewage will overflow onto streets from blocked drains',time:'0–30 min',color:'#c62828'},
+    {icon:'💧',txt:'Water contamination risk in nearby supply lines',time:'1–4 hours',color:'#c62828'},
+    {icon:'🤒',txt:'Gastroenteritis and waterborne disease risk rises sharply',time:'12–48 hours',color:'#e65100'},
+    {icon:'🏥',txt:'Hospitals in area should prepare for increased admissions',time:'24–72 hours',color:'#374151'},
+  ],
+  label_garbage_flood:[
+    {icon:'🗑',txt:'Garbage will float and block drainage outlets',time:'0–1 hour',color:'#e65100'},
+    {icon:'🦟',txt:'Standing water with waste accelerates mosquito breeding',time:'24–48 hours',color:'#e65100'},
+    {icon:'💨',txt:'Disease vectors will spread to adjacent residential areas',time:'48–96 hours',color:'#c62828'},
+    {icon:'🧹',txt:'Post-rain cleanup will require major MCD deployment',time:'After rain',color:'#374151'},
+  ],
+  label_elec_hazard:[
+    {icon:'⚡',txt:'Exposed wiring and junction boxes face short-circuit risk',time:'Immediate',color:'#c62828'},
+    {icon:'💡',txt:'Power outages likely due to grid overload or fault',time:'0–2 hours',color:'#e65100'},
+    {icon:'⚠️',txt:'Electrocution risk in waterlogged areas with open wiring',time:'During rain',color:'#c62828'},
+    {icon:'🏥',txt:'DISCOM teams must isolate vulnerable feeders before storm',time:'Before rain',color:'#374151'},
+  ],
+};
+
+function onAreaClick(area, label, score){
+  _chatArea=area; _chatLabel=label; _chatScore=score;
+  // update what-panel
+  const items=WHAT_HAPPENS[label]||WHAT_HAPPENS.label_flood;
+  g('det-what-items').innerHTML=items.map(it=>`
+    <div class="what-item">
+      <div class="what-dot" style="background:${it.color}"></div>
+      <div>
+        <div class="what-txt">${it.icon} ${it.txt}</div>
+        <div class="what-time">${it.time}</div>
+      </div>
+    </div>`).join('');
+  g('det-what-panel').style.borderLeft='3px solid var(--blue)';
+  // seed chatbot
+  const info=LD[label]||{};
+  const intro=`${area} — risk score ${score}/100. ${info.name||label} risk identified. Ask me anything about what will happen here or what action to take.`;
+  _chatHistory=[{role:'assistant',content:intro}];
+  const msgs=g('det-chat-msgs');
+  msgs.innerHTML=`<div class="ai-msg-ai">${intro}</div>`;
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function toggleFloatChat(){
+  const panel=g('float-chat-panel');
+  panel.style.display=panel.style.display==='flex'?'none':'flex';
+}
+
+async function sendChat(){
+  const inp=g('det-chat-input');
+  const q=inp.value.trim();
+  if(!q)return;
+  inp.value='';
+  const msgs=g('det-chat-msgs');
+  msgs.innerHTML+=`<div class="ai-msg-user">${q}</div>`;
+  const typingId='chat-t-'+Date.now();
+  msgs.innerHTML+=`<div class="ai-msg-ai" id="${typingId}" style="color:#9ca3af">Thinking...</div>`;
+  msgs.scrollTop=msgs.scrollHeight;
+  _chatHistory.push({role:'user',content:q});
+  try{
+    const w=D?D.weather:{};
+    // Route through Flask backend — uses Groq API server-side (no CORS issue)
+    const res=await fetch('/api/chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        area:_chatArea,
+        label:_chatLabel,
+        score:_chatScore,
+        weather_condition:w.current_condition||'',
+        weather_temp:w.curr_temp||0,
+        weather_rain:w.curr_rain||0,
+        question:q,
+        history:_chatHistory.slice(-6)
+      })
+    });
+    const data=await res.json();
+    const reply=data.reply||data.error||'No response.';
+    _chatHistory.push({role:'assistant',content:reply});
+    const el=g(typingId);
+    if(el){el.textContent=reply;el.style.color='';}
+    else msgs.innerHTML+=`<div class="ai-msg-ai">${reply}</div>`;
+  }catch(e){
+    const el=g(typingId);
+    if(el)el.textContent='Could not reach server. Try again.';
+  }
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+
+// ═══════════════════════════════════════════════════════
+//  PDF EXPORT
+// ═══════════════════════════════════════════════════════
+async function exportPDF(){
+  const btn=g('pdf-btn');
+  btn.textContent='Generating…';btn.disabled=true;
+  try{
+    const res=await fetch('/api/export-pdf',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        areas:D?D.areas:[],
+        weather:D?D.weather:{},
+        aqi:D?D.aqi:null,
+        ai_bulletin:D?D.ai_bulletin:'',
+        issues_analysed:D?D.issues_analysed:0,
+        generated_at:D?D.generated_at:new Date().toISOString(),
+      })
+    });
+    if(!res.ok)throw new Error('Server error '+res.status);
+    const blob=await res.blob();
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download=`CivicAlert_Report_${new Date().toISOString().slice(0,10)}.pdf`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }catch(e){
+    alert('PDF export failed: '+e.message);
+  }finally{
+    btn.innerHTML='<span>📄</span> Export PDF';btn.disabled=false;
+  }
+}
+
 document.addEventListener('DOMContentLoaded',()=>{
   if(navigator.geolocation){
     navigator.geolocation.getCurrentPosition(
@@ -1181,5 +1368,37 @@ document.addEventListener('DOMContentLoaded',()=>{
   setInterval(()=>run(false),120000);
 });
 </script>
+
+<!-- ── FLOATING AI CHATBOT ──────────────────────────────── -->
+<div id="float-chat-btn" onclick="toggleFloatChat()" style="
+  position:fixed;bottom:24px;right:24px;z-index:9000;
+  width:52px;height:52px;border-radius:50%;
+  background:var(--blue);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;cursor:pointer;
+  box-shadow:0 4px 16px rgba(0,102,255,.35);
+  border:none;transition:transform .15s">💬</div>
+
+<div id="float-chat-panel" style="
+  position:fixed;bottom:88px;right:24px;z-index:9000;
+  width:320px;background:#fff;border-radius:12px;
+  border:1px solid #e5e7eb;
+  box-shadow:0 8px 32px rgba(0,0,0,.12);
+  display:none;flex-direction:column;overflow:hidden">
+  <div style="padding:12px 14px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between">
+    <span style="font-size:13px;font-weight:700;color:#111">AI Assistant</span>
+    <button onclick="toggleFloatChat()" style="background:none;border:none;font-size:16px;cursor:pointer;color:#9ca3af">✕</button>
+  </div>
+  <div id="det-chat-msgs" style="height:240px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px">
+    <div class="ai-msg-ai">Click any area in the Response Timeline to get AI guidance on what will happen and what to do.</div>
+  </div>
+  <div style="display:flex;border-top:1px solid #e5e7eb">
+    <input type="text" id="det-chat-input"
+      placeholder="Ask about this threat…"
+      onkeydown="if(event.key==='Enter')sendChat()"
+      style="flex:1;padding:10px 12px;font-size:12px;border:none;outline:none;font-family:inherit;color:#111"/>
+    <button onclick="sendChat()" style="padding:10px 16px;background:var(--blue);color:#fff;border:none;font-size:12px;font-weight:600;cursor:pointer">Ask</button>
+  </div>
+</div>
 </body>
 </html>

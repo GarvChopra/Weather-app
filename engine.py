@@ -47,43 +47,102 @@ def fetch_issues_from_postgres(database_url, limit=500):
 
 
 # ── DELHI AREA PROFILES ───────────────────────────────────────
+# drain:    0=none, 1=poor, 2=moderate, 3=good
+# elev:     0=low/flood-prone, 1=mid, 2=high/safe
+# road_age: 0=new(<2yr), 1=5yr, 2=10yr, 3=old(>15yr)
+# infra_age:0=new, 1=5yr, 2=10yr, 3=old
+# wp:       0=low, 1=medium, 2=high waterlogging potential
+# pop:      0=sparse, 1=medium, 2=dense
+# zone:     NORTH/SOUTH/EAST/WEST/CENTRE/NW/NE/SW/SE
+
 DELHI_AREAS = {
-    'Chandni Chowk':   {'lat':28.6506,'lng':77.2334,'drain':0,'elev':0,'road_age':3,'infra_age':3,'wp':2,'pop':2},
-    'Kashmere Gate':   {'lat':28.6671,'lng':77.2276,'drain':0,'elev':0,'road_age':3,'infra_age':3,'wp':2,'pop':2},
-    'Paharganj':       {'lat':28.6448,'lng':77.2167,'drain':0,'elev':0,'road_age':3,'infra_age':3,'wp':2,'pop':2},
-    'Connaught Place': {'lat':28.6315,'lng':77.2167,'drain':2,'elev':1,'road_age':2,'infra_age':2,'wp':2,'pop':1},
-    'Karol Bagh':      {'lat':28.6514,'lng':77.1907,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':2,'pop':2},
-    'Rohini':          {'lat':28.7480,'lng':77.0670,'drain':2,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':2},
-    'Pitampura':       {'lat':28.7010,'lng':77.1320,'drain':2,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':2},
-    'Model Town':      {'lat':28.7120,'lng':77.1900,'drain':2,'elev':1,'road_age':1,'infra_age':2,'wp':1,'pop':1},
-    'Civil Lines':     {'lat':28.6800,'lng':77.2230,'drain':2,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':1},
-    'Mukherjee Nagar': {'lat':28.7040,'lng':77.2080,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':2},
-    'Saket':           {'lat':28.5245,'lng':77.2066,'drain':3,'elev':2,'road_age':1,'infra_age':1,'wp':1,'pop':1},
-    'Malviya Nagar':   {'lat':28.5355,'lng':77.2010,'drain':2,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':1},
-    'Greater Kailash': {'lat':28.5494,'lng':77.2436,'drain':3,'elev':2,'road_age':1,'infra_age':1,'wp':1,'pop':1},
-    'Hauz Khas':       {'lat':28.5494,'lng':77.2001,'drain':3,'elev':2,'road_age':1,'infra_age':1,'wp':1,'pop':1},
-    'Lajpat Nagar':    {'lat':28.5700,'lng':77.2433,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':2,'pop':2},
-    'Nehru Place':     {'lat':28.5491,'lng':77.2543,'drain':2,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':1},
-    'Kalkaji':         {'lat':28.5366,'lng':77.2590,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':2},
-    'Okhla':           {'lat':28.5244,'lng':77.2860,'drain':0,'elev':0,'road_age':2,'infra_age':2,'wp':1,'pop':2},
-    'Mehrauli':        {'lat':28.5244,'lng':77.1855,'drain':0,'elev':0,'road_age':3,'infra_age':3,'wp':1,'pop':2},
-    'Vasant Kunj':     {'lat':28.5205,'lng':77.1575,'drain':3,'elev':2,'road_age':1,'infra_age':1,'wp':1,'pop':1},
-    'Vasant Vihar':    {'lat':28.5621,'lng':77.1567,'drain':3,'elev':2,'road_age':1,'infra_age':1,'wp':1,'pop':0},
-    'Dwarka':          {'lat':28.5823,'lng':77.0500,'drain':2,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':2},
-    'Janakpuri':       {'lat':28.6219,'lng':77.0878,'drain':2,'elev':1,'road_age':2,'infra_age':1,'wp':1,'pop':2},
-    'Rajouri Garden':  {'lat':28.6465,'lng':77.1150,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':2,'pop':2},
-    'Punjabi Bagh':    {'lat':28.6708,'lng':77.1311,'drain':2,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':1},
-    'Patel Nagar':     {'lat':28.6548,'lng':77.1630,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':2,'pop':2},
-    'Mayur Vihar':     {'lat':28.6096,'lng':77.2946,'drain':2,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':2},
-    'Preet Vihar':     {'lat':28.6455,'lng':77.2927,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':2},
-    'Shahdara':        {'lat':28.6695,'lng':77.2993,'drain':0,'elev':0,'road_age':3,'infra_age':3,'wp':2,'pop':2},
-    'Laxmi Nagar':     {'lat':28.6330,'lng':77.2780,'drain':1,'elev':0,'road_age':2,'infra_age':2,'wp':2,'pop':2},
-    'Lodhi Colony':    {'lat':28.5931,'lng':77.2257,'drain':3,'elev':2,'road_age':1,'infra_age':1,'wp':1,'pop':0},
-    'Nizamuddin':      {'lat':28.5890,'lng':77.2480,'drain':1,'elev':0,'road_age':2,'infra_age':3,'wp':2,'pop':2},
-    'Sarojini Nagar':  {'lat':28.5765,'lng':77.1954,'drain':2,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':1},
-    'INA':             {'lat':28.5741,'lng':77.2092,'drain':2,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':1},
-    'Defence Colony':  {'lat':28.5740,'lng':77.2310,'drain':3,'elev':2,'road_age':1,'infra_age':1,'wp':1,'pop':0},
-    'RK Puram':        {'lat':28.5649,'lng':77.1700,'drain':3,'elev':2,'road_age':1,'infra_age':1,'wp':1,'pop':1},
+    # ── CENTRE ────────────────────────────────────────────────────
+    'Chandni Chowk':      {'lat':28.6506,'lng':77.2334,'drain':0,'elev':0,'road_age':3,'infra_age':3,'wp':2,'pop':2,'zone':'CENTRE'},
+    'Kashmere Gate':      {'lat':28.6671,'lng':77.2276,'drain':0,'elev':0,'road_age':3,'infra_age':3,'wp':2,'pop':2,'zone':'CENTRE'},
+    'Paharganj':          {'lat':28.6448,'lng':77.2167,'drain':0,'elev':0,'road_age':3,'infra_age':3,'wp':2,'pop':2,'zone':'CENTRE'},
+    'Connaught Place':    {'lat':28.6315,'lng':77.2167,'drain':2,'elev':1,'road_age':2,'infra_age':2,'wp':2,'pop':1,'zone':'CENTRE'},
+    'Karol Bagh':         {'lat':28.6514,'lng':77.1907,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':2,'pop':2,'zone':'CENTRE'},
+    'Patel Nagar':        {'lat':28.6548,'lng':77.1630,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':2,'pop':2,'zone':'CENTRE'},
+    'Daryaganj':          {'lat':28.6420,'lng':77.2440,'drain':0,'elev':0,'road_age':3,'infra_age':3,'wp':2,'pop':2,'zone':'CENTRE'},
+    'Jama Masjid':        {'lat':28.6507,'lng':77.2334,'drain':0,'elev':0,'road_age':3,'infra_age':3,'wp':2,'pop':2,'zone':'CENTRE'},
+    'New Delhi Station':  {'lat':28.6421,'lng':77.2197,'drain':1,'elev':0,'road_age':2,'infra_age':2,'wp':2,'pop':2,'zone':'CENTRE'},
+    'Minto Road':         {'lat':28.6384,'lng':77.2290,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':1,'zone':'CENTRE'},
+    'Lodhi Colony':       {'lat':28.5931,'lng':77.2257,'drain':3,'elev':2,'road_age':1,'infra_age':1,'wp':1,'pop':0,'zone':'CENTRE'},
+    'Sarojini Nagar':     {'lat':28.5765,'lng':77.1954,'drain':2,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':1,'zone':'CENTRE'},
+    'INA':                {'lat':28.5741,'lng':77.2092,'drain':2,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':1,'zone':'CENTRE'},
+
+    # ── NORTH ─────────────────────────────────────────────────────
+    'Civil Lines':        {'lat':28.6800,'lng':77.2230,'drain':2,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':1,'zone':'NORTH'},
+    'Mukherjee Nagar':    {'lat':28.7040,'lng':77.2080,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':2,'zone':'NORTH'},
+    'Model Town':         {'lat':28.7120,'lng':77.1900,'drain':2,'elev':1,'road_age':1,'infra_age':2,'wp':1,'pop':1,'zone':'NORTH'},
+    'Pitampura':          {'lat':28.7010,'lng':77.1320,'drain':2,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':2,'zone':'NORTH'},
+    'Burari':             {'lat':28.7380,'lng':77.2010,'drain':1,'elev':0,'road_age':2,'infra_age':2,'wp':2,'pop':2,'zone':'NORTH'},
+    'Timarpur':           {'lat':28.7150,'lng':77.2110,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':2,'zone':'NORTH'},
+    'Bara Hindu Rao':     {'lat':28.6720,'lng':77.2150,'drain':0,'elev':0,'road_age':3,'infra_age':3,'wp':2,'pop':2,'zone':'NORTH'},
+
+    # ── NORTH-WEST ────────────────────────────────────────────────
+    'Rohini':             {'lat':28.7480,'lng':77.0670,'drain':2,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':2,'zone':'NW'},
+    'Shalimar Bagh':      {'lat':28.7200,'lng':77.1500,'drain':2,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':2,'zone':'NW'},
+    'Ashok Vihar':        {'lat':28.6950,'lng':77.1750,'drain':2,'elev':1,'road_age':1,'infra_age':2,'wp':1,'pop':2,'zone':'NW'},
+    'Wazirpur':           {'lat':28.6900,'lng':77.1600,'drain':1,'elev':0,'road_age':2,'infra_age':2,'wp':2,'pop':2,'zone':'NW'},
+    'Netaji Subhash Pl':  {'lat':28.6950,'lng':77.1400,'drain':2,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':2,'zone':'NW'},
+    'Narela':             {'lat':28.8510,'lng':77.0940,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':1,'zone':'NW'},
+    'Bawana':             {'lat':28.7990,'lng':77.0380,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':1,'zone':'NW'},
+    'Alipur':             {'lat':28.7970,'lng':77.1340,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':1,'zone':'NW'},
+
+    # ── WEST ──────────────────────────────────────────────────────
+    'Punjabi Bagh':       {'lat':28.6708,'lng':77.1311,'drain':2,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':1,'zone':'WEST'},
+    'Rajouri Garden':     {'lat':28.6465,'lng':77.1150,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':2,'pop':2,'zone':'WEST'},
+    'Janakpuri':          {'lat':28.6219,'lng':77.0878,'drain':2,'elev':1,'road_age':2,'infra_age':1,'wp':1,'pop':2,'zone':'WEST'},
+    'Dwarka':             {'lat':28.5823,'lng':77.0500,'drain':2,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':2,'zone':'WEST'},
+    'Uttam Nagar':        {'lat':28.6210,'lng':77.0590,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':2,'pop':2,'zone':'WEST'},
+    'Vikaspuri':          {'lat':28.6350,'lng':77.0710,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':2,'pop':2,'zone':'WEST'},
+    'Tilak Nagar':        {'lat':28.6440,'lng':77.1010,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':2,'pop':2,'zone':'WEST'},
+    'Subhash Nagar':      {'lat':28.6380,'lng':77.1120,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':2,'zone':'WEST'},
+    'Paschim Vihar':      {'lat':28.6710,'lng':77.0900,'drain':2,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':2,'zone':'WEST'},
+    'Nangloi':            {'lat':28.6720,'lng':77.0580,'drain':0,'elev':0,'road_age':2,'infra_age':2,'wp':2,'pop':2,'zone':'WEST'},
+    'Nihal Vihar':        {'lat':28.6760,'lng':77.0700,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':2,'zone':'WEST'},
+
+    # ── NORTH-EAST ────────────────────────────────────────────────
+    'Shahdara':           {'lat':28.6695,'lng':77.2993,'drain':0,'elev':0,'road_age':3,'infra_age':3,'wp':2,'pop':2,'zone':'NE'},
+    'Preet Vihar':        {'lat':28.6455,'lng':77.2927,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':2,'zone':'NE'},
+    'Vivek Vihar':        {'lat':28.6720,'lng':77.3150,'drain':1,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':2,'zone':'NE'},
+    'Gandhi Nagar':       {'lat':28.6620,'lng':77.2760,'drain':0,'elev':0,'road_age':3,'infra_age':3,'wp':2,'pop':2,'zone':'NE'},
+    'Geeta Colony':       {'lat':28.6530,'lng':77.2780,'drain':0,'elev':0,'road_age':2,'infra_age':2,'wp':2,'pop':2,'zone':'NE'},
+    'Anand Vihar':        {'lat':28.6470,'lng':77.3160,'drain':1,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':2,'zone':'NE'},
+
+    # ── EAST ──────────────────────────────────────────────────────
+    'Laxmi Nagar':        {'lat':28.6330,'lng':77.2780,'drain':1,'elev':0,'road_age':2,'infra_age':2,'wp':2,'pop':2,'zone':'EAST'},
+    'Mayur Vihar':        {'lat':28.6096,'lng':77.2946,'drain':2,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':2,'zone':'EAST'},
+    'Patparganj':         {'lat':28.6230,'lng':77.2990,'drain':1,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':2,'zone':'EAST'},
+    'IP Extension':       {'lat':28.6280,'lng':77.3120,'drain':1,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':2,'zone':'EAST'},
+    'Kondli':             {'lat':28.5980,'lng':77.3160,'drain':0,'elev':0,'road_age':2,'infra_age':2,'wp':2,'pop':2,'zone':'EAST'},
+
+    # ── SOUTH-EAST ────────────────────────────────────────────────
+    'Nizamuddin':         {'lat':28.5890,'lng':77.2480,'drain':1,'elev':0,'road_age':2,'infra_age':3,'wp':2,'pop':2,'zone':'SE'},
+    'Lajpat Nagar':       {'lat':28.5700,'lng':77.2433,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':2,'pop':2,'zone':'SE'},
+    'Defence Colony':     {'lat':28.5740,'lng':77.2310,'drain':3,'elev':2,'road_age':1,'infra_age':1,'wp':1,'pop':0,'zone':'SE'},
+    'Greater Kailash':    {'lat':28.5494,'lng':77.2436,'drain':3,'elev':2,'road_age':1,'infra_age':1,'wp':1,'pop':1,'zone':'SE'},
+    'Nehru Place':        {'lat':28.5491,'lng':77.2543,'drain':2,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':1,'zone':'SE'},
+    'Kalkaji':            {'lat':28.5366,'lng':77.2590,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':2,'zone':'SE'},
+    'Okhla':              {'lat':28.5244,'lng':77.2860,'drain':0,'elev':0,'road_age':2,'infra_age':2,'wp':1,'pop':2,'zone':'SE'},
+    'Sarita Vihar':       {'lat':28.5280,'lng':77.2930,'drain':1,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':2,'zone':'SE'},
+    'Badarpur':           {'lat':28.5000,'lng':77.2930,'drain':0,'elev':0,'road_age':2,'infra_age':2,'wp':2,'pop':2,'zone':'SE'},
+    'Tughlakabad':        {'lat':28.5050,'lng':77.2600,'drain':0,'elev':0,'road_age':2,'infra_age':2,'wp':2,'pop':2,'zone':'SE'},
+
+    # ── SOUTH ─────────────────────────────────────────────────────
+    'Saket':              {'lat':28.5245,'lng':77.2066,'drain':3,'elev':2,'road_age':1,'infra_age':1,'wp':1,'pop':1,'zone':'SOUTH'},
+    'Malviya Nagar':      {'lat':28.5355,'lng':77.2010,'drain':2,'elev':1,'road_age':1,'infra_age':1,'wp':1,'pop':1,'zone':'SOUTH'},
+    'Hauz Khas':          {'lat':28.5494,'lng':77.2001,'drain':3,'elev':2,'road_age':1,'infra_age':1,'wp':1,'pop':1,'zone':'SOUTH'},
+    'Mehrauli':           {'lat':28.5244,'lng':77.1855,'drain':0,'elev':0,'road_age':3,'infra_age':3,'wp':1,'pop':2,'zone':'SOUTH'},
+    'Vasant Kunj':        {'lat':28.5205,'lng':77.1575,'drain':3,'elev':2,'road_age':1,'infra_age':1,'wp':1,'pop':1,'zone':'SOUTH'},
+    'Chhatarpur':         {'lat':28.4980,'lng':77.1740,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':1,'zone':'SOUTH'},
+    'Sangam Vihar':       {'lat':28.5130,'lng':77.2200,'drain':0,'elev':0,'road_age':2,'infra_age':2,'wp':2,'pop':2,'zone':'SOUTH'},
+    'Ambedkar Nagar':     {'lat':28.5220,'lng':77.2130,'drain':1,'elev':1,'road_age':2,'infra_age':2,'wp':1,'pop':2,'zone':'SOUTH'},
+
+    # ── SOUTH-WEST ────────────────────────────────────────────────
+    'Vasant Vihar':       {'lat':28.5621,'lng':77.1567,'drain':3,'elev':2,'road_age':1,'infra_age':1,'wp':1,'pop':0,'zone':'SW'},
+    'RK Puram':           {'lat':28.5649,'lng':77.1700,'drain':3,'elev':2,'road_age':1,'infra_age':1,'wp':1,'pop':1,'zone':'SW'},
 }
 
 # ── RISK LABELS ───────────────────────────────────────────────
@@ -171,7 +230,7 @@ def _fetch_weatherapi(lat, lng, api_key):
             params={
                 'key':   api_key,
                 'q':     f'{lat},{lng}',
-                'days':  1,
+                'days':  2,
                 'aqi':   'no',
                 'alerts':'yes',
             },
@@ -235,8 +294,11 @@ def _parse_weatherapi(raw):
     Identical output shape to _parse_openmeteo() so all downstream code works unchanged.
     """
     c    = raw.get('current', {})
-    fc   = raw.get('forecast', {}).get('forecastday', [{}])[0]
+    forecastdays = raw.get('forecast', {}).get('forecastday', [{}])
+    fc   = forecastdays[0]                      # today
+    fc2  = forecastdays[1] if len(forecastdays) > 1 else {}  # tomorrow
     hrs  = fc.get('hour', [])
+    hrs2 = fc2.get('hour', [])   # tomorrow's hours for max temp/gust
     alts = raw.get('alerts', {}).get('alert', [])
 
     curr_temp  = float(c.get('temp_c')       or 25)
@@ -273,19 +335,22 @@ def _parse_weatherapi(raw):
     rain_now    = cond_code in _WAPI_ALL_RAIN
     fog_now     = cond_code in _WAPI_FOG
     wind_hazard = curr_gust >= 40
-    heat_hazard = curr_temp >= 40
-    storm_now   = thunder_now or rain_now or wind_hazard or heat_hazard or fog_now
+    # heat_hazard: current temp OR today's forecast max (catches morning/evening readings)
+    day_max_c   = float(fc.get('day', {}).get('maxtemp_c') or 0)
+    heat_hazard = curr_temp >= 40 or day_max_c >= 40
+    storm_now   = thunder_now or rain_now or wind_hazard or (curr_temp >= 40) or fog_now
+    # Note: heat_hazard is True even if storm_now=False — used for forecast bar
 
-    # Also check alerts for thunderstorm warning
+    # IMD alerts = FORECAST WARNING only, not live condition.
+    # Only condition code tells us what is happening RIGHT NOW.
+    # Alerts set thunder_soon (used for forecast bar), never thunder_now.
     has_alert_thunder = any(
         'thunder' in str(a.get('headline', '')).lower() or
         'thunder' in str(a.get('event', '')).lower()
         for a in alts
     )
-    if has_alert_thunder and not thunder_now:
-        thunder_now = True
-        storm_now   = True
-        print(f"[weather] IMD thunderstorm alert active: {alts[0].get('headline','')[:60]}")
+    if has_alert_thunder:
+        print(f"[weather] IMD alert (forecast, not live): {(alts[0].get('headline','') or alts[0].get('event',''))[:80]}")
 
     # WMO-equivalent code for ML model (maps WeatherAPI → approximate WMO)
     if cond_code in _WAPI_THUNDER_CODES:   curr_code = 95
@@ -320,11 +385,24 @@ def _parse_weatherapi(raw):
     _wrd = datetime.now() + timedelta(hours=worst_3h_start)
     worst_rain_day  = 'Today' if worst_3h_start <= 2 else _wrd.strftime('%a %d %b')
 
-    # Max temp and gust
-    max_temp_24h  = max(ht[:24]) if ht else curr_temp
-    max_temp_hour = ht[:24].index(max(ht[:24])) if ht and len(ht) >= 24 else 0
-    max_temp_time = (datetime.now() + timedelta(hours=max_temp_hour)).strftime('%I:%M %p')
-    max_gust_24h  = max(hg[:24]) if hg else curr_gust
+    # Max temp and gust — use today remaining + tomorrow to cover full 24h window
+    # WeatherAPI hourly is midnight-to-midnight; at 2pm only 10 hours remain today
+    now_h = datetime.now().hour
+    ht2   = [float(h.get('temp_c') or 25) for h in hrs2]  if hrs2 else []
+    hg2   = [float(h.get('gust_kph') or 0) for h in hrs2] if hrs2 else []
+    # remaining today from now_h onwards + first (24-remaining) hours of tomorrow
+    remaining_today = ht[now_h:]
+    fill_tomorrow   = ht2[:max(0, 24 - len(remaining_today))]
+    temp_window     = remaining_today + fill_tomorrow
+    gust_window_raw = hg[now_h:] + hg2[:max(0, 24 - len(hg[now_h:]))]
+
+    # Also use fc day max as authoritative daily max (WeatherAPI day summary)
+    day_max_temp = float(fc.get('day', {}).get('maxtemp_c') or 0)
+    max_temp_24h  = max(max(temp_window) if temp_window else curr_temp, day_max_temp)
+    max_temp_hour_idx = temp_window.index(max(temp_window)) if temp_window else 0
+    max_temp_time = (datetime.now() + timedelta(hours=max_temp_hour_idx)).strftime('%I:%M %p')
+    max_gust_24h  = max(max(gust_window_raw) if gust_window_raw else curr_gust,
+                        float(fc.get('day', {}).get('maxwind_kph') or 0))
 
     # Thunderstorm forecast from hourly codes
     thunder_soon = has_alert_thunder or any(c in _WAPI_THUNDER_CODES for c in hcc[:24])
@@ -754,6 +832,7 @@ def score_area(area_name, meta, weather, open_issues):
     tti_base    = max(0, 60 - overall_risk)
     time_to_impact_mins = tti_base if not using_forecast else max(30, tti_base * 2)
 
+    drain_labels = {0: 'None', 1: 'Poor', 2: 'Moderate', 3: 'Good'}
     return {
         'area':               area_name,
         'lat':                meta['lat'],
@@ -764,7 +843,20 @@ def score_area(area_name, meta, weather, open_issues):
         'top_score':          top_score,
         'time_to_impact_mins': time_to_impact_mins,
         'open_issues':        len(area_issues),
+        'open_issues_count':  len(area_issues),
         'issue_ids':          [str(i.get('id', '')) for i in area_issues[:5]],
+        'drain_quality':      drain_labels.get(meta['drain'], 'Unknown'),
+        'zone':               meta.get('zone', 'CENTRE'),
+        'affected_issues':    [
+            {
+                'id':         str(i.get('id', '')),
+                'tag':        i.get('tag', ''),
+                'severity':   i.get('severity', 'low'),
+                'description': str(i.get('description', '')),
+                'risk_label': top_risk,
+            }
+            for i in area_issues[:10]
+        ],
     }
 
 
@@ -848,15 +940,19 @@ def run_full_prediction(open_issues=None, groq_api_key=None, aqi_token='demo',
     _load_model()
     api_key = os.environ.get('WEATHER_API_KEY', '').strip()
     src_label = 'WeatherAPI' if api_key else 'Open-Meteo'
-    print(f"[engine] v4.4 · {len(DELHI_AREAS)} areas · {len(open_issues)} issues · source={src_label}"
+    print(f"[engine] v4.5 · {len(DELHI_AREAS)} areas · {len(open_issues)} issues · source={src_label}"
           + (f" · rain_override={rain_override_mm}mm" if rain_override_mm else ""))
 
     ZONES = {
-        'north':  (28.720, 77.130),
-        'south':  (28.530, 77.220),
-        'east':   (28.650, 77.295),
-        'west':   (28.610, 77.070),
-        'centre': (28.632, 77.217),
+        'centre': (28.632, 77.217),   # Connaught Place
+        'north':  (28.720, 77.200),   # Civil Lines / Burari
+        'nw':     (28.730, 77.090),   # Rohini / Shalimar Bagh
+        'west':   (28.630, 77.080),   # Janakpuri / Uttam Nagar
+        'sw':     (28.560, 77.160),   # Vasant Vihar / RK Puram
+        'south':  (28.510, 77.210),   # Saket / Sangam Vihar
+        'se':     (28.540, 77.270),   # Kalkaji / Badarpur
+        'east':   (28.630, 77.310),   # Mayur Vihar / Patparganj
+        'ne':     (28.660, 77.300),   # Shahdara / Vivek Vihar
     }
     if focus_lat is not None and focus_lng is not None:
         ZONES['officer'] = (focus_lat, focus_lng)
