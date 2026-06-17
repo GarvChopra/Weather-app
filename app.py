@@ -24,6 +24,7 @@ load_dotenv()
 from engine import (
     run_full_prediction, DELHI_AREAS,
     fetch_aqi, fetch_issues_from_postgres,
+    simulate_repair,
 )
 
 app = Flask(__name__)
@@ -743,6 +744,68 @@ def health():
         'officer_area':      gov.get('area') if gov else None,
     })
 
+
+
+@app.route('/api/simulate-repair', methods=['POST'])
+def api_simulate_repair():
+    """
+    Policy simulation: score area before and after fixing selected issues.
+    POST body: { area, issue_ids: [], rain_override_mm: 0 }
+    Returns: risk_reduction, residents_protected, cost, ROI, per-label deltas.
+    """
+    body         = request.get_json(silent=True) or {}
+    area         = body.get('area', '').strip()
+    issue_ids    = body.get('issue_ids', [])
+    rain_override= int(body.get('rain_override_mm') or 0)
+
+    if not area:
+        return jsonify({'error': 'area required'}), 400
+    if not issue_ids:
+        return jsonify({'error': 'issue_ids required — select at least one issue to fix'}), 400
+
+    issues, _ = _get_issues()
+
+    # Get live weather — check all cache entries (newest first)
+    # predict-for-officer stores under "lat,lng:0" keys, never 'default'
+    weather = {}
+    best_ts, best_entry = 0, None
+    for key, entry in _cache.items():
+        if isinstance(entry, dict) and entry.get('result') and entry.get('ts', 0) > best_ts:
+            best_ts = entry['ts']
+            best_entry = entry
+    if best_entry:
+        weather = best_entry['result'].get('weather', {})
+
+    # Apply rain override if requested
+    if rain_override > 0 and weather:
+        WMO_OVERRIDE = {5: 61, 25: 65, 40: 95}
+        override_code = WMO_OVERRIDE.get(rain_override, 63)
+        weather = dict(weather)
+        weather['curr_rain']    = float(rain_override)
+        weather['curr_code']    = override_code
+        weather['rain_next_3h'] = float(rain_override) * 2
+        weather['rain_next_6h'] = float(rain_override) * 3
+        weather['rain_24h']     = float(rain_override) * 8
+        weather['storm_now']    = rain_override >= 15
+        weather['weather_coming'] = True
+
+    # If still no weather, use a sensible Delhi summer fallback
+    # so simulation works even before first Run Analysis
+    if not weather:
+        print("[simulate] No cached weather — using fallback for simulation")
+        weather = {
+            'curr_rain': 0, 'curr_code': 1, 'curr_temp': 35,
+            'max_temp_24h': 40, 'curr_wind': 10, 'curr_gust': 15,
+            'curr_humid': 30, 'curr_press': 1005, 'press_trend': 0,
+            'curr_vis': 8000, 'rain_next_3h': 0, 'rain_next_6h': 0,
+            'rain_24h': 0, 'storm_now': False, 'weather_coming': False,
+            'thunder_now': False, 'thunder_soon': False,
+            'heat_hazard': True, 'wind_hazard': False,
+            'month': 6, 'hour': 14,
+        }
+
+    result = simulate_repair(area, issue_ids, issues, weather)
+    return jsonify(result)
 
 # ── ENTRY POINT ───────────────────────────────────────────────
 if __name__ == '__main__':

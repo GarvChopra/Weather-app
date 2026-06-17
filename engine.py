@@ -162,6 +162,102 @@ LABEL_DISPLAY = {
     'label_elec_hazard':     {'icon': '⚡', 'name': 'Electrical Hazard', 'dept': 'DISCOM',          'color': '#e65100'},
 }
 
+
+# ── AREA POPULATION (approx. residents per area) ──────────────
+AREA_POPULATION = {
+    "Chandni Chowk":220000,"Kashmere Gate":85000,"Paharganj":95000,
+    "Connaught Place":15000,"Karol Bagh":310000,"Daryaganj":120000,
+    "Jama Masjid":180000,"New Delhi Station":45000,"Minto Road":55000,
+    "Lodhi Colony":35000,"Sarojini Nagar":125000,"INA":80000,
+    "Patel Nagar":195000,"Civil Lines":90000,"Mukherjee Nagar":210000,
+    "Model Town":185000,"Pitampura":380000,"Burari":290000,
+    "Timarpur":165000,"Bara Hindu Rao":140000,"Rohini":580000,
+    "Shalimar Bagh":260000,"Ashok Vihar":195000,"Wazirpur":170000,
+    "Netaji Subhash Pl":120000,"Narela":145000,"Bawana":110000,
+    "Alipur":95000,"Punjabi Bagh":225000,"Rajouri Garden":320000,
+    "Janakpuri":410000,"Dwarka":720000,"Uttam Nagar":480000,
+    "Vikaspuri":380000,"Tilak Nagar":290000,"Subhash Nagar":185000,
+    "Paschim Vihar":310000,"Nangloi":390000,"Nihal Vihar":175000,
+    "Shahdara":350000,"Preet Vihar":265000,"Vivek Vihar":210000,
+    "Gandhi Nagar":195000,"Geeta Colony":180000,"Anand Vihar":220000,
+    "Laxmi Nagar":420000,"Mayur Vihar":390000,"Patparganj":280000,
+    "IP Extension":245000,"Kondli":195000,"Nizamuddin":115000,
+    "Lajpat Nagar":295000,"Defence Colony":65000,"Greater Kailash":155000,
+    "Nehru Place":45000,"Kalkaji":285000,"Okhla":310000,
+    "Sarita Vihar":195000,"Badarpur":275000,"Tughlakabad":165000,
+    "Saket":185000,"Malviya Nagar":220000,"Hauz Khas":145000,
+    "Mehrauli":235000,"Vasant Kunj":210000,"Chhatarpur":155000,
+    "Sangam Vihar":485000,"Ambedkar Nagar":295000,"Vasant Vihar":75000,
+    "RK Puram":195000,
+}
+
+REPAIR_COSTS = {
+    "pothole":40000,"sewage":85000,"water":65000,"garbage":12000,
+    "electricity":55000,"streetlight":35000,"tree":18000,
+    "traffic":25000,"noise":8000,"drain":75000,"other":45000,
+}
+
+EMERGENCY_MULTIPLIER = 5.2
+
+
+def simulate_repair(area_name, issue_ids_to_fix, all_issues, weather):
+    meta = DELHI_AREAS.get(area_name)
+    if not meta:
+        return {"error": "Unknown area: " + area_name}
+
+    issue_ids_set = {str(x) for x in issue_ids_to_fix}
+    fixed_issues     = [i for i in all_issues if str(i.get("id","")) in issue_ids_set]
+    remaining_issues = [i for i in all_issues if str(i.get("id","")) not in issue_ids_set]
+
+    baseline = score_area(area_name, meta, weather, all_issues)
+    improved = score_area(area_name, meta, weather, remaining_issues)
+
+    risk_reduction  = max(0, baseline["overall_risk"] - improved["overall_risk"])
+    pop             = AREA_POPULATION.get(area_name, 150000)
+    residents_saved = round(pop * (risk_reduction / 100))
+
+    repair_cost = sum(REPAIR_COSTS.get(i.get("tag","other"), 45000) for i in fixed_issues)
+    if repair_cost == 0 and fixed_issues:
+        repair_cost = len(fixed_issues) * 45000
+
+    emergency_cost_avoided = round(repair_cost * EMERGENCY_MULTIPLIER)
+    roi = round(emergency_cost_avoided / repair_cost, 1) if repair_cost > 0 else 0
+
+    score_changes = {
+        label: {
+            "before": baseline["scores"].get(label, 0),
+            "after":  improved["scores"].get(label, 0),
+            "delta":  baseline["scores"].get(label, 0) - improved["scores"].get(label, 0),
+        }
+        for label in LABELS
+    }
+
+    if roi >= 4:        recommendation = "Repair immediately - very high ROI"
+    elif roi >= 2.5:    recommendation = "Repair before next rain event"
+    elif roi >= 1.5:    recommendation = "Schedule within 7 days"
+    else:               recommendation = "Monitor - lower priority"
+
+    urgency_h = round(improved["time_to_impact_mins"] / 60, 1) if improved["time_to_impact_mins"] < 999 else None
+
+    return {
+        "area":                  area_name,
+        "issues_fixed":          len(fixed_issues),
+        "issues_fixed_list":     [{"id": i.get("id"), "tag": i.get("tag"), "description": str(i.get("description",""))[:60]} for i in fixed_issues],
+        "baseline_risk":         baseline["overall_risk"],
+        "improved_risk":         improved["overall_risk"],
+        "risk_reduction":        risk_reduction,
+        "score_changes":         score_changes,
+        "residents_protected":   residents_saved,
+        "population":            pop,
+        "repair_cost_inr":       repair_cost,
+        "emergency_avoided_inr": emergency_cost_avoided,
+        "roi":                   roi,
+        "recommendation":        recommendation,
+        "urgency_hours":         urgency_h,
+        "deploy_teams":          max(1, round(len(fixed_issues) / 2)),
+        "estimated_hours":       max(2, len(fixed_issues) * 3),
+    }
+
 # ── MODEL ─────────────────────────────────────────────────────
 _model = None
 _encoder = None
@@ -404,13 +500,13 @@ def _parse_weatherapi(raw):
     max_gust_24h  = max(max(gust_window_raw) if gust_window_raw else curr_gust,
                         float(fc.get('day', {}).get('maxwind_kph') or 0))
 
-    # Thunderstorm forecast from hourly codes
-    thunder_soon = has_alert_thunder or any(c in _WAPI_THUNDER_CODES for c in hcc[:24])
+    # Thunderstorm forecast — condition codes ONLY, no IMD alerts
+    # thunder_now: condition code says it's thundering RIGHT NOW
+    # thunder_soon: hourly forecast codes show thunder coming in next 24h
+    thunder_soon = any(c in _WAPI_THUNDER_CODES for c in hcc[:24])
     thunder_hour = next((i for i, c in enumerate(hcc[:24]) if c in _WAPI_THUNDER_CODES), None)
-    if thunder_soon and not has_alert_thunder and thunder_hour is not None:
+    if thunder_soon and thunder_hour is not None:
         thunder_time = (datetime.now() + timedelta(hours=thunder_hour)).strftime('%I:%M %p')
-    elif has_alert_thunder:
-        thunder_time = 'active now'
     else:
         thunder_time = None
 
@@ -762,12 +858,27 @@ def score_area(area_name, meta, weather, open_issues):
             except Exception:
                 pass
 
+            # ── DERIVED FEATURES from issue inventory ─────────────────
+            high_sev    = sum(1 for i in area_issues if i.get('severity') == 'high')
+            escalated_c = sum(1 for i in area_issues if i.get('escalated') or i.get('status') == 'escalated')
+            upvote_mom  = sum(int(i.get('upvotes') or 0) for i in area_issues)
+            ages_h      = [(now_ts - float(i.get('timestamp') or now_ts)) / 3600 for i in area_issues]
+            avg_age_h   = round(sum(ages_h) / len(ages_h), 1) if ages_h else 0.0
+            complaint_vel_24h = sum(
+                1 for i in area_issues
+                if now_ts - float(i.get('timestamp') or 0) < 86400
+            )
+            # Drought proxy — no rain in last 24h and next 6h
+            drought_flag = int(weather.get('rain_24h', 0) < 0.5 and weather.get('rain_next_6h', 0) < 0.5)
+            # Monsoon season flag (June-September Delhi monsoon)
+            is_monsoon   = int(weather['month'] in [6, 7, 8, 9])
+
             row = {
                 'area_enc':    ae,
                 'drain':       meta['drain'],
                 'elev':        meta['elev'],
                 'road_age':    meta['road_age'],
-                'infra_age':   meta['infra_age'],
+                'infra_age':   meta.get('infra_age', 1),
                 'wp':          meta['wp'],
                 'pop':         meta['pop'],
                 'month':       weather['month'],
@@ -777,6 +888,7 @@ def score_area(area_name, meta, weather, open_issues):
                 'rain_6h':     weather['rain_next_6h'],
                 'rain_24h':    weather['rain_24h'],
                 'temp':        eff_temp,
+                'max_temp_24h': weather.get('max_temp_24h', eff_temp),   # NEW
                 'wind':        weather.get('curr_wind', 0),
                 'gust':        eff_gust,
                 'humid':       weather['curr_humid'],
@@ -786,12 +898,20 @@ def score_area(area_name, meta, weather, open_issues):
                 'weathercode': eff_code,
                 'storm_now':   int(weather.get('storm_now', False) or using_forecast),
                 'thunder_now': int(eff_thunder),
+                'heat_hazard': int(weather.get('heat_hazard', False)),   # NEW
+                'is_monsoon':  is_monsoon,                               # NEW
+                'drought_flag': drought_flag,                            # NEW
                 'open_water':  w_open,
                 'open_sewage': s_open,
                 'open_pothole': p_open,
                 'open_garbage': g_open,
                 'open_elec':   e_open,
+                'open_high_sev': high_sev,                               # NEW
+                'open_escalated': escalated_c,                           # NEW
+                'avg_issue_age_h': avg_age_h,                            # NEW
+                'upvote_momentum': min(upvote_mom, 200),                 # NEW (capped)
                 'complaint_vel': complaint_vel,
+                'complaint_vel_24h': complaint_vel_24h,                  # NEW
             }
 
             fd    = pd.DataFrame([row])[_features]
@@ -824,6 +944,32 @@ def score_area(area_name, meta, weather, open_issues):
             'label_garbage_flood':   min(100, round((rain / 20) * 50 + g_open * 6)),
             'label_elec_hazard':     min(100, round((eff_gust / 60) * 70 + (50 if eff_thunder else 0) + e_open * 8)),
         }
+
+    # ── HEATWAVE AMPLIFIER — applied after ML scores ────────────
+    # ML model trained on rain data gives low scores in dry heatwave.
+    # Heatwave directly causes electrical hazard via AC overload + old wiring.
+    # Boost scores proportionally when temp >= 40°C.
+    if scores:
+        heat = weather.get('max_temp_24h', weather.get('curr_temp', 25))
+        if heat >= 44:
+            heat_mult = 1.35   # extreme heat — transformers blow
+        elif heat >= 42:
+            heat_mult = 1.20
+        elif heat >= 40:
+            heat_mult = 1.10
+        else:
+            heat_mult = 1.0
+
+        if heat_mult > 1.0:
+            # Electrical hazard gets full amplification
+            scores['label_elec_hazard'] = min(100, round(
+                scores.get('label_elec_hazard', 0) * heat_mult +
+                (heat - 38) * 1.5 * (1 + meta.get('infra_age', 1) / 3)
+            ))
+            # Pothole and sewage get minor boost — heat dries/cracks roads
+            scores['label_pothole_worsen'] = min(100, round(
+                scores.get('label_pothole_worsen', 0) * (1 + (heat_mult - 1) * 0.4)
+            ))
 
     overall_risk = round(sum(scores.values()) / max(len(scores), 1))
 

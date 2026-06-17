@@ -371,23 +371,40 @@ body{font-family:'Inter',sans-serif;background:#EBF4FF;color:var(--text);font-si
   </div>
 </div>
 
-<!-- HERO -->
+<!-- HERO — simplified: big temp, condition, prediction -->
 <div class="hero" id="hero-wrap">
   <div class="hero-bg" id="hero-bg"></div>
   <div class="hero-c">
-    <div>
+    <div style="flex:1">
       <div class="h-eyebrow" id="h-eyebrow">Delhi · Live data</div>
       <div class="h-title" id="h-ttl">Analysing...</div>
       <div class="h-sub" id="h-sub">Fetching live weather</div>
       <div class="h-chips" id="h-chips"></div>
     </div>
-    <div class="h-wx">
-      <div class="h-wxc"><div class="h-wxv" id="wx-r" style="color:#81d4fa">—</div><div class="h-wxl">Rain now</div></div>
-      <div class="h-wxc"><div class="h-wxv" id="wx-6">—</div><div class="h-wxl">Next 6h</div></div>
-      <div class="h-wxc"><div class="h-wxv" id="wx-t" style="color:var(--blue)">—</div><div class="h-wxl">Temp</div></div>
-      <div class="h-wxc">
-        <div class="h-wxv" id="wx-a">—</div>
-        <div class="h-wxl">AQI · <span id="wx-a-tier" style="font-size:9px;font-weight:700">—</span></div>
+    <!-- Weather stats — temp is dominant -->
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+      <!-- BIG TEMP -->
+      <div style="display:flex;align-items:baseline;gap:4px">
+        <div style="font-size:52px;font-weight:700;color:#fff;line-height:1;font-variant-numeric:tabular-nums" id="wx-t">—</div>
+        <div style="font-size:18px;color:rgba(255,255,255,.7);font-weight:500">°C</div>
+      </div>
+      <div style="font-size:13px;color:rgba(255,255,255,.75);font-weight:500;text-align:right" id="wx-cond">—</div>
+      <!-- small stats row -->
+      <div style="display:flex;gap:14px;background:rgba(255,255,255,.12);border-radius:8px;padding:8px 14px">
+        <div style="text-align:center">
+          <div style="font-size:15px;font-weight:600;color:#81d4fa;font-variant-numeric:tabular-nums" id="wx-r">—</div>
+          <div style="font-size:9px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.06em;margin-top:2px">Rain</div>
+        </div>
+        <div style="width:1px;background:rgba(255,255,255,.15)"></div>
+        <div style="text-align:center">
+          <div style="font-size:15px;font-weight:600;color:#fff;font-variant-numeric:tabular-nums" id="wx-6">—</div>
+          <div style="font-size:9px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.06em;margin-top:2px">Next 6h</div>
+        </div>
+        <div style="width:1px;background:rgba(255,255,255,.15)"></div>
+        <div style="text-align:center">
+          <div class="h-wxv" id="wx-a">—</div>
+          <div style="font-size:9px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.06em;margin-top:2px">AQI · <span id="wx-a-tier">—</span></div>
+        </div>
       </div>
     </div>
   </div>
@@ -395,71 +412,24 @@ body{font-family:'Inter',sans-serif;background:#EBF4FF;color:var(--text);font-si
 
 <!-- DASHBOARD PAGE -->
 <div id="dash-page" style="background:var(--bg)">
-  <!-- FIX: fchart + ai-strip inside dash-page only — not visible on detail/ngo/map pages -->
-  <div class="fchart-wrap" id="fchart-wrap" style="display:none">
-    <div class="fchart-head">
-      <div class="fchart-title">12-Hour Precipitation Forecast</div>
-      <span class="fchart-tag">Open-Meteo · Hourly</span>
-      <button class="fchart-toggle" id="fchart-toggle-btn" onclick="toggleFchart()">Hide ▲</button>
-    </div>
-    <div class="fchart-body" id="fchart-body">
-      <div class="fchart-bars" id="fchart-bars"></div>
-      <div class="fchart-summary" id="fchart-summary"></div>
-    </div>
-  </div>
-  <div class="ai-strip" id="ai-strip" style="display:none">
-    <div class="ai-strip-head">
-      <div class="ai-strip-lbl">AI Civic Risk Prediction</div>
-      <span class="ai-stag">XGBoost ML</span>
-      <span class="ai-stag">Groq Llama-4-Scout</span>
-      <span class="ai-mode-pill ai-mode-idle" id="ai-strip-mode">Monitoring</span>
-      <button class="ai-strip-toggle" id="ai-strip-toggle-btn" onclick="toggleAiStrip()">Hide ▲</button>
-    </div>
-    <div id="ai-strip-body">
-      <div class="ai-scores" id="ai-strip-scores"></div>
-      <div class="ai-bul-lbl">AI Bulletin · <span id="ai-strip-meta" style="text-transform:none;letter-spacing:0;font-size:9px;color:#6B7280"></span></div>
-      <div class="ai-bul-txt" id="ai-strip-bul">Analysing…</div>
-    </div>
-  </div>
+
   <div class="body">
-    <div style="display:flex;align-items:center;gap:0;padding-bottom:20px;border-bottom:1px solid var(--border);margin-bottom:22px">
-      <div style="padding-right:28px">
-        <div style="font-size:36px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;color:var(--blue)" id="k-crit">36</div>
-        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:4px">Areas monitored</div>
+
+    <!-- AI PREDICTION — clean, large font, easy to read -->
+    <div style="background:#fff;border-radius:10px;border:1px solid var(--border);padding:20px 24px;margin-bottom:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--blue)"></div>
+          <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--blue)" id="ai-mode-text">AI PREDICTION</span>
+        </div>
+        <span style="font-size:11px;color:#9ca3af" id="ai-meta">—</span>
       </div>
-      <div style="width:1px;height:44px;background:var(--border);margin-right:28px"></div>
-      <div style="padding-right:28px">
-        <div style="font-size:36px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;color:#e65100" id="k-risk">—</div>
-        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:4px">At risk areas</div>
+      <!-- Big prediction text -->
+      <div style="font-size:18px;font-weight:500;line-height:1.6;color:#111;margin-bottom:16px;font-family:'Inter',sans-serif" id="ai-stmt">Analysing...</div>
+
+      <div style="margin-top:10px;font-size:11px;color:#9ca3af">
+        XGBoost ML + Groq Llama-4-Scout · <span id='data-src-lbl'>WeatherAPI + Neon Postgres</span>
       </div>
-      <div style="width:1px;height:44px;background:var(--border);margin-right:28px"></div>
-      <div style="padding-right:28px">
-        <div style="font-size:36px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums" id="k-iss">—</div>
-        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:4px">Issues analysed</div>
-      </div>
-      <div style="width:1px;height:44px;background:var(--border);margin-right:28px"></div>
-      <div style="padding-right:28px">
-        <div style="font-size:36px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;color:var(--blue)" id="k-aqi">—</div>
-        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:4px">AQI Delhi</div>
-      </div>
-      <div style="width:1px;height:44px;background:var(--border);margin-right:28px"></div>
-      <div>
-        <div style="font-size:16px;font-weight:700;line-height:1;color:var(--red);padding-top:5px" id="k-thr">—</div>
-        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:4px">Top threat</div>
-      </div>
-    </div>
-    <div class="ai-section">
-      <div class="ai-section-top">
-        <div class="ai-badge"><div class="ai-dot"></div><span id="ai-mode-text">AI PREDICTION · FORECAST MODE</span></div>
-        <div class="ai-meta" id="ai-meta">—</div>
-      </div>
-      <div class="ai-stmt" id="ai-stmt">Analysing...</div>
-      <div class="ai-footer">
-        <span>Model <strong>XGBoost + Groq Llama-4-Scout</strong></span>
-        <span>Data <strong id='data-src-lbl'>WeatherAPI + Neon Postgres</strong></span>
-        <span id="ai-conf-span"></span>
-      </div>
-      <div id="ai-ml-breakdown" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding-top:14px;border-top:0.5px solid var(--border)"></div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start">
       <div>
@@ -784,7 +754,16 @@ function renderAll(d){
   g('wx-r').textContent=w.curr_rain+'mm';
   g('wx-r').style.color=w.curr_rain>5?'#ff5252':'#81d4fa';
   g('wx-6').textContent=(w.rain_next_6h!=null?w.rain_next_6h:'—')+'mm';
-  g('wx-t').textContent=w.curr_temp+'°';
+  g('wx-t').textContent=w.curr_temp;
+  // colour temp by heat level
+  const wxT=g('wx-t');
+  wxT.style.color=w.curr_temp>=44?'#ff5252':w.curr_temp>=40?'#ff8f00':'#fff';
+  // condition text under temp
+  const wxCond=g('wx-cond');if(wxCond){
+    const heatTag=w.curr_temp>=44?' · EXTREME HEAT':w.curr_temp>=40?' · HEATWAVE':'';
+    wxCond.textContent=(w.current_condition||'—')+heatTag;
+    wxCond.style.color=w.curr_temp>=40?'#ffa726':'rgba(255,255,255,.75)';
+  }
 
   if(a&&a.aqi){
     const tier=AQI_TIERS.find(t=>a.aqi<=t.max)||AQI_TIERS[5];
@@ -794,12 +773,12 @@ function renderAll(d){
     const kAqi=g('k-aqi');if(kAqi){kAqi.textContent=a.aqi;kAqi.className=tier.cls;}
   }
 
-  g('k-crit').textContent=d.areas.length;
-  g('k-risk').textContent=d.areas.filter(a=>a.overall_risk>=1).length;
-  g('k-iss').textContent=d.issues_analysed;
+  const kCrit=g('k-crit');if(kCrit)kCrit.textContent=d.areas.length;
+  const kRisk=g('k-risk');if(kRisk)kRisk.textContent=d.areas.filter(a=>a.overall_risk>=1).length;
+  const kIss=g('k-iss');if(kIss)kIss.textContent=d.issues_analysed;
   const top=d.areas[0];
-  if(top){const tr=Object.entries(top.scores||{}).sort((a,b)=>b[1]-a[1])[0];g('k-thr').textContent=tr&&tr[1]>0?LD[tr[0]]?.short||tr[0]:'—';}
-  g('ml-b').textContent=d.ml_active?'ML Active':'Rule-Based';
+  const kThr=g('k-thr');if(top&&kThr){const tr=Object.entries(top.scores||{}).sort((a,b)=>b[1]-a[1])[0];kThr.textContent=tr&&tr[1]>0?LD[tr[0]]?.short||tr[0]:'—';}
+  const mlB=g('ml-b');if(mlB)mlB.textContent=d.ml_active?'ML Active':'Rule-Based';
   const now=new Date();
   const hhmm=`${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')} IST`;
   g('upd').textContent=`Last synced: ${hhmm}`;
@@ -809,8 +788,9 @@ function renderAll(d){
   if(lovAreas)lovAreas.textContent=d.areas.length;
   if(lovIss)lovIss.textContent=d.issues_analysed;
   if(lovRisk)lovRisk.textContent=d.areas.filter(x=>x.overall_risk>=1).length;
-  if(lovAqi&&d.aqi&&d.aqi.aqi)lovAqi.textContent=d.aqi.aqi;g('upd2').textContent=`Last synced: ${hhmm}`;
-  g('blt-txt').textContent=d.ai_bulletin;
+  if(lovAqi&&d.aqi&&d.aqi.aqi)lovAqi.textContent=d.aqi.aqi;
+  const upd2El=g('upd2');if(upd2El)upd2El.textContent=`Last synced: ${hhmm}`;
+  const bltEl=g('blt-txt');if(bltEl)bltEl.textContent=d.ai_bulletin;
   const modeEl=g('ai-mode-text');
   if(isNow)modeEl.textContent='AI PREDICTION · LIVE NOW';
   else if(isFcst)modeEl.textContent='AI PREDICTION · FORECAST MODE';
@@ -821,13 +801,12 @@ function renderAll(d){
   buildLiveFeed(d.areas);
   g('cards-label').textContent=isNow?'Live civic impact — happening now':isFcst?'Predicted civic impact — when weather arrives':'Current civic risk monitoring';
   buildCards(d.areas,d.label_summary||{});
-  renderForecastChart(w);
-  renderAiStrip(d,isNow,isFcst);
 }
 
 function renderForecastChart(w){
   const precip=w.hourly_precip_12h;
   const wrap=g('fchart-wrap');
+  if(!wrap)return;
   if(!precip||!precip.length){wrap.style.display='none';return;}
   const totalRain=precip.reduce((a,b)=>a+(b||0),0);
   wrap.style.display='block';
@@ -948,19 +927,42 @@ function buildAiStmt(d,w,isNow,isFcst){
 }
 
 function buildMlBreakdown(d,w,isNow,isFcst){
-  const el=g('ai-ml-breakdown');if(!el)return;
-  const topFeatures=[
-    {label:'Open civic issues',val:d.issues_analysed,desc:'Citizen-filed via AR / WhatsApp / Map Tap'},
-    {label:'Weather pattern',val:(w.curr_temp>=40?'Heatwave':w.curr_rain>0?'Rain':'Clear'),desc:'vs 5-year Delhi seasonal model'},
-    {label:'Top feature weight',val:'open_pothole 14.8%',desc:'Existing issues outweigh weather alone'},
-    {label:'Prediction horizon',val:isNow?'Live':'Next 6–24h',desc:isNow?'Current weather active now':'Based on Open-Meteo forecast'},
+  const el=g('ai-ml-breakdown');if(!el){return;}
+  const ls=d.label_summary||{};
+  // 5 threat scores as slim bars
+  const threats=[
+    {key:'label_flood',      icon:'🌊',name:'Flood'},
+    {key:'label_pothole_worsen',icon:'🕳',name:'Pothole'},
+    {key:'label_sewage_overflow',icon:'🚨',name:'Sewage'},
+    {key:'label_garbage_flood',icon:'🗑',name:'Garbage'},
+    {key:'label_elec_hazard',icon:'⚡',name:'Electric'},
   ];
-  el.innerHTML=topFeatures.map(f=>`
-    <div style="background:#f8faff;border-radius:9px;padding:12px 14px;border:0.5px solid var(--border)">
-      <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:5px">${f.label}</div>
-      <div style="font-size:15px;font-weight:700;color:var(--blue);margin-bottom:3px;font-variant-numeric:tabular-nums">${f.val}</div>
-      <div style="font-size:10px;color:var(--muted);line-height:1.4">${f.desc}</div>
-    </div>`).join('');
+  el.innerHTML=threats.map(t=>{
+    const sc=ls[t.key]?.max||0;
+    const col=sc>=70?'#c62828':sc>=40?'#e65100':'#1d4ed8';
+    return `<div style="background:#f9fafb;border-radius:8px;padding:10px 12px;border:1px solid #f3f4f6;text-align:center">
+      <div style="font-size:18px;margin-bottom:4px">${t.icon}</div>
+      <div style="font-size:20px;font-weight:700;color:${col};font-variant-numeric:tabular-nums">${sc}</div>
+      <div style="font-size:10px;color:#6b7280;margin-top:2px">${t.name}</div>
+      <div style="background:#e5e7eb;border-radius:2px;height:3px;margin-top:6px;overflow:hidden">
+        <div style="width:${sc}%;height:100%;background:${col};border-radius:2px"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // AI signals row — new features surfaced
+  const sigEl=g('ai-signals');if(!sigEl)return;
+  const signals=[];
+  if(w.heat_hazard||w.curr_temp>=40)signals.push({t:'🌡 Heatwave '+Math.round(w.max_temp_24h||w.curr_temp)+'°C',c:'#fff3e0',tc:'#e65100'});
+  if(w.thunder_soon)signals.push({t:'⛈ Thunder forecast',c:'#fce4ec',tc:'#c62828'});
+  if(w.curr_rain>0)signals.push({t:'🌧 Rain '+w.curr_rain+'mm/hr',c:'#e3f2fd',tc:'#1565c0'});
+  if(w.wind_hazard)signals.push({t:'💨 Gusts '+w.curr_gust+'km/h',c:'#f3e5f5',tc:'#6a1b9a'});
+  const highSevAreas=d.areas.filter(a=>(a.affected_issues||[]).some(i=>i.severity==='high')).length;
+  if(highSevAreas>0)signals.push({t:'🔴 '+highSevAreas+' areas with high-severity issues',c:'#fce4ec',tc:'#c62828'});
+  const escalatedCount=d.areas.reduce((sum,a)=>(a.affected_issues||[]).filter(i=>i.severity==='high').length+sum,0);
+  if(d.issues_analysed>0)signals.push({t:'📋 '+d.issues_analysed+' issues analysed',c:'#e8f5e9',tc:'#2e7d32'});
+  if(!signals.length)signals.push({t:'✅ No active weather threat',c:'#e8f5e9',tc:'#2e7d32'});
+  sigEl.innerHTML=signals.map(s=>`<span style="background:${s.c};color:${s.tc};padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600">${s.t}</span>`).join('');
 }
 
 function buildCards(areas,ls){
@@ -1054,18 +1056,25 @@ function showDetail(label){
     const s=a.scores[label]||0;
     const issues=(a.affected_issues||[]).slice(0,3)
       .map(iss=>`<span class="iss ${iss.severity==='high'?'hi':''}">#AP-${iss.id}</span>`).join('');
-    const t=a.time_to_impact_mins<999?`~${a.time_to_impact_mins} min`:'Lower risk';
+    const t=a.time_to_impact_mins<999?`~${a.time_to_impact_mins} min`:'Monitor';
+    // New: escalated + high-sev counts from affected_issues
+    const highSev=(a.affected_issues||[]).filter(i=>i.severity==='high').length;
+    const highSevStr=highSev>0?` · <span style="color:#c62828;font-weight:600">${highSev} high severity</span>`:'';
     const btnHtml=isUrgent
       ?`<button class="dispatch-btn" onclick="event.stopPropagation();onAreaClick('${a.area}','${label}',${s})">Dispatch</button>`
       :isSchedule?`<button class="queue-btn" onclick="event.stopPropagation();onAreaClick('${a.area}','${label}',${s})">Queue</button>`:'';
     return `<div class="arow" onclick="onAreaClick('${a.area}','${label}',${s})">
-      <div>
-        <div style="display:flex;align-items:center;margin-bottom:3px">
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
           <div class="arow-name">${a.area}</div>
           <span class="arow-badge">${s>=75?'Critical':s>=50?'High':s>=25?'Medium':'Low'}</span>
         </div>
-        <div class="arow-meta">${info.dept} · ${t} · ${a.drain_quality||'—'} drainage · ${a.open_issues||0} issues</div>
+        <div class="arow-meta">${t} · ${a.drain_quality||'—'} drain · ${a.open_issues||0} issues${highSevStr}</div>
         ${issues?`<div class="arow-iss" style="margin-top:4px">${issues}</div>`:''}
+        <button onclick="event.stopPropagation();openSimulate('${a.area}',${JSON.stringify((a.affected_issues||[]).slice(0,3).map(i=>i.id)).replace(/"/g,"'")})"
+          style="margin-top:6px;padding:3px 10px;font-size:10px;font-weight:600;background:#eff6ff;color:var(--blue);border:1px solid #bfdbfe;border-radius:4px;cursor:pointer">
+          Simulate repair →
+        </button>
       </div>
       <div class="arow-score">${s}</div>
       <div>${btnHtml}</div>
@@ -1400,5 +1409,137 @@ document.addEventListener('DOMContentLoaded',()=>{
     <button onclick="sendChat()" style="padding:10px 16px;background:var(--blue);color:#fff;border:none;font-size:12px;font-weight:600;cursor:pointer">Ask</button>
   </div>
 </div>
+
+<!-- ── POLICY SIMULATION MODAL ──────────────────────────────── -->
+<div id="sim-modal" style="display:none;position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,.45);align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:12px;width:480px;max-width:94vw;max-height:88vh;overflow-y:auto;padding:24px;position:relative">
+    <button onclick="closeSimulate()" style="position:absolute;top:14px;right:14px;background:none;border:none;font-size:18px;cursor:pointer;color:#9ca3af">✕</button>
+    <div style="font-size:13px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Policy Simulation</div>
+    <div style="font-size:18px;font-weight:700;color:#111;margin-bottom:16px" id="sim-area-title">—</div>
+
+    <!-- Before/after scores -->
+    <div id="sim-before-after" style="display:none;background:#f8faff;border-radius:8px;padding:14px;margin-bottom:14px;border:1px solid #dbeafe">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+        <div style="text-align:center">
+          <div style="font-size:11px;color:#6b7280;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Risk Before</div>
+          <div style="font-size:36px;font-weight:700;color:#c62828" id="sim-before">—</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:11px;color:#6b7280;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Risk After Fix</div>
+          <div style="font-size:36px;font-weight:700;color:#15803d" id="sim-after">—</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+        <div style="text-align:center;background:#fff;border-radius:6px;padding:8px 4px">
+          <div style="font-size:16px;font-weight:700;color:#1d4ed8" id="sim-residents">—</div>
+          <div style="font-size:9px;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;margin-top:2px">Residents protected</div>
+        </div>
+        <div style="text-align:center;background:#fff;border-radius:6px;padding:8px 4px">
+          <div style="font-size:16px;font-weight:700;color:#1d4ed8" id="sim-cost">—</div>
+          <div style="font-size:9px;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;margin-top:2px">Repair cost</div>
+        </div>
+        <div style="text-align:center;background:#fff;border-radius:6px;padding:8px 4px">
+          <div style="font-size:16px;font-weight:700;color:#15803d" id="sim-roi">—</div>
+          <div style="font-size:9px;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;margin-top:2px">ROI</div>
+        </div>
+      </div>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid #e5e7eb;font-size:12px;font-weight:600;color:#111" id="sim-rec">—</div>
+      <div style="font-size:11px;color:#6b7280;margin-top:4px" id="sim-teams">—</div>
+    </div>
+
+    <!-- Issue checkboxes -->
+    <div style="font-size:11px;font-weight:600;color:#374151;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Select issues to fix:</div>
+    <div id="sim-issues-list" style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px"></div>
+    <div id="sim-status" style="font-size:12px;color:#6b7280;margin-bottom:12px;min-height:16px"></div>
+    <button onclick="runSimulate()" style="width:100%;padding:10px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer" id="sim-run-btn">
+      Run Simulation
+    </button>
+  </div>
+</div>
+
+<script>
+
+// ═══════════════════════════════════════════════════════
+//  POLICY SIMULATION
+// ═══════════════════════════════════════════════════════
+let _simArea = '', _simIssueIds = [];
+
+function openSimulate(area, preselectedIds) {
+  _simArea = area;
+  const modal = g('sim-modal');
+  g('sim-area-title').textContent = area + ' — What If We Repair?';
+  g('sim-before-after').style.display = 'none';
+  g('sim-status').textContent = '';
+
+  // Build issue checkboxes from current data
+  const areaData = D ? D.areas.find(a => a.area === area) : null;
+  const issues = areaData ? (areaData.affected_issues || []) : [];
+  const listEl = g('sim-issues-list');
+
+  if (!issues.length) {
+    listEl.innerHTML = '<div style="font-size:12px;color:#6b7280;padding:10px 0">No open issues found for this area in the current dataset.</div>';
+  } else {
+    listEl.innerHTML = issues.map(iss => `
+      <label style="display:flex;align-items:flex-start;gap:10px;padding:8px 10px;background:#f9fafb;border-radius:6px;cursor:pointer;border:1px solid #f3f4f6">
+        <input type="checkbox" value="${iss.id}" ${preselectedIds && preselectedIds.includes(iss.id) ? 'checked' : ''}
+          style="margin-top:2px;cursor:pointer"/>
+        <div>
+          <div style="font-size:12px;font-weight:600;color:#111">#AP-${iss.id} · ${iss.tag}</div>
+          <div style="font-size:11px;color:#6b7280">${iss.description || '—'}</div>
+          <div style="font-size:10px;margin-top:2px">
+            <span style="background:${iss.severity==='high'?'#fef2f2':'#fff7ed'};color:${iss.severity==='high'?'#991b1b':'#c2410c'};padding:1px 6px;border-radius:3px;font-weight:600">${iss.severity}</span>
+          </div>
+        </div>
+      </label>`).join('');
+  }
+
+  modal.style.display = 'flex';
+}
+
+function closeSimulate() {
+  g('sim-modal').style.display = 'none';
+}
+
+async function runSimulate() {
+  const checkboxes = g('sim-issues-list').querySelectorAll('input[type=checkbox]:checked');
+  const ids = Array.from(checkboxes).map(c => c.value);
+  if (!ids.length) { g('sim-status').textContent = 'Select at least one issue to simulate.'; return; }
+
+  const btn = g('sim-run-btn');
+  btn.textContent = 'Simulating...'; btn.disabled = true;
+  g('sim-status').textContent = 'Running simulation...';
+
+  try {
+    const res = await fetch('/api/simulate-repair', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ area: _simArea, issue_ids: ids })
+    });
+    const data = await res.json();
+    if (data.error) { g('sim-status').textContent = 'Error: ' + data.error; return; }
+
+    // Show results
+    g('sim-before').textContent = data.baseline_risk;
+    g('sim-after').textContent = data.improved_risk;
+    g('sim-residents').textContent = (data.residents_protected || 0).toLocaleString('en-IN');
+    g('sim-cost').textContent = '₹' + Math.round((data.repair_cost_inr || 0) / 1000) + 'K';
+    g('sim-roi').textContent = data.roi + 'x ROI';
+    g('sim-rec').textContent = data.recommendation || '—';
+    g('sim-teams').textContent = `Deploy ${data.deploy_teams} team${data.deploy_teams>1?'s':''} · Est. ${data.estimated_hours}h · Emergency avoided: ₹${Math.round((data.emergency_avoided_inr||0)/1000)}K`;
+    g('sim-before-after').style.display = 'block';
+    g('sim-status').textContent = '';
+  } catch(e) {
+    g('sim-status').textContent = 'Could not reach server. Try again.';
+  } finally {
+    btn.textContent = 'Run Simulation'; btn.disabled = false;
+  }
+}
+
+// Close modal on outside click
+g('sim-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeSimulate();
+});
+
+</script>
 </body>
 </html>
